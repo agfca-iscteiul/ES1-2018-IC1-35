@@ -19,7 +19,7 @@ public final class TwitterMain {
 			Twitter twitter = tf.getInstance();
 			List<Status> statuses = twitter.getHomeTimeline();
 			System.out.println("------------------------\n Showing home timeline \n------------------------");
-			int counter = 0;
+			int counter = 0; 
 			int counterTotal = 0;
 			for (Status status : statuses) {
 				// Filters only tweets from user "catarina"
