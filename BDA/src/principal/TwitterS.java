@@ -13,7 +13,6 @@ public class TwitterS {
 			this.data=data;
 		}
 		
-
 		public String getAutor() {
 			return autor;
 		}
