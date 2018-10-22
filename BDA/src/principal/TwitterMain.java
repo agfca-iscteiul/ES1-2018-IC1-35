@@ -31,6 +31,7 @@ public final class TwitterMain {
 			for(TwitterS lst : lista) {
 				System.out.println("Autor: " + lst.getAutor() + " \n \n" + lst.getPost() + " \n \n" + lst.getData() + "\n \n \n \n \n");
 				
+				
 			}
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
