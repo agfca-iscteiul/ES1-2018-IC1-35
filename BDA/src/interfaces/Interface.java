@@ -7,6 +7,8 @@ import javax.swing.JMenuItem;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.Action;
 import javax.swing.DefaultListModel;
@@ -29,9 +31,12 @@ public class Interface {
 	private final Action actionFB = new LoginAction("Facebook");
 	private final Action actionTT = new LoginAction("Twitter");
 	private final Action actionM = new LoginAction("E-mail");
-	JLabel lblFB=new JLabel("Ativo");
-	JLabel lblTT=new JLabel("Ativo");
-	JLabel lblM=new JLabel("Ativo");
+	private JLabel lblFB=new JLabel("Ativo");
+	private JLabel lblTT=new JLabel("Ativo");
+	private JLabel lblM=new JLabel("Ativo");
+	private boolean checkFB=true;
+	private boolean checkTT=true;
+	private boolean checkM=true;
 	private DefaultListModel<String> modelPosts= new DefaultListModel<>();
 	private DefaultListModel<String> modelFiltros= new DefaultListModel<>();
 	private JTextField textFiltros;
@@ -108,8 +113,16 @@ public class Interface {
 		JButton btnFacebook = new JButton("");
 		btnFacebook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblFB.setText("Desativo");
-				frame.repaint();
+				if(checkFB==true){
+					lblFB.setText("Desativo");
+					checkFB=false;
+					}
+					else {
+						lblFB.setText("  Ativo");
+						checkFB=true;
+						
+					}
+					frame.repaint();
 			}
 		});
 		btnFacebook.setToolTipText("");
@@ -122,8 +135,16 @@ public class Interface {
 		JButton btnTwitter = new JButton("");
 		btnTwitter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblTT.setText("Desativo");
-				frame.repaint();
+				if(checkTT==true){
+					lblTT.setText("Desativo");
+					checkTT=false;
+					}
+					else {
+						lblTT.setText("  Ativo");
+						checkTT=true;
+						
+					}
+					frame.repaint();
 			}
 		});
 		sl_panel.putConstraint(SpringLayout.WEST, btnTwitter, 73, SpringLayout.EAST, btnFacebook);
@@ -135,8 +156,17 @@ public class Interface {
 		JButton btnEmail = new JButton("");
 		btnEmail.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(checkM==true){
 				lblM.setText("Desativo");
+				checkM=false;
+				}
+				else {
+					lblM.setText("  Ativo");
+					checkM=true;
+					
+				}
 				frame.repaint();
+				
 			}
 		});
 		sl_panel.putConstraint(SpringLayout.NORTH, btnEmail, 48, SpringLayout.SOUTH, btnFacebook);
@@ -184,10 +214,22 @@ public class Interface {
 		textFiltros.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		panel.add(textFiltros);
 		textFiltros.setColumns(10);
+		textFiltros.addMouseListener(new MouseAdapter() {
+			  @Override
+			  public void mouseClicked(MouseEvent e) {
+			    textFiltros.setText("");
+			  }
+			});
 		
 		JList<String> listFiltros = new JList<String>();
+		listFiltros.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		sl_panel.putConstraint(SpringLayout.WEST, listFiltros, 0, SpringLayout.WEST, textFiltros);
 		sl_panel.putConstraint(SpringLayout.SOUTH, listFiltros, -10, SpringLayout.SOUTH, panel);
+		String s1="lol";
+		String s2="lol2";
+		modelFiltros.addElement(s1);
+		modelFiltros.addElement(s2);
+		listFiltros.setModel(modelFiltros);
 		panel.add(listFiltros);
 		
 		JButton btnOk = new JButton("Ok");
