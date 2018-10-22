@@ -1,15 +1,19 @@
 package principal;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
 public final class TwitterMain {
+	
+	
 	public static void main(String[] args) {
-		// https://www.youtube.com/watch?v=uYPmkzMpnxw
-		try {
+		List<TwitterS> lista = new ArrayList<TwitterS>();
+			try {
 			ConfigurationBuilder cb = new ConfigurationBuilder();
 			cb.setDebugEnabled(true).setOAuthConsumerKey("W1f0VvgWPfT8OBqVxvy4Mw")
 					.setOAuthConsumerSecret("zKH2yAtRyefwsgOO8h8Szc4kru68iEm95QmIG7svw")
@@ -18,20 +22,19 @@ public final class TwitterMain {
 			TwitterFactory tf = new TwitterFactory(cb.build());
 			Twitter twitter = tf.getInstance();
 			List<Status> statuses = twitter.getHomeTimeline();
-			System.out.println("------------------------\n Showing home timeline \n------------------------");
-			int counter = 0; 
-			int counterTotal = 0;
 			for (Status status : statuses) {
-				// Filters only tweets from user "catarina"
 				if (status.getUser().getName() != null && status.getUser().getName().contains("ISCTE")) {
-					System.out.println(status.getUser().getName() + ":" + status.getText());
-					counter++;
+					lista.add(new TwitterS(status.getUser().getName(), status.getText(), status.getCreatedAt().toString()));
 				}
-				counterTotal++;
+			
 			}
-			System.out.println("-------------\nN∫ of Results: " + counter + "/" + counterTotal);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+			for(TwitterS lst : lista) {
+				System.out.println("Autor: " + lst.getAutor() + " \n \n" + lst.getPost() + " \n \n" + lst.getData() + "\n \n \n \n \n");
+				
+			}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		
 	}
 }
