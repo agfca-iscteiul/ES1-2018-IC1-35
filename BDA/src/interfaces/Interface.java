@@ -116,7 +116,7 @@ public class Interface {
 		sl_panel.putConstraint(SpringLayout.NORTH, btnFacebook, 35, SpringLayout.NORTH, panel);
 		sl_panel.putConstraint(SpringLayout.WEST, btnFacebook, 91, SpringLayout.WEST, panel);
 		sl_panel.putConstraint(SpringLayout.EAST, btnFacebook, -301, SpringLayout.EAST, panel);
-		btnFacebook.setIcon(new ImageIcon("C:\\Users\\lapsh\\OneDrive\\Imagens\\facebook.png"));
+		btnFacebook.setIcon(new ImageIcon("BDA\\src\\facebook.png"));
 		panel.add(btnFacebook);
 		
 		JButton btnTwitter = new JButton("");
@@ -129,7 +129,7 @@ public class Interface {
 		sl_panel.putConstraint(SpringLayout.WEST, btnTwitter, 73, SpringLayout.EAST, btnFacebook);
 		sl_panel.putConstraint(SpringLayout.SOUTH, btnTwitter, 0, SpringLayout.SOUTH, btnFacebook);
 		sl_panel.putConstraint(SpringLayout.EAST, btnTwitter, -62, SpringLayout.EAST, panel);
-		btnTwitter.setIcon(new ImageIcon("C:\\Users\\lapsh\\OneDrive\\Imagens\\Twitter-icon.png"));
+		btnTwitter.setIcon(new ImageIcon("BDA\\src\\Twitter-icon.png"));
 		panel.add(btnTwitter);
 		
 		JButton btnEmail = new JButton("");
@@ -142,7 +142,7 @@ public class Interface {
 		sl_panel.putConstraint(SpringLayout.NORTH, btnEmail, 48, SpringLayout.SOUTH, btnFacebook);
 		sl_panel.putConstraint(SpringLayout.WEST, btnEmail, 127, SpringLayout.WEST, btnFacebook);
 		sl_panel.putConstraint(SpringLayout.EAST, btnEmail, -174, SpringLayout.EAST, panel);
-		btnEmail.setIcon(new ImageIcon("C:\\Users\\lapsh\\OneDrive\\Imagens\\Gmail-icon.png"));
+		btnEmail.setIcon(new ImageIcon("BDA\\src\\Gmail-icon.png"));
 		panel.add(btnEmail);
 		
 		lblFB = new JLabel("  Ativo");
@@ -216,7 +216,6 @@ public class Interface {
 		public void actionPerformed(ActionEvent e) {
 			System.out.println(this.config);
 			Configuracoes facebook= new Configuracoes(this.config);
-			//facebook.main(args);
 		}
 	}
 }
