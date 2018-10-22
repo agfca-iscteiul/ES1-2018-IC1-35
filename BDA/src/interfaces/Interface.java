@@ -41,7 +41,6 @@ public class Interface {
 	 */
 	public static void main(String[] args) {
 		Interface window = new Interface();
-		window.frame.setVisible(true);
 	}
 
 	/**
@@ -49,6 +48,7 @@ public class Interface {
 	 */
 	public Interface() {
 		initialize();
+		frame.setVisible(true);
 	}
 
 	/**
