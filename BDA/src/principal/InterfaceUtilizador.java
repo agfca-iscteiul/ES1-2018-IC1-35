@@ -1,13 +1,9 @@
 package principal;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,9 +15,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.WindowConstants;
-
-
-
 
 public class InterfaceUtilizador {
 	
@@ -69,7 +62,7 @@ public class InterfaceUtilizador {
 	}
 	
 	private void FacebookLogin(JMenu menu) {
-		JMenuItem configface=new JMenuItem("Configurações");
+		JMenuItem configface=new JMenuItem("Configuraï¿½ï¿½es");
 		configface.setFont(new Font("sans-serif", Font.PLAIN, 15));
 		configface.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -86,7 +79,7 @@ public class InterfaceUtilizador {
 	}
 	
 	private void TwitterLogin(JMenu menu) {
-		JMenuItem configtwitter=new JMenuItem("Configurações");
+		JMenuItem configtwitter=new JMenuItem("Configuraï¿½ï¿½es");
 		configtwitter.setFont(new Font("sans-serif", Font.PLAIN, 15));
 		configtwitter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -104,7 +97,7 @@ public class InterfaceUtilizador {
 	}
 	
 	private void EmailLogin(JMenu menu) {
-		JMenuItem configmail=new JMenuItem("Configurações");
+		JMenuItem configmail=new JMenuItem("Configuraï¿½ï¿½es");
 		configmail.setFont(new Font("sans-serif", Font.PLAIN, 15));
 		configmail.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
