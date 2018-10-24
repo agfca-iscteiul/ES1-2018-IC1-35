@@ -42,4 +42,19 @@ public class TwitterInfo extends AbstractInfo {
 		}
 	}
 
+	@Override
+	public boolean checkTwitter() {
+		return true;
+	}
+
+	@Override
+	public boolean checkFacebook() {
+		return false;
+	}
+
+	@Override
+	public boolean checkEmail() {
+		return false;
+	}
+
 }

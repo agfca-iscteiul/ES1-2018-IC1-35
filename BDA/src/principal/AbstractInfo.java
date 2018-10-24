@@ -39,5 +39,10 @@ public abstract class AbstractInfo {
 		this.data = data;
 	}
 	
+	 abstract public boolean checkTwitter();
+	 abstract public boolean checkFacebook();
+	 abstract public boolean checkEmail();
+	 
+	
 
 }
