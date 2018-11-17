@@ -50,7 +50,11 @@ public class Interface {
 	private JButton btnEmail;
 	private JButton btnTwitter;
 	private TwitterApp ttapp;
+	private JCalendar calendarIn;
+	private JCalendar calendarFim;
 	
+	private ArrayList<AbstractInfo> aListMain;
+	private ArrayList<AbstractInfo> aListRepresent;
 	private ArrayList<AbstractInfo> aListTT;
 
 	/**
@@ -62,6 +66,8 @@ public class Interface {
 		initialize();
 		initializeAux();
 		addToListTwitter();
+		addToListMain();
+		showList();
 		frame.setVisible(true);
 	}
 
@@ -182,11 +188,27 @@ public class Interface {
 	
 	private void addToListTwitter() {
 		aListTT=ttapp.getList();
+	}
+	
+	private void addToListMain() {
+		aListMain=new ArrayList<AbstractInfo>();
+		aListMain.addAll(aListTT);
 		
+	}
+	
+	private void filtrList() {
+		for(AbstractInfo info: aListMain) {
+			aListMain.add(modelPosts.size(),info);
+			}
+	}
+	
+	private void showList() {
 		for(AbstractInfo info: aListTT) {
-		modelPosts.add(modelPosts.size(),info);
+			modelPosts.add(modelPosts.size(),info);
 		}
 	}
+	
+	
 
 	private void addListenerLista() {
 		listPosts.addMouseListener(new MouseAdapter() {
@@ -276,14 +298,14 @@ public class Interface {
 		panel.add(btnOkOrigem);
 		
 		JCheckBox chckbxData = new JCheckBox("Data");
-		sl_panel.putConstraint(SpringLayout.NORTH, chckbxData, 586, SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.WEST, chckbxData, 44, SpringLayout.WEST, panel);
+		sl_panel.putConstraint(SpringLayout.WEST, chckbxData, 0, SpringLayout.WEST, chckbxPC);
 		sl_panel.putConstraint(SpringLayout.EAST, chckbxData, -343, SpringLayout.EAST, panel);
 		chckbxData.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		panel.add(chckbxData);
 		
 		JLabel lblIncio = new JLabel("Início");
-		sl_panel.putConstraint(SpringLayout.NORTH, lblIncio, 27, SpringLayout.SOUTH, chckbxData);
+		sl_panel.putConstraint(SpringLayout.NORTH, lblIncio, 646, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.SOUTH, chckbxData, -6, SpringLayout.NORTH, lblIncio);
 		sl_panel.putConstraint(SpringLayout.WEST, lblIncio, 125, SpringLayout.WEST, panel);
 		lblIncio.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		panel.add(lblIncio);
@@ -294,7 +316,7 @@ public class Interface {
 		lblFim.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		panel.add(lblFim);
 		
-		JCalendar calendarIn = new JCalendar();
+		calendarIn = new JCalendar();
 		calendarIn.getDayChooser().getDayPanel().setBackground(Color.WHITE);
 		sl_panel.putConstraint(SpringLayout.NORTH, calendarIn, 5, SpringLayout.SOUTH, lblIncio);
 		sl_panel.putConstraint(SpringLayout.WEST, calendarIn, 10, SpringLayout.WEST, panel);
@@ -302,7 +324,7 @@ public class Interface {
 		sl_panel.putConstraint(SpringLayout.EAST, calendarIn, 270, SpringLayout.WEST, panel);
 		panel.add(calendarIn);
 		
-		JCalendar calendarFim = new JCalendar();
+		calendarFim = new JCalendar();
 		calendarFim.getDayChooser().getDayPanel().setBackground(Color.WHITE);
 		sl_panel.putConstraint(SpringLayout.NORTH, calendarFim, 6, SpringLayout.SOUTH, lblFim);
 		sl_panel.putConstraint(SpringLayout.WEST, calendarFim, 6, SpringLayout.EAST, calendarIn);
