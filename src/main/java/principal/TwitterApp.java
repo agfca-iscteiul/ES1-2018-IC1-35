@@ -70,6 +70,7 @@ public class TwitterApp {
 				Document doc = dBuilder.parse(data);
 				doc.getDocumentElement().normalize();
 				
+				
 			}
 		} catch (IOException | ParserConfigurationException | SAXException e) {
 			e.printStackTrace();
