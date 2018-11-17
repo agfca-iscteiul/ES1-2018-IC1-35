@@ -36,9 +36,6 @@ public class Interface {
 	private JFrame frame;
 	private JPanel panel;
 	private SpringLayout sl_panel;
-	private final Action actionFB = new LoginAction("Facebook");
-	private final Action actionTT = new LoginAction("Twitter");
-	private final Action actionM = new LoginAction("E-mail");
 	private JLabel lblFB;
 	private JLabel lblTT;
 	private JLabel lblM;
@@ -204,7 +201,6 @@ public class Interface {
 		});
 	}
 	
-
 	
 	private void initializeLabel(JButton btnFacebook,JButton btnTwitter,JButton btnEmail) {
 		lblFB = new JLabel("  Ativo");
@@ -317,20 +313,4 @@ public class Interface {
 		
 		}
 	
-	private class LoginAction extends AbstractAction {
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-		
-		private String config;
-		public LoginAction(String config) {
-			putValue(NAME, "Configura�oes");
-			putValue(SHORT_DESCRIPTION, "Configura��es de Conta");
-			this.config=config;
-		}
-		public void actionPerformed(ActionEvent e) {
-			Configuracoes facebook= new Configuracoes(this.config);
-		}
-	}
 }
