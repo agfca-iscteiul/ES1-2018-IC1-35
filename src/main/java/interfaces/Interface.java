@@ -28,6 +28,8 @@ import javax.swing.JList;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
+import com.toedter.calendar.JCalendar;
+import java.awt.Color;
 
 public class Interface {
 
@@ -47,6 +49,8 @@ public class Interface {
 	private JPanel panel;
 	private SpringLayout sl_panel;
 	private JTextField txtOrigem;
+	private JButton btnFacebook_1;
+	private JButton btnEmail_1;
 
 	/**
 	 * Launch the application.
@@ -79,17 +83,16 @@ public class Interface {
 		frame.getContentPane().setLayout(springLayout);
 		
 		panel = new JPanel();
+		springLayout.putConstraint(SpringLayout.SOUTH, panel, 0, SpringLayout.SOUTH, frame.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, panel, 0, SpringLayout.EAST, frame.getContentPane());
 		panel.setBackground(SystemColor.inactiveCaption);
 		panel.setForeground(SystemColor.textHighlight);
-		springLayout.putConstraint(SpringLayout.NORTH, panel, 0, SpringLayout.NORTH, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, panel, 0, SpringLayout.SOUTH, frame.getContentPane());
 		frame.getContentPane().add(panel);
 		sl_panel = new SpringLayout();
 		panel.setLayout(sl_panel);
 		
-		JButton btnFacebook = new JButton("");
-		btnFacebook.addActionListener(new ActionListener() {
+		btnFacebook_1 = new JButton("");
+		btnFacebook_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(checkFB==true){
 					lblFB.setText("Desativo");
@@ -103,12 +106,12 @@ public class Interface {
 					frame.repaint();
 			}
 		});
-		btnFacebook.setToolTipText("");
-		sl_panel.putConstraint(SpringLayout.NORTH, btnFacebook, 35, SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.WEST, btnFacebook, 91, SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, btnFacebook, -301, SpringLayout.EAST, panel);
-		btnFacebook.setIcon(new ImageIcon("src\\main\\java\\facebook.png"));
-		panel.add(btnFacebook);
+		btnFacebook_1.setToolTipText("");
+		sl_panel.putConstraint(SpringLayout.NORTH, btnFacebook_1, 35, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.WEST, btnFacebook_1, 91, SpringLayout.WEST, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, btnFacebook_1, -301, SpringLayout.EAST, panel);
+		btnFacebook_1.setIcon(new ImageIcon("src\\main\\java\\facebook.png"));
+		panel.add(btnFacebook_1);
 		
 		JButton btnTwitter = new JButton("");
 		btnTwitter.addActionListener(new ActionListener() {
@@ -125,14 +128,14 @@ public class Interface {
 					frame.repaint();
 			}
 		});
-		sl_panel.putConstraint(SpringLayout.WEST, btnTwitter, 73, SpringLayout.EAST, btnFacebook);
-		sl_panel.putConstraint(SpringLayout.SOUTH, btnTwitter, 0, SpringLayout.SOUTH, btnFacebook);
+		sl_panel.putConstraint(SpringLayout.WEST, btnTwitter, 73, SpringLayout.EAST, btnFacebook_1);
+		sl_panel.putConstraint(SpringLayout.SOUTH, btnTwitter, 0, SpringLayout.SOUTH, btnFacebook_1);
 		sl_panel.putConstraint(SpringLayout.EAST, btnTwitter, -62, SpringLayout.EAST, panel);
 		btnTwitter.setIcon(new ImageIcon("src\\main\\java\\Twitter-icon.png"));
 		panel.add(btnTwitter);
 		
-		JButton btnEmail = new JButton("");
-		btnEmail.addActionListener(new ActionListener() {
+		btnEmail_1 = new JButton("");
+		btnEmail_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(checkM==true){
 				lblM.setText("Desativo");
@@ -147,16 +150,17 @@ public class Interface {
 				
 			}
 		});
-		sl_panel.putConstraint(SpringLayout.NORTH, btnEmail, 48, SpringLayout.SOUTH, btnFacebook);
-		sl_panel.putConstraint(SpringLayout.WEST, btnEmail, 127, SpringLayout.WEST, btnFacebook);
-		sl_panel.putConstraint(SpringLayout.EAST, btnEmail, -174, SpringLayout.EAST, panel);
-		btnEmail.setIcon(new ImageIcon("src\\main\\java\\Gmail-icon.png"));
-		panel.add(btnEmail);
+		sl_panel.putConstraint(SpringLayout.NORTH, btnEmail_1, 48, SpringLayout.SOUTH, btnFacebook_1);
+		sl_panel.putConstraint(SpringLayout.WEST, btnEmail_1, 127, SpringLayout.WEST, btnFacebook_1);
+		sl_panel.putConstraint(SpringLayout.EAST, btnEmail_1, -174, SpringLayout.EAST, panel);
+		btnEmail_1.setIcon(new ImageIcon("src\\main\\java\\Gmail-icon.png"));
+		panel.add(btnEmail_1);
 		
-		initializeLabel(btnFacebook,btnTwitter,btnEmail);
+		initializeLabel(btnFacebook_1,btnTwitter,btnEmail_1);
 		
 		
 		JList<AbstractInfo> listPosts = new JList<AbstractInfo>();
+		listPosts.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		springLayout.putConstraint(SpringLayout.WEST, listPosts, 0, SpringLayout.WEST, frame.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, listPosts, -558, SpringLayout.EAST, frame.getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, panel, 0, SpringLayout.EAST, listPosts);
@@ -164,14 +168,18 @@ public class Interface {
 		TwitterApp ttapp=new TwitterApp();
 		ttapp.runTwitter();
 		
-		modelPosts.addElement(ttapp.getList().get(1));
+		for(AbstractInfo info:ttapp.getList()) {
+		modelPosts.addElement(info);
+		}
+	
 		springLayout.putConstraint(SpringLayout.NORTH, listPosts, 100, SpringLayout.NORTH, frame.getContentPane());
 		springLayout.putConstraint(SpringLayout.SOUTH, listPosts, 0, SpringLayout.SOUTH, frame.getContentPane());
 		frame.getContentPane().add(listPosts);
 		
 		JLabel lblBomDiaAcademia = new JLabel("Bom Dia Academia");
+		springLayout.putConstraint(SpringLayout.EAST, lblBomDiaAcademia, -32, SpringLayout.WEST, panel);
+		springLayout.putConstraint(SpringLayout.NORTH, panel, 0, SpringLayout.NORTH, lblBomDiaAcademia);
 		springLayout.putConstraint(SpringLayout.NORTH, lblBomDiaAcademia, 0, SpringLayout.NORTH, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, lblBomDiaAcademia, -36, SpringLayout.WEST, panel);
 		
 		
 		lblBomDiaAcademia.setFont(new Font("Lucida Fax", Font.BOLD, 84));
@@ -302,6 +310,35 @@ public class Interface {
 		sl_panel.putConstraint(SpringLayout.EAST, chckbxData, -343, SpringLayout.EAST, panel);
 		chckbxData.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		panel.add(chckbxData);
+		
+		JLabel lblIncio = new JLabel("Início");
+		sl_panel.putConstraint(SpringLayout.NORTH, lblIncio, 27, SpringLayout.SOUTH, chckbxData);
+		sl_panel.putConstraint(SpringLayout.WEST, lblIncio, 125, SpringLayout.WEST, panel);
+		lblIncio.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
+		panel.add(lblIncio);
+		
+		JLabel lblFim = new JLabel("Fim");
+		sl_panel.putConstraint(SpringLayout.NORTH, lblFim, 0, SpringLayout.NORTH, lblIncio);
+		sl_panel.putConstraint(SpringLayout.EAST, lblFim, 0, SpringLayout.EAST, btnEmail_1);
+		lblFim.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
+		panel.add(lblFim);
+		
+		JCalendar calendarIn = new JCalendar();
+		calendarIn.getDayChooser().getDayPanel().setBackground(Color.WHITE);
+		sl_panel.putConstraint(SpringLayout.NORTH, calendarIn, 5, SpringLayout.SOUTH, lblIncio);
+		sl_panel.putConstraint(SpringLayout.WEST, calendarIn, 10, SpringLayout.WEST, panel);
+		sl_panel.putConstraint(SpringLayout.SOUTH, calendarIn, 206, SpringLayout.SOUTH, lblIncio);
+		sl_panel.putConstraint(SpringLayout.EAST, calendarIn, 270, SpringLayout.WEST, panel);
+		panel.add(calendarIn);
+		
+		JCalendar calendarFim = new JCalendar();
+		calendarFim.getDayChooser().getDayPanel().setBackground(Color.WHITE);
+		sl_panel.putConstraint(SpringLayout.NORTH, calendarFim, 6, SpringLayout.SOUTH, lblFim);
+		sl_panel.putConstraint(SpringLayout.WEST, calendarFim, 6, SpringLayout.EAST, calendarIn);
+		sl_panel.putConstraint(SpringLayout.SOUTH, calendarFim, 0, SpringLayout.SOUTH, calendarIn);
+		sl_panel.putConstraint(SpringLayout.EAST, calendarFim, 0, SpringLayout.EAST, btnOkPC);
+		panel.add(calendarFim);
+		
 		
 		}
 	
