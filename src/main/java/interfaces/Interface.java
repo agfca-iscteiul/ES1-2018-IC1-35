@@ -34,6 +34,8 @@ import java.awt.Color;
 public class Interface {
 
 	private JFrame frame;
+	private JPanel panel;
+	private SpringLayout sl_panel;
 	private final Action actionFB = new LoginAction("Facebook");
 	private final Action actionTT = new LoginAction("Twitter");
 	private final Action actionM = new LoginAction("E-mail");
@@ -43,29 +45,26 @@ public class Interface {
 	private boolean checkFB=true;
 	private boolean checkTT=true;
 	private boolean checkM=true;
-	private DefaultListModel<AbstractInfo> modelPosts= new DefaultListModel<>();
-	private ArrayList<String> filtros=new ArrayList<String>();
+	JList<AbstractInfo> listPosts;
+	DefaultListModel<AbstractInfo> modelPosts= new DefaultListModel<>();
 	private JTextField textFiltros;
-	private JPanel panel;
-	private SpringLayout sl_panel;
 	private JTextField txtOrigem;
-	private JButton btnFacebook_1;
-	private JButton btnEmail_1;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		Interface window = new Interface();
-	}
+	private JButton btnFacebook;
+	private JButton btnEmail;
+	private JButton btnTwitter;
+	private TwitterApp ttapp;
+	
+	private ArrayList<AbstractInfo> aListTT;
 
 	/**
 	 * Create the application.
 	 */
-	public Interface() {
+	public Interface(TwitterApp ttapp) {
+		ttapp.runTwitter();
+		this.ttapp=ttapp;
 		initialize();
-		barmenu();
 		initializeAux();
+		addToListTwitter();
 		frame.setVisible(true);
 	}
 
@@ -91,8 +90,8 @@ public class Interface {
 		sl_panel = new SpringLayout();
 		panel.setLayout(sl_panel);
 		
-		btnFacebook_1 = new JButton("");
-		btnFacebook_1.addActionListener(new ActionListener() {
+		btnFacebook = new JButton("");
+		btnFacebook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(checkFB==true){
 					lblFB.setText("Desativo");
@@ -106,14 +105,14 @@ public class Interface {
 					frame.repaint();
 			}
 		});
-		btnFacebook_1.setToolTipText("");
-		sl_panel.putConstraint(SpringLayout.NORTH, btnFacebook_1, 35, SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.WEST, btnFacebook_1, 91, SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, btnFacebook_1, -301, SpringLayout.EAST, panel);
-		btnFacebook_1.setIcon(new ImageIcon("src\\main\\java\\facebook.png"));
-		panel.add(btnFacebook_1);
+		btnFacebook.setToolTipText("");
+		sl_panel.putConstraint(SpringLayout.NORTH, btnFacebook, 35, SpringLayout.NORTH, panel);
+		sl_panel.putConstraint(SpringLayout.WEST, btnFacebook, 91, SpringLayout.WEST, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, btnFacebook, -301, SpringLayout.EAST, panel);
+		btnFacebook.setIcon(new ImageIcon("src\\main\\java\\facebook.png"));
+		panel.add(btnFacebook);
 		
-		JButton btnTwitter = new JButton("");
+		btnTwitter = new JButton("");
 		btnTwitter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(checkTT==true){
@@ -128,14 +127,14 @@ public class Interface {
 					frame.repaint();
 			}
 		});
-		sl_panel.putConstraint(SpringLayout.WEST, btnTwitter, 73, SpringLayout.EAST, btnFacebook_1);
-		sl_panel.putConstraint(SpringLayout.SOUTH, btnTwitter, 0, SpringLayout.SOUTH, btnFacebook_1);
+		sl_panel.putConstraint(SpringLayout.WEST, btnTwitter, 73, SpringLayout.EAST, btnFacebook);
+		sl_panel.putConstraint(SpringLayout.SOUTH, btnTwitter, 0, SpringLayout.SOUTH, btnFacebook);
 		sl_panel.putConstraint(SpringLayout.EAST, btnTwitter, -62, SpringLayout.EAST, panel);
 		btnTwitter.setIcon(new ImageIcon("src\\main\\java\\Twitter-icon.png"));
 		panel.add(btnTwitter);
 		
-		btnEmail_1 = new JButton("");
-		btnEmail_1.addActionListener(new ActionListener() {
+		btnEmail = new JButton("");
+		btnEmail.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(checkM==true){
 				lblM.setText("Desativo");
@@ -150,27 +149,24 @@ public class Interface {
 				
 			}
 		});
-		sl_panel.putConstraint(SpringLayout.NORTH, btnEmail_1, 48, SpringLayout.SOUTH, btnFacebook_1);
-		sl_panel.putConstraint(SpringLayout.WEST, btnEmail_1, 127, SpringLayout.WEST, btnFacebook_1);
-		sl_panel.putConstraint(SpringLayout.EAST, btnEmail_1, -174, SpringLayout.EAST, panel);
-		btnEmail_1.setIcon(new ImageIcon("src\\main\\java\\Gmail-icon.png"));
-		panel.add(btnEmail_1);
+		sl_panel.putConstraint(SpringLayout.NORTH, btnEmail, 48, SpringLayout.SOUTH, btnFacebook);
+		sl_panel.putConstraint(SpringLayout.WEST, btnEmail, 127, SpringLayout.WEST, btnFacebook);
+		sl_panel.putConstraint(SpringLayout.EAST, btnEmail, -174, SpringLayout.EAST, panel);
+		btnEmail.setIcon(new ImageIcon("src\\main\\java\\Gmail-icon.png"));
+		panel.add(btnEmail);
 		
-		initializeLabel(btnFacebook_1,btnTwitter,btnEmail_1);
+		initializeLabel(btnFacebook,btnTwitter,btnEmail);
 		
 		
-		JList<AbstractInfo> listPosts = new JList<AbstractInfo>();
+		listPosts = new JList<AbstractInfo>();
 		listPosts.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		springLayout.putConstraint(SpringLayout.WEST, listPosts, 0, SpringLayout.WEST, frame.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, listPosts, -558, SpringLayout.EAST, frame.getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, panel, 0, SpringLayout.EAST, listPosts);
 		listPosts.setModel(modelPosts);
-		TwitterApp ttapp=new TwitterApp();
-		ttapp.runTwitter();
 		
-		for(AbstractInfo info:ttapp.getList()) {
-		modelPosts.addElement(info);
-		}
+		addListenerLista();
+		
 	
 		springLayout.putConstraint(SpringLayout.NORTH, listPosts, 100, SpringLayout.NORTH, frame.getContentPane());
 		springLayout.putConstraint(SpringLayout.SOUTH, listPosts, 0, SpringLayout.SOUTH, frame.getContentPane());
@@ -187,38 +183,25 @@ public class Interface {
 		
 	}
 	
-	
-	private void barmenu() {
-		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
+	private void addToListTwitter() {
+		aListTT=ttapp.getList();
 		
-		JMenu mnFacebook = new JMenu("Facebook");
-		mnFacebook.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
-		menuBar.add(mnFacebook);
-		
-		JMenuItem mntmConfiguraesFB = new JMenuItem("Configuracoes");
-		mntmConfiguraesFB.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
-		mntmConfiguraesFB.setAction(actionFB);
-		mnFacebook.add(mntmConfiguraesFB);
-		
-		
-		JMenu mnTwitter = new JMenu("Twitter");
-		mnTwitter.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
-		menuBar.add(mnTwitter);
-		
-		JMenuItem mntmConfiguraesTT = new JMenuItem("Configuracoes");
-		mntmConfiguraesTT.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
-		mntmConfiguraesTT.setAction(actionTT);
-		mnTwitter.add(mntmConfiguraesTT);
-		
-		JMenu mnEmail = new JMenu("E-mail");
-		mnEmail.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
-		menuBar.add(mnEmail);
-		
-		JMenuItem mntmConfiguraesM = new JMenuItem("Configuracoes");
-		mntmConfiguraesM.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
-		mntmConfiguraesM.setAction(actionM);
-		mnEmail.add(mntmConfiguraesM);
+		for(AbstractInfo info: aListTT) {
+		modelPosts.add(modelPosts.size(),info);
+		}
+	}
+
+	private void addListenerLista() {
+		listPosts.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt) {
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				JList<AbstractInfo> list = (JList)evt.getSource();
+				if (evt.getClickCount() == 2) {
+					int index = list.locationToIndex(evt.getPoint());
+					new Display(modelPosts.getElementAt(index));
+				}
+			}
+		});
 	}
 	
 
@@ -257,14 +240,6 @@ public class Interface {
 			    textFiltros.setText("");
 			  }
 			});
-//		textFiltros.addActionListener(new ActionListener(){
-//
-//            public void actionPerformed(ActionEvent e){
-//
-//            	 modelFiltros.addElement(textFiltros.getText());
-//            	 filtros.add(textFiltros.getText());
-//            	
-//            	}});
 		
 		JButton btnOkPC = new JButton("Ok");
 		sl_panel.putConstraint(SpringLayout.EAST, textFiltros, -6, SpringLayout.WEST, btnOkPC);
@@ -295,14 +270,14 @@ public class Interface {
 		panel.add(txtOrigem);
 		txtOrigem.setColumns(10);
 		
-		JButton btnOk = new JButton("Ok");
-		sl_panel.putConstraint(SpringLayout.NORTH, txtOrigem, 1, SpringLayout.NORTH, btnOk);
-		sl_panel.putConstraint(SpringLayout.NORTH, btnOk, 62, SpringLayout.SOUTH, btnOkPC);
-		sl_panel.putConstraint(SpringLayout.WEST, btnOk, 418, SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, btnOk, -35, SpringLayout.EAST, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, btnOkPC, 0, SpringLayout.EAST, btnOk);
-		btnOk.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
-		panel.add(btnOk);
+		JButton btnOkOrigem = new JButton("Ok");
+		sl_panel.putConstraint(SpringLayout.NORTH, txtOrigem, 1, SpringLayout.NORTH, btnOkOrigem);
+		sl_panel.putConstraint(SpringLayout.NORTH, btnOkOrigem, 62, SpringLayout.SOUTH, btnOkPC);
+		sl_panel.putConstraint(SpringLayout.WEST, btnOkOrigem, 418, SpringLayout.WEST, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, btnOkOrigem, -35, SpringLayout.EAST, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, btnOkPC, 0, SpringLayout.EAST, btnOkOrigem);
+		btnOkOrigem.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
+		panel.add(btnOkOrigem);
 		
 		JCheckBox chckbxData = new JCheckBox("Data");
 		sl_panel.putConstraint(SpringLayout.NORTH, chckbxData, 586, SpringLayout.NORTH, panel);
@@ -319,7 +294,7 @@ public class Interface {
 		
 		JLabel lblFim = new JLabel("Fim");
 		sl_panel.putConstraint(SpringLayout.NORTH, lblFim, 0, SpringLayout.NORTH, lblIncio);
-		sl_panel.putConstraint(SpringLayout.EAST, lblFim, 0, SpringLayout.EAST, btnEmail_1);
+		sl_panel.putConstraint(SpringLayout.EAST, lblFim, 0, SpringLayout.EAST, btnEmail);
 		lblFim.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		panel.add(lblFim);
 		
