@@ -1,6 +1,7 @@
 package principal;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -71,43 +72,38 @@ public class TwitterApp {
 	}
 
 	public void writeTwitterXML() {
-		File database = new File("database.xml");
 		try {
-			if (database.createNewFile()) {
-
-			} else {
-				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-				Document doc = dBuilder.parse(database);
-				doc.getDocumentElement().normalize();
-
-				Element rootElement = doc.createElement("Serviços");
-				Element tree = doc.createElement("Serviço");
-				rootElement.appendChild(tree);
-				tree.setAttribute("serv", "Twitter");
-
-				String autor, data, post;
-				for (TwitterInfo tdados : lista) {
-					autor = tdados.getAutor();
-					data = tdados.getData();
-					post = tdados.getPost();
-					Element tweet = doc.createElement("Tweet");
-					tweet.setAttribute("Autor", autor);
-					tweet.setAttribute("Data e Hora", data);
-					tweet.setTextContent(post);
-					tree.appendChild(tweet);
-				}
-
-				System.out.println("\nSave XML document.");
-				Transformer transformer = TransformerFactory.newInstance().newTransformer();
-				transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-				StreamResult result = new StreamResult(new FileOutputStream("database.xml"));
-				DOMSource source = new DOMSource(doc);
-				transformer.transform(source, result);
-
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.newDocument();
+			Element rootElement = doc.createElement("Serviços");
+			doc.appendChild(rootElement);
+			Element tree = doc.createElement("Serviço");
+			rootElement.appendChild(tree);
+			tree.setAttribute("serv", "Twitter");
+			String autor, data, post;
+			for (TwitterInfo tdados : lista) {
+				autor = tdados.getAutor();
+				data = tdados.getData();
+				post = tdados.getPost();
+				Element tweet = doc.createElement("Tweet");
+				tweet.setAttribute("Autor", autor);
+				tweet.setAttribute("Data", data);
+				tweet.setTextContent(post);
+				tree.appendChild(tweet);
 			}
-		} catch (IOException | ParserConfigurationException | SAXException | TransformerFactoryConfigurationError
-				| TransformerException e) {
+			System.out.println("\nSave XML document.");
+			Transformer transformer = TransformerFactory.newInstance().newTransformer();
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(new File("database.xml"));
+			transformer.transform(source, result);
+			StreamResult consoleResult = new StreamResult(System.out);
+	        transformer.transform(source, consoleResult);
+			System.out.println("File saved!!");
+		} catch (ParserConfigurationException | TransformerFactoryConfigurationError |
+				TransformerException e) {
 			e.printStackTrace();
 		}
 	}
