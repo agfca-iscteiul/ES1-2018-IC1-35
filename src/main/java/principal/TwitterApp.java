@@ -10,6 +10,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import twitter4j.Status;
@@ -60,17 +62,33 @@ public class TwitterApp {
 	}
 
 	public void writeTwitterXML() {
-		File data = new File("database.xml");
+		File database = new File("database.xml");
 		try {
-			if (data.createNewFile()) {
+			if (database.createNewFile()) {
 
 			} else {
 				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-				Document doc = dBuilder.parse(data);
+				Document doc = dBuilder.parse(database);
 				doc.getDocumentElement().normalize();
-				
-				
+
+				Element rootElement = doc.createElement("Serviços");
+				Element tree = doc.createElement("Serviço");
+				rootElement.appendChild(tree);
+				tree.setAttribute("serv", "Twitter");
+
+				String autor, data, post;
+				for (TwitterInfo tdados : lista) {
+					autor = tdados.getAutor();
+					data = tdados.getData();
+					post = tdados.getPost();
+					Element tweet = doc.createElement("Tweet");
+					tweet.setAttribute("Autor", autor);
+					tweet.setAttribute("Data e Hora", data);
+					tweet.setTextContent(post);
+					
+				}
+
 			}
 		} catch (IOException | ParserConfigurationException | SAXException e) {
 			e.printStackTrace();
