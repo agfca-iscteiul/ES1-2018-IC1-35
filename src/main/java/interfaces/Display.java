@@ -25,8 +25,8 @@ public class Display {
 	public Display(AbstractInfo info) {
 		initialize();
 		this.textPaneAut.setText(info.getAutor());
-		this.textPaneDate.setText(info.getData());
 		this.textPanePost.setText(info.getPost());
+		this.textPaneDate.setText(info.getData());
 		frmDetalhes.setVisible(true);
 	}
 
