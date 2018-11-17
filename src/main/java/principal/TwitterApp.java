@@ -1,6 +1,7 @@
 package principal;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,14 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -86,11 +95,19 @@ public class TwitterApp {
 					tweet.setAttribute("Autor", autor);
 					tweet.setAttribute("Data e Hora", data);
 					tweet.setTextContent(post);
-					
+					tree.appendChild(tweet);
 				}
 
+				System.out.println("\nSave XML document.");
+				Transformer transformer = TransformerFactory.newInstance().newTransformer();
+				transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+				StreamResult result = new StreamResult(new FileOutputStream("database.xml"));
+				DOMSource source = new DOMSource(doc);
+				transformer.transform(source, result);
+
 			}
-		} catch (IOException | ParserConfigurationException | SAXException e) {
+		} catch (IOException | ParserConfigurationException | SAXException | TransformerFactoryConfigurationError
+				| TransformerException e) {
 			e.printStackTrace();
 		}
 	}
