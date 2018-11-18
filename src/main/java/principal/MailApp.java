@@ -18,7 +18,7 @@ import javax.mail.internet.MimeMessage;
 
 public class MailApp {
 	
-	private List<MailInfo> lista = new ArrayList<MailInfo>();
+	private ArrayList<AbstractInfo> lista = new ArrayList<AbstractInfo>();
 	
 	String host;
 	String mailStoreType;
@@ -51,10 +51,11 @@ public class MailApp {
 			
 			Message[] msgs = emailFolder.getMessages();
 			
-			for (int i = 0; i < 50; i++) {
+			for (int i = 0; i <20; i++) {
 				Message msg = msgs[i];
 				if(msg.getContent().toString().contains("ISCTE")) {
 					lista.add(new MailInfo(msg.getFrom()[0].toString(), msg.getContent().toString(),msg.getSentDate()));
+					System.out.println(msg.getFrom()[0].toString());
 				}
 			}
 			
@@ -71,9 +72,9 @@ public class MailApp {
 	}
 	
 	
-	public List<AbstractInfo> getMailList(){
-		List<AbstractInfo> listaaux = new ArrayList<AbstractInfo>();
-		for(MailInfo mails : lista) {
+	public ArrayList<AbstractInfo> getMailList(){
+		ArrayList<AbstractInfo> listaaux = new ArrayList<AbstractInfo>();
+		for(AbstractInfo mails : lista) {
 			listaaux.add(mails);
 		}
 		return listaaux;
@@ -126,14 +127,15 @@ public class MailApp {
 	
 	public void runMail() {
 		
-		String host = "smtp.outlook.com";
+		String host = "smtp-mail.outlook.com";
 		String mailStoreType = "smtp";
-		String username = "usares@outlook.pt";//escrever o e-mail aqui
-		String password = "ESgrupo35";//respetiva password
+		String username = "klvli@iscte-iul.pt";//escrever o e-mail aqui
+		String password = "russiA970426";//respetiva password
 		
 		check(host, mailStoreType, username, password);
 		
 	}
+	
 	
 
 }

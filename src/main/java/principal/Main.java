@@ -18,8 +18,8 @@ public class Main {
 	public static void main(String[] args) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException, TransformerFactoryConfigurationError, TransformerException {
 		//Interface user= new Interface();
 		TwitterApp ttapp=new TwitterApp();
-		ttapp.runTwitter();
-		ttapp.writeTwitterXML();
+		MailApp mapp=new MailApp();
+		Interface i=new Interface(ttapp,mapp);
 	}
 
 }

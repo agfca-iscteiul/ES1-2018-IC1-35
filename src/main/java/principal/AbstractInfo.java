@@ -41,6 +41,12 @@ public abstract class AbstractInfo {
 		this.data = data;
 	}
 	
+	public String toString() {
+		// TODO Auto-generated method stub
+		return ("Autor: " + this.getAutor() + " \n \n" + this.getPost() + " \n \n" + this.getData() + "\n \n \n \n \n");
+	}
+
+	
 	 abstract public boolean checkTwitter();
 	 abstract public boolean checkFacebook();
 	 abstract public boolean checkEmail();

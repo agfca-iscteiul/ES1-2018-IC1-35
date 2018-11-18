@@ -18,6 +18,7 @@ import java.awt.Font;
 import javax.swing.SpringLayout;
 
 import principal.AbstractInfo;
+import principal.MailApp;
 import principal.TwitterApp;
 
 import javax.swing.JPanel;
@@ -52,6 +53,7 @@ public class Interface {
 	private JButton btnEmail;
 	private JButton btnTwitter;
 	private TwitterApp ttapp;
+	private MailApp mapp;
 	private JCalendar calendarIn;
 	private JCalendar calendarFim;
 	private JCheckBox chckbxPC;
@@ -59,18 +61,18 @@ public class Interface {
 	private ArrayList<AbstractInfo> aListMain;
 	private ArrayList<AbstractInfo> aListRepresent;
 	private ArrayList<AbstractInfo> aListTT;
+	private ArrayList<AbstractInfo> aListM;
 
 	/**
 	 * Create the application.
 	 */
-	public Interface(TwitterApp ttapp) {
+	public Interface(TwitterApp ttapp,MailApp mapp) {
 		ttapp.runTwitter();
+		mapp.runMail();
 		this.ttapp=ttapp;
+		this.mapp=mapp;
 		initialize();
 		initializeAux();
-		addToListTwitter();
-		addToListMain();
-		showList();
 		frame.setVisible(true);
 	}
 
@@ -145,6 +147,12 @@ public class Interface {
 				if(checkM==true){
 				lblM.setText("Desativo");
 				checkM=false;
+				
+
+				addToListTwitter();
+				addToListMail();
+				addToListMain();
+				showList();
 				}
 				else {
 					lblM.setText("  Ativo");
@@ -193,9 +201,14 @@ public class Interface {
 		aListTT=ttapp.getList();
 	}
 	
+	private void addToListMail() {
+		aListM=mapp.getMailList();
+	}
+	
 	private void addToListMain() {
 		aListMain=new ArrayList<AbstractInfo>();
 		aListMain.addAll(aListTT);
+		aListMain.addAll(aListM);
 		
 	}
 	
@@ -208,7 +221,7 @@ public class Interface {
 	}
 	
 	private void showList() {
-		for(AbstractInfo info: aListTT) {
+		for(AbstractInfo info: aListMain) {
 			modelPosts.add(modelPosts.size(),info);
 		}
 	}
