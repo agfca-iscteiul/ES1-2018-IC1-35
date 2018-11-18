@@ -128,8 +128,8 @@ public class MailApp {
 		
 		String host = "smtp.outlook.com";
 		String mailStoreType = "smtp";
-		String username = "";//escrever o e-mail aqui
-		String password = "";//respetiva password
+		String username = "usares@outlook.pt";//escrever o e-mail aqui
+		String password = "ESgrupo35";//respetiva password
 		
 		check(host, mailStoreType, username, password);
 		
