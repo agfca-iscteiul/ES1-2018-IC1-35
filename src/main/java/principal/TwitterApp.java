@@ -38,7 +38,7 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class TwitterApp {
 
-	private List<TwitterInfo> lista = new ArrayList<TwitterInfo>();
+	private ArrayList<TwitterInfo> lista = new ArrayList<TwitterInfo>();
 
 	public TwitterApp() {
 
@@ -70,8 +70,8 @@ public class TwitterApp {
 		}
 	}
 
-	public List<AbstractInfo> getList() {
-		List<AbstractInfo> listaaux = new ArrayList<AbstractInfo>();
+	public ArrayList<AbstractInfo> getList() {
+		ArrayList<AbstractInfo> listaaux = new ArrayList<AbstractInfo>();
 		for (TwitterInfo post : lista) {
 			listaaux.add(post);
 		}
