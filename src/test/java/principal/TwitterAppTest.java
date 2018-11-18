@@ -5,15 +5,18 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class TwitterAppTest {
-
+	TwitterApp app = new TwitterApp();
+	
 	@Test
 	public void testRunTwitter() {
-		fail("Not yet implemented");
+		app.runTwitter();
+		assertNotNull(app.getListPost());
 	}
 
 	@Test
 	public void testGetList() {
-		fail("Not yet implemented");
+		app.runTwitter();
+		assertEquals(app.getList(), app.getListPost());
 	}
 
 	@Test
