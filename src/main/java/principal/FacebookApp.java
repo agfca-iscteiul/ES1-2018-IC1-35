@@ -25,7 +25,6 @@ import org.xml.sax.SAXException;
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
-import com.restfb.FacebookClient.AccessToken;
 import com.restfb.Version;
 import com.restfb.types.Post;
 import com.restfb.types.User;
@@ -45,33 +44,21 @@ public class FacebookApp {
 			String accessToken = "EAAffZC9Xl8dEBAOpvb3CAZAKWziOZA6jxu5Fda0cuTg3z2vreASSR83nZAy2O7KYxOXg2nsLL8u4EOP1rMsXhG3hKtQiZCjxo7fWZASdwWTVH9Ks0gPIUSvCUHUZBbiqFO7HlqDWOSpp02O7AZA7aed1txz3VEMBudSgkk0QxtTjLDVzFbAGrtz2OLUpipWyxQq90gFVxedI6xiUVX3Yn0oO";
 			FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_12);
 			User me = fbClient.fetchObject("me", User.class);
-
-			// Imprimir Nome e ID
-			System.out.println("Facebook:");
-			System.out.println("Id: " + me.getId());
-			System.out.println("Name: " + me.getName()); 
-
+			
 			// Extender o tempo do token
-			AccessToken extendedAccessToken = fbClient.obtainExtendedAccessToken("2216614735245777",
+			fbClient.obtainExtendedAccessToken("2216614735245777",
 					"47baee1d3c2b6366f7212a3dfa403dd3");
-			System.out.println("ExtendedAccessToken: " + extendedAccessToken.getAccessToken());
-			System.out.println("Expires: " + extendedAccessToken.getExpires());
-			System.out.println("1");
+
 			
 			// Imprimir os post da timeline do user
 			Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
-			System.out.println("2");
-			System.out.println("\nPosts:");
-			int counter = 0;
-			int counterTotal = 0;
+
 			for (List<Post> page : result) {
 				for (Post aPost : page) {
 					// Filters only posts that contain the word "ISCTE"
 					if (aPost.getMessage() != null && aPost.getMessage().contains("ISCTE")) {
 						lista.add(new FacebookInfo(me.getName(), aPost.getMessage(), aPost.getCreatedTime()));
-						counter++;
 					}
-					counterTotal++;
 				}
 			}
 		} catch (Exception e) {
