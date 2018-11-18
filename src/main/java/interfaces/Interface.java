@@ -28,6 +28,8 @@ import javax.swing.JList;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+
 import com.toedter.calendar.JCalendar;
 import java.awt.Color;
 
@@ -44,7 +46,7 @@ public class Interface {
 	private boolean checkM=true;
 	JList<AbstractInfo> listPosts;
 	DefaultListModel<AbstractInfo> modelPosts= new DefaultListModel<>();
-	private JTextField textFiltros;
+	private JTextField txtFiltros;
 	private JTextField txtOrigem;
 	private JButton btnFacebook;
 	private JButton btnEmail;
@@ -52,6 +54,7 @@ public class Interface {
 	private TwitterApp ttapp;
 	private JCalendar calendarIn;
 	private JCalendar calendarFim;
+	private JCheckBox chckbxPC;
 	
 	private ArrayList<AbstractInfo> aListMain;
 	private ArrayList<AbstractInfo> aListRepresent;
@@ -198,8 +201,10 @@ public class Interface {
 	
 	private void filtrList() {
 		for(AbstractInfo info: aListMain) {
-			aListMain.add(modelPosts.size(),info);
+			if(chckbxPC.isSelected()==true) {
+				aListMain.add(modelPosts.size(),info);
 			}
+		}
 	}
 	
 	private void showList() {
@@ -223,6 +228,41 @@ public class Interface {
 		});
 	}
 	
+	private void enableComponents(JCheckBox chcbox,JComponent component,JComponent component2) {
+		chcbox.addMouseListener(new MouseAdapter() {
+			  @Override
+			  public void mouseClicked(MouseEvent e) {
+				  if(component.isEnabled()==false && component2.isEnabled()==false) {
+					  component.setEnabled(true);
+					  component2.setEnabled(true);
+				  }
+				  else {
+					  component.setEnabled(false);
+					  component2.setEnabled(false);
+				  }
+					  
+			  
+			  }});
+		
+		
+	}
+	
+	private void enableComponents(JCheckBox chcbox,JComponent component) {
+		chcbox.addMouseListener(new MouseAdapter() {
+			  @Override
+			  public void mouseClicked(MouseEvent e) {
+				  if(component.isEnabled()==false) {
+					  component.setEnabled(true);
+				  }
+				  else {
+					  component.setEnabled(false);
+				  }
+					  
+			  
+			  }});
+		
+		
+	}
 	
 	private void initializeLabel(JButton btnFacebook,JButton btnTwitter,JButton btnEmail) {
 		lblFB = new JLabel("  Ativo");
@@ -246,30 +286,31 @@ public class Interface {
 	
 	private void initializeAux() {
 		
-		textFiltros = new JTextField();
-		sl_panel.putConstraint(SpringLayout.WEST, textFiltros, 105, SpringLayout.WEST, panel);
-		textFiltros.setText("escreva aqui o filtro");
-		textFiltros.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
-		panel.add(textFiltros);
-		textFiltros.setColumns(10);
-		textFiltros.addMouseListener(new MouseAdapter() {
+		txtFiltros = new JTextField();
+		sl_panel.putConstraint(SpringLayout.WEST, txtFiltros, 105, SpringLayout.WEST, panel);
+		txtFiltros.setEnabled(false);
+		txtFiltros.setText("escreva aqui o filtro");
+		txtFiltros.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
+		panel.add(txtFiltros);
+		txtFiltros.setColumns(10);
+		txtFiltros.addMouseListener(new MouseAdapter() {
 			  @Override
 			  public void mouseClicked(MouseEvent e) {
-			    textFiltros.setText("");
+				if(txtFiltros.isEnabled())
+			    txtFiltros.setText("");
 			  }
 			});
 		
-		JButton btnOkPC = new JButton("Ok");
-		sl_panel.putConstraint(SpringLayout.EAST, textFiltros, -6, SpringLayout.WEST, btnOkPC);
-		sl_panel.putConstraint(SpringLayout.NORTH, btnOkPC, -1, SpringLayout.NORTH, textFiltros);
-		sl_panel.putConstraint(SpringLayout.WEST, btnOkPC, 418, SpringLayout.WEST, panel);
-		btnOkPC.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
-		panel.add(btnOkPC);
+		JButton btnOk = new JButton("Ok");
+		sl_panel.putConstraint(SpringLayout.WEST, btnOk, 206, SpringLayout.WEST, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, btnOk, -247, SpringLayout.EAST, panel);
+		btnOk.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
+		panel.add(btnOk);
 		
 		JCheckBox chckbxPC = new JCheckBox("Palavra-chave");
 		sl_panel.putConstraint(SpringLayout.WEST, chckbxPC, 44, SpringLayout.WEST, panel);
 		sl_panel.putConstraint(SpringLayout.SOUTH, chckbxPC, -453, SpringLayout.SOUTH, panel);
-		sl_panel.putConstraint(SpringLayout.NORTH, textFiltros, 6, SpringLayout.SOUTH, chckbxPC);
+		sl_panel.putConstraint(SpringLayout.NORTH, txtFiltros, 6, SpringLayout.SOUTH, chckbxPC);
 		chckbxPC.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		panel.add(chckbxPC);
 		
@@ -280,22 +321,23 @@ public class Interface {
 		panel.add(chckbxOrigem);
 		
 		txtOrigem = new JTextField();
+		sl_panel.putConstraint(SpringLayout.WEST, txtOrigem, 105, SpringLayout.WEST, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, txtOrigem, -35, SpringLayout.EAST, panel);
+		sl_panel.putConstraint(SpringLayout.EAST, txtFiltros, 0, SpringLayout.EAST, txtOrigem);
 		sl_panel.putConstraint(SpringLayout.SOUTH, chckbxOrigem, -6, SpringLayout.NORTH, txtOrigem);
-		sl_panel.putConstraint(SpringLayout.WEST, txtOrigem, 0, SpringLayout.WEST, textFiltros);
-		sl_panel.putConstraint(SpringLayout.EAST, txtOrigem, 0, SpringLayout.EAST, textFiltros);
+		sl_panel.putConstraint(SpringLayout.NORTH, txtOrigem, 566, SpringLayout.NORTH, panel);
+		txtOrigem.setEnabled(false);
 		txtOrigem.setText("escreva aqui a origem");
 		txtOrigem.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		panel.add(txtOrigem);
 		txtOrigem.setColumns(10);
-		
-		JButton btnOkOrigem = new JButton("Ok");
-		sl_panel.putConstraint(SpringLayout.NORTH, txtOrigem, 1, SpringLayout.NORTH, btnOkOrigem);
-		sl_panel.putConstraint(SpringLayout.NORTH, btnOkOrigem, 62, SpringLayout.SOUTH, btnOkPC);
-		sl_panel.putConstraint(SpringLayout.WEST, btnOkOrigem, 418, SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, btnOkOrigem, -35, SpringLayout.EAST, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, btnOkPC, 0, SpringLayout.EAST, btnOkOrigem);
-		btnOkOrigem.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
-		panel.add(btnOkOrigem);
+		txtOrigem.addMouseListener(new MouseAdapter() {
+			  @Override
+			  public void mouseClicked(MouseEvent e) {
+				if(txtOrigem.isEnabled())
+			    txtOrigem.setText("");
+			  }
+			});
 		
 		JCheckBox chckbxData = new JCheckBox("Data");
 		sl_panel.putConstraint(SpringLayout.WEST, chckbxData, 0, SpringLayout.WEST, chckbxPC);
@@ -317,7 +359,9 @@ public class Interface {
 		panel.add(lblFim);
 		
 		calendarIn = new JCalendar();
+		sl_panel.putConstraint(SpringLayout.NORTH, btnOk, 6, SpringLayout.SOUTH, calendarIn);
 		calendarIn.getDayChooser().getDayPanel().setBackground(Color.WHITE);
+		calendarIn.setEnabled(false);
 		sl_panel.putConstraint(SpringLayout.NORTH, calendarIn, 5, SpringLayout.SOUTH, lblIncio);
 		sl_panel.putConstraint(SpringLayout.WEST, calendarIn, 10, SpringLayout.WEST, panel);
 		sl_panel.putConstraint(SpringLayout.SOUTH, calendarIn, 206, SpringLayout.SOUTH, lblIncio);
@@ -325,13 +369,17 @@ public class Interface {
 		panel.add(calendarIn);
 		
 		calendarFim = new JCalendar();
-		calendarFim.getDayChooser().getDayPanel().setBackground(Color.WHITE);
-		sl_panel.putConstraint(SpringLayout.NORTH, calendarFim, 6, SpringLayout.SOUTH, lblFim);
 		sl_panel.putConstraint(SpringLayout.WEST, calendarFim, 6, SpringLayout.EAST, calendarIn);
+		sl_panel.putConstraint(SpringLayout.EAST, calendarFim, -35, SpringLayout.EAST, panel);
+		calendarFim.getDayChooser().getDayPanel().setBackground(Color.WHITE);
+		calendarFim.setEnabled(false);
+		sl_panel.putConstraint(SpringLayout.NORTH, calendarFim, 6, SpringLayout.SOUTH, lblFim);
 		sl_panel.putConstraint(SpringLayout.SOUTH, calendarFim, 0, SpringLayout.SOUTH, calendarIn);
-		sl_panel.putConstraint(SpringLayout.EAST, calendarFim, 0, SpringLayout.EAST, btnOkPC);
 		panel.add(calendarFim);
 		
+		enableComponents(chckbxPC, txtFiltros);
+		enableComponents(chckbxOrigem,txtOrigem);
+		enableComponents(chckbxData,calendarIn,calendarFim);
 		
 		}
 	
