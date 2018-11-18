@@ -83,4 +83,83 @@ public class FacebookApp {
 		}
 		return listaaux;
 	}
+	
+	// Escrever no ficheiro XML
+		public void writeFacebookXML() {
+			File datebase = new File("config.xml");
+			if (datebase.exists()) {
+				System.out.println("A file já existe");
+				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder dBuilder;
+				try {
+					dBuilder = dbFactory.newDocumentBuilder();
+					Document doc = dBuilder.parse(datebase);
+					Node root = doc.getDocumentElement();
+					root.normalize();
+					Element tree = doc.createElement("Serviço");
+					root.appendChild(tree);
+					tree.setAttribute("Nome", "Facebook");
+					String autor, post;
+					Date data;
+					for (FacebookInfo tdados : lista) {
+						autor = tdados.getAutor();
+						data = tdados.getData();
+						post = tdados.getPost();
+						Element tweet = doc.createElement("Post");
+						tweet.setAttribute("Autor", autor);
+						tweet.setAttribute("Data", data.toString());
+						tweet.setTextContent(post);
+						tree.appendChild(tweet);
+					}
+					System.out.println("\nSave XML document.");
+					Transformer transformer = TransformerFactory.newInstance().newTransformer();
+					transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+					transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+					DOMSource source = new DOMSource(doc);
+					StreamResult result = new StreamResult(new FileOutputStream("config.xml"));
+					transformer.transform(source, result);
+					StreamResult consoleResult = new StreamResult(System.out);
+					transformer.transform(source, consoleResult);
+				} catch (ParserConfigurationException | SAXException | TransformerFactoryConfigurationError
+						| TransformerException | IOException e) {
+					e.printStackTrace();
+				}
+
+			} else {
+				try {
+					System.out.println("A file não existe");
+					DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+					DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+					Document doc = dBuilder.newDocument();
+					Element rootElement = doc.createElement("Serviços");
+					doc.appendChild(rootElement);
+					Element tree = doc.createElement("Serviço");
+					rootElement.appendChild(tree);
+					tree.setAttribute("Nome", "Facebook");
+					String autor, post;
+					Date data;
+					for (FacebookInfo tdados : lista) {
+						autor = tdados.getAutor();
+						data = tdados.getData();
+						post = tdados.getPost();
+						Element tweet = doc.createElement("Post");
+						tweet.setAttribute("Autor", autor);
+						tweet.setAttribute("Data", data.toString());
+						tweet.setTextContent(post);
+						tree.appendChild(tweet);
+					}
+					System.out.println("\nSave XML document.");
+					Transformer transformer = TransformerFactory.newInstance().newTransformer();
+					transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+					transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+					DOMSource source = new DOMSource(doc);
+					StreamResult result = new StreamResult(new File("config.xml"));
+					transformer.transform(source, result);
+					StreamResult consoleResult = new StreamResult(System.out);
+					transformer.transform(source, consoleResult);
+				} catch (ParserConfigurationException | TransformerFactoryConfigurationError | TransformerException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 }
