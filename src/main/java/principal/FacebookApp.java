@@ -102,7 +102,7 @@ public class FacebookApp {
 					root.normalize();
 					Element tree = doc.createElement("Serviço");
 					root.appendChild(tree);
-					tree.setAttribute("Nome", "Facebook");
+					tree.setAttribute("Plataforma", "Facebook");
 					String autor, post;
 					Date data;
 					for (FacebookInfo tdados : lista) {
@@ -139,7 +139,7 @@ public class FacebookApp {
 					doc.appendChild(rootElement);
 					Element tree = doc.createElement("Serviço");
 					rootElement.appendChild(tree);
-					tree.setAttribute("Nome", "Facebook");
+					tree.setAttribute("Plataforma", "Facebook");
 					String autor, post;
 					Date data;
 					for (FacebookInfo tdados : lista) {

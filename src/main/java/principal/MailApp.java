@@ -184,8 +184,8 @@ public class MailApp {
 		
 		String host = "smtp.outlook.com";
 		String mailStoreType = "smtp";
-		String username = "tmcsa1@iscte-iul.pt";//escrever o e-mail aqui
-		String password = "";//respetiva password
+		String username = "agfca@iscte-iul.pt";//escrever o e-mail aqui
+		String password = "Champion_1997";//respetiva password
 		
 		check(host, mailStoreType, username, password);
 		
@@ -210,7 +210,7 @@ public class MailApp {
 				root.normalize();
 				Element tree = doc.createElement("Serviço");
 				root.appendChild(tree);
-				tree.setAttribute("Nome", "Mail");
+				tree.setAttribute("Plataforma", "Mail");
 				String autor, post;
 				Date data;
 				for (MailInfo tdados : lista) {
@@ -228,7 +228,7 @@ public class MailApp {
 				transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 				transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 				DOMSource source = new DOMSource(doc);
-				StreamResult result = new StreamResult(new FileOutputStream("database.xml"));
+				StreamResult result = new StreamResult(new FileOutputStream("config.xml"));
 				transformer.transform(source, result);
 				StreamResult consoleResult = new StreamResult(System.out);
 				transformer.transform(source, consoleResult);
@@ -247,7 +247,7 @@ public class MailApp {
 				doc.appendChild(rootElement);
 				Element tree = doc.createElement("Serviço");
 				rootElement.appendChild(tree);
-				tree.setAttribute("Nome", "Mail");
+				tree.setAttribute("Plataforma", "Mail");
 				String autor, post;
 				Date data;
 				for (MailInfo tdados : lista) {
@@ -265,7 +265,7 @@ public class MailApp {
 				transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 				transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 				DOMSource source = new DOMSource(doc);
-				StreamResult result = new StreamResult(new File("database.xml"));
+				StreamResult result = new StreamResult(new File("config.xml"));
 				transformer.transform(source, result);
 				StreamResult consoleResult = new StreamResult(System.out);
 				transformer.transform(source, consoleResult);

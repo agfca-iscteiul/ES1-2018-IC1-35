@@ -19,7 +19,12 @@ public class Main {
 		//Interface user= new Interface();
 		TwitterApp ttapp=new TwitterApp();
 		MailApp mapp=new MailApp();
-		Interface i=new Interface(ttapp,mapp);
+		FacebookApp face=new FacebookApp();
+//		Interface i=new Interface(ttapp,mapp);
+		ttapp.runTwitter();
+		mapp.runMail();
+		ttapp.writeTwitterXML();
+		mapp.writeMailXML();
 	}
 
 }
