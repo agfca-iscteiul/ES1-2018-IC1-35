@@ -29,6 +29,7 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.jsoup.Jsoup;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -216,7 +217,7 @@ public class MailApp {
 				for (MailInfo tdados : lista) {
 					autor = tdados.getAutor();
 					data = tdados.getData();
-					post = tdados.getPost();
+					post=(Jsoup.parse(tdados.getPost())).text();
 					Element mail = doc.createElement("Mail");
 					mail.setAttribute("Autor", autor);
 					mail.setAttribute("Data", data.toString());
@@ -253,7 +254,7 @@ public class MailApp {
 				for (MailInfo tdados : lista) {
 					autor = tdados.getAutor();
 					data = tdados.getData();
-					post = tdados.getPost();
+					post=(Jsoup.parse(tdados.getPost())).text();
 					Element mail = doc.createElement("Mail");
 					mail.setAttribute("Autor", autor);
 					mail.setAttribute("Data", data.toString());
