@@ -91,7 +91,7 @@ public class TwitterApp {
 				root.normalize();
 				Element tree = doc.createElement("Serviço");
 				root.appendChild(tree);
-				tree.setAttribute("serv", "Twitter");
+				tree.setAttribute("Nome", "Twitter");
 				String autor, data, post;
 				for (TwitterInfo tdados : lista) {
 					autor = tdados.getAutor();
@@ -127,7 +127,7 @@ public class TwitterApp {
 				doc.appendChild(rootElement);
 				Element tree = doc.createElement("Serviço");
 				rootElement.appendChild(tree);
-				tree.setAttribute("serv", "Twitter");
+				tree.setAttribute("Nome", "Twitter");
 				String autor, data, post;
 				for (TwitterInfo tdados : lista) {
 					autor = tdados.getAutor();
