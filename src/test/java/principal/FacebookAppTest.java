@@ -5,20 +5,18 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class FacebookAppTest {
-
-	@Test
-	public void testFacebookApp() {
-		fail("Not yet implemented");
-	}
+	FacebookApp app = new FacebookApp();
 
 	@Test
 	public void testRunFacebook() {
-		fail("Not yet implemented");
+		app.runFacebook();
+		assertNotNull(app.getListPost());
 	}
 
 	@Test
 	public void testGetList() {
-		fail("Not yet implemented");
+		app.runFacebook();
+		assertEquals(app.getList(), app.getListPost());
 	}
 
 	@Test
