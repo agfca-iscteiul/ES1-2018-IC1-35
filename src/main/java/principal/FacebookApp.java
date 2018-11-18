@@ -25,6 +25,7 @@ import org.xml.sax.SAXException;
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
+import com.restfb.FacebookClient.AccessToken;
 import com.restfb.Version;
 import com.restfb.types.Post;
 import com.restfb.types.User;
@@ -41,13 +42,14 @@ public class FacebookApp {
 	 */
 	public void runFacebook() {
 		try {
-			String accessToken = "EAAffZC9Xl8dEBAKGmh5ZAKTbN73Xu4MgRNd20MQzf9kDuj3D1wfZAjSRfdQDJAUpkHIKhsnigCxt5sRdezXHgyixTybFZAcZCs0jza0BdoA4qka5B4bqalRc9xhNqZBvj5ZB5t4MpIRY4vLf5jRbdhe0h1LnnCK4a10AtVKDUuZCE5TZBM6ZBOV4P0z1rYjYZA1ZBaZBIaGDLKVaNPxoo0iiIZCuFb";
+			String accessToken = "EAAffZC9Xl8dEBAGLwurZCvEosBjgTivUMmxMzcljw2SD5VvPaaUpplMLr2vUKdqK3skXsyZBmacEeHnfR8vNNcD16dVrhlZBjgDnAZBEkg1bSZCVrUFbZAxFOxDGIPu6SZBDXWHS8ZCjwvnrca0wL0kcJCZAX8ZCi5el0sZCsJULO97Bzu7L8qwM2HTeQZCln61egBUc4kHfKZAZBoAi9MlcJudf38F";
 			FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_12);
 			User me = fbClient.fetchObject("me", User.class);
 			
 			// Extender o tempo do token
-			fbClient.obtainExtendedAccessToken("2216614735245777",
+			AccessToken exAcessToken = fbClient.obtainExtendedAccessToken("2216614735245777",
 					"47baee1d3c2b6366f7212a3dfa403dd3");
+			System.out.println(exAcessToken.getAccessToken() + exAcessToken.getExpires());
 
 			
 			// Imprimir os post da timeline do user
@@ -97,7 +99,7 @@ public class FacebookApp {
 				DocumentBuilder dBuilder;
 				try {
 					dBuilder = dbFactory.newDocumentBuilder();
-					Document doc = dBuilder.parse(datebase);
+					Document doc = dBuilder.parse(datebase); 
 					Node root = doc.getDocumentElement();
 					root.normalize();
 					Element tree = doc.createElement("Serviço");
