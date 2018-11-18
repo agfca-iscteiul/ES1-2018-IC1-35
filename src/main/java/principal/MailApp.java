@@ -54,8 +54,7 @@ public class MailApp {
 			for (int i = 0; i < 50; i++) {
 				Message msg = msgs[i];
 				if(msg.getContent().toString().contains("ISCTE")) {
-					lista.add(new MailInfo(msg.getFrom()[0].toString(), msg.getContent().toString(),"indefinido"));
-					System.out.println(msg);
+					lista.add(new MailInfo(msg.getFrom()[0].toString(), msg.getContent().toString(),msg.getSentDate()));
 				}
 			}
 			
