@@ -70,6 +70,12 @@ public class TwitterApp {
 		}
 	}
 	
+	
+	public ArrayList<TwitterInfo> getListPost(){
+		return lista;
+		
+	}
+	
 	/**
 	 * Transformar a lista de TwitterInfo para listas AbstractInfo
 	 * @return lista AbstractInfo com os tweets
