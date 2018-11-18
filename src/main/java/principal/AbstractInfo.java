@@ -1,15 +1,17 @@
 package principal;
 
+import java.util.Date;
+
 public abstract class AbstractInfo {
 	
 	private String autor;
 	private String post;
-	private String data;
+	private Date data;
 	boolean isTwitter=false;
 	boolean isFacebook=false;
 	boolean isEmail=false;
 	
-	public AbstractInfo(String autor, String post, String data){
+	public AbstractInfo(String autor, String post, Date data){
 		this.autor=autor;
 		this.post=post;
 		this.data=data;
@@ -31,18 +33,17 @@ public abstract class AbstractInfo {
 		this.post = post;
 	}
 
-	public String getData() {
+	public Date getData() {
 		return data;
 	}
 
-	public void setData(String data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
 	
 	 abstract public boolean checkTwitter();
 	 abstract public boolean checkFacebook();
 	 abstract public boolean checkEmail();
-	 
 	
 
 }

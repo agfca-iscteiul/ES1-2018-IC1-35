@@ -1,6 +1,7 @@
 package principal;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import twitter4j.Status;
@@ -10,7 +11,7 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class TwitterInfo extends AbstractInfo {
 	
-	public TwitterInfo(String autor, String post, String data) {
+	public TwitterInfo(String autor, String post, Date data) {
 		super(autor, post, data);
 	}
 
