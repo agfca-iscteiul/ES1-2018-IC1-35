@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.DatabaseMetaData;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -57,7 +58,7 @@ public class TwitterApp {
 			for (Status status : statuses) {
 				if (status.getUser().getName() != null && status.getUser().getName().contains("ISCTE")) {
 					lista.add(new TwitterInfo(status.getUser().getName(), status.getText(),
-							status.getCreatedAt().toString()));
+							status.getCreatedAt()));
 				}
 
 			}
@@ -92,14 +93,15 @@ public class TwitterApp {
 				Element tree = doc.createElement("Serviço");
 				root.appendChild(tree);
 				tree.setAttribute("Nome", "Twitter");
-				String autor, data, post;
+				String autor, post;
+				Date data;
 				for (TwitterInfo tdados : lista) {
 					autor = tdados.getAutor();
 					data = tdados.getData();
 					post = tdados.getPost();
 					Element tweet = doc.createElement("Tweet");
 					tweet.setAttribute("Autor", autor);
-					tweet.setAttribute("Data", data);
+					tweet.setAttribute("Data", data.toString());
 					tweet.setTextContent(post);
 					tree.appendChild(tweet);
 				}
@@ -128,14 +130,15 @@ public class TwitterApp {
 				Element tree = doc.createElement("Serviço");
 				rootElement.appendChild(tree);
 				tree.setAttribute("Nome", "Twitter");
-				String autor, data, post;
+				String autor, post;
+				Date data;
 				for (TwitterInfo tdados : lista) {
 					autor = tdados.getAutor();
 					data = tdados.getData();
 					post = tdados.getPost();
 					Element tweet = doc.createElement("Tweet");
 					tweet.setAttribute("Autor", autor);
-					tweet.setAttribute("Data", data);
+					tweet.setAttribute("Data", data.toString());
 					tweet.setTextContent(post);
 					tree.appendChild(tweet);
 				}

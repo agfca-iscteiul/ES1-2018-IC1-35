@@ -1,8 +1,10 @@
 package principal;
 
+import java.util.Date;
+
 public class MailInfo extends AbstractInfo{
 	
-	public MailInfo(String autor, String post, String data) {
+	public MailInfo(String autor, String post, Date data) {
 		super(autor, post, data);
 	}
 
