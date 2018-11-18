@@ -36,7 +36,10 @@ public class FacebookApp {
 	public FacebookApp() {
 
 	}
- 
+	
+	/**
+	 * Aceder ao Token e extender o tempo do mesmo, imprimir os post da timeline do user e adiciona-los ao array como FacebookInfo
+	 */
 	public void runFacebook() {
 		try {
 			String accessToken = "EAAffZC9Xl8dEBAOpvb3CAZAKWziOZA6jxu5Fda0cuTg3z2vreASSR83nZAy2O7KYxOXg2nsLL8u4EOP1rMsXhG3hKtQiZCjxo7fWZASdwWTVH9Ks0gPIUSvCUHUZBbiqFO7HlqDWOSpp02O7AZA7aed1txz3VEMBudSgkk0QxtTjLDVzFbAGrtz2OLUpipWyxQq90gFVxedI6xiUVX3Yn0oO";
@@ -75,7 +78,12 @@ public class FacebookApp {
 			System.out.println(e.getMessage());
 		}
 	}
+	
 
+	/**
+	 * Transformar as lista de FacebookInfo para listas AbstractInfo
+	 * @return lista AbstractInfo com os post
+	 */
 	public ArrayList<AbstractInfo> getList() {
 		ArrayList<AbstractInfo> listaaux = new ArrayList<AbstractInfo>();
 		for (FacebookInfo post : lista) {
@@ -84,6 +92,10 @@ public class FacebookApp {
 		return listaaux;
 	}
 	
+	
+	/**
+	 * Escrever no ficheiro XML todos os post do facebook
+	 */
 	// Escrever no ficheiro XML
 		public void writeFacebookXML() {
 			File datebase = new File("config.xml");
