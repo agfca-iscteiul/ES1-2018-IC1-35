@@ -34,14 +34,14 @@ public class FacebookApp {
 
 	public FacebookApp() {
 
-	}
+	} 
 	
 	/**
 	 * Aceder ao Token e extender o tempo do mesmo, imprimir os post da timeline do user e adiciona-los ao array como FacebookInfo
 	 */
 	public void runFacebook() {
 		try {
-			String accessToken = "EAAffZC9Xl8dEBAOpvb3CAZAKWziOZA6jxu5Fda0cuTg3z2vreASSR83nZAy2O7KYxOXg2nsLL8u4EOP1rMsXhG3hKtQiZCjxo7fWZASdwWTVH9Ks0gPIUSvCUHUZBbiqFO7HlqDWOSpp02O7AZA7aed1txz3VEMBudSgkk0QxtTjLDVzFbAGrtz2OLUpipWyxQq90gFVxedI6xiUVX3Yn0oO";
+			String accessToken = "EAAffZC9Xl8dEBAKGmh5ZAKTbN73Xu4MgRNd20MQzf9kDuj3D1wfZAjSRfdQDJAUpkHIKhsnigCxt5sRdezXHgyixTybFZAcZCs0jza0BdoA4qka5B4bqalRc9xhNqZBvj5ZB5t4MpIRY4vLf5jRbdhe0h1LnnCK4a10AtVKDUuZCE5TZBM6ZBOV4P0z1rYjYZA1ZBaZBIaGDLKVaNPxoo0iiIZCuFb";
 			FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_12);
 			User me = fbClient.fetchObject("me", User.class);
 			
@@ -66,7 +66,12 @@ public class FacebookApp {
 		}
 	}
 	
-
+	
+	public ArrayList<FacebookInfo> getListPost(){
+		return lista;
+		
+	}
+	
 	/**
 	 * Transformar as lista de FacebookInfo para listas AbstractInfo
 	 * @return lista AbstractInfo com os post
