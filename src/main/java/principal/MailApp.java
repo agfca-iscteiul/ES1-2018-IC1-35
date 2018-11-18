@@ -18,7 +18,7 @@ import javax.mail.internet.MimeMessage;
 
 public class MailApp {
 	
-	private ArrayList<AbstractInfo> lista = new ArrayList<AbstractInfo>();
+	private List<MailInfo> lista = new ArrayList<MailInfo>();
 	
 	String host;
 	String mailStoreType;
@@ -31,13 +31,29 @@ public class MailApp {
 		
 	}
 	
+	
+	/**
+	 * 
+	 * É fornecida a informação para usar os serviços oferecidos pela JavaMail API.
+	 * A informção é respetiva ao servido do ISCTE, pois é este que é usado para ler e-mails.
+	 * É lida a mail box do e-mail cujas credenciais são fornecidas nos parâmetros da função.
+	 * Os e-mails presentes na mail box são colocados numa lista para posteriormente ser utilizada na interface.
+	 * 
+	 * @param  host  fornecedor do host
+	 * @param  storeType  protocolo fornecedor que dá acesso a message store
+	 * @param  user  email do utilizador
+	 * @param  password  password do utilizador
+	 * 
+	 */
+	
+	
 	private void check(String host, String storeType, String user, String password) {
 		try {
 			
 			properties = new Properties();
 			
 			properties.put("mail.smtp.host", host);
-			properties.put("mail.smtp.port", "995");
+			properties.put("mail.smtp.port", "993");
 			properties.put("mail.smtp.starttls.enable", "true");
 			
 			Session emailSession = Session.getDefaultInstance(properties);
@@ -51,11 +67,10 @@ public class MailApp {
 			
 			Message[] msgs = emailFolder.getMessages();
 			
-			for (int i = 0; i <20; i++) {
+			for (int i = 0; i < 50; i++) {
 				Message msg = msgs[i];
 				if(msg.getContent().toString().contains("ISCTE")) {
 					lista.add(new MailInfo(msg.getFrom()[0].toString(), msg.getContent().toString(),msg.getSentDate()));
-					System.out.println(msg.getFrom()[0].toString());
 				}
 			}
 			
@@ -72,14 +87,36 @@ public class MailApp {
 	}
 	
 	
+	/**
+	 * 
+	 * Cria uma lista auxiliar de AbastractInfo. 
+	 * Os e-mails presentes na lista de MailInfo são transferidos para a lista auxiliar criada.
+	 * 
+	 * @return lista de AbstractInfo com os e-mails que se encontravam na lista de MailInfo.
+	 */
+	
 	public ArrayList<AbstractInfo> getMailList(){
 		ArrayList<AbstractInfo> listaaux = new ArrayList<AbstractInfo>();
-		for(AbstractInfo mails : lista) {
+		for(MailInfo mails : lista) {
 			listaaux.add(mails);
 		}
 		return listaaux;
 	}
 	
+	
+	/**
+	 * 
+	 * É fornecida a informação para usar os serviços oferecidos pela JavaMail API.
+	 * As credenciais do utilizador, oferecidas nos parametros, são autenticadas.
+	 * É criada uma mensagem com o assunto e corpo da mensagem indicados nos parametros e é enviada para o destinatário.
+	 * 
+	 * 
+	 * @param to	e-mail do destinatário
+	 * @param username  e-mail do utilizador
+	 * @param password	password do utiliador
+	 * @param subject	assunto do e-mail a enviar
+	 * @param text	corpo da mensagem do e-mail a enviar
+	 */
 	
 	public void sendEmail(String to, String username, String password, String subject, String text) {
 		
@@ -127,15 +164,14 @@ public class MailApp {
 	
 	public void runMail() {
 		
-		String host = "smtp-mail.outlook.com";
+		String host = "smtp.outlook.com";
 		String mailStoreType = "smtp";
-		String username = "klvli@iscte-iul.pt";//escrever o e-mail aqui
-		String password = "russiA970426";//respetiva password
+		String username = "";//escrever o e-mail aqui
+		String password = "";//respetiva password
 		
 		check(host, mailStoreType, username, password);
 		
 	}
-	
 	
 
 }
