@@ -37,7 +37,7 @@ public class FacebookApp {
 	} 
 	
 	/**
-	 * Aceder ao Token e extender o tempo do mesmo, imprimir os post da timeline do user e adiciona-los ao array como FacebookInfo
+	 * Aceder ao Token e extender o tempo do mesmo através da API RestFB, imprimir os post da timeline do user com a palavra "ISCTE" e adiciona-los ao array como FacebookInfo
 	 */
 	public void runFacebook() {
 		try {
