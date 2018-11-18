@@ -44,8 +44,11 @@ public class TwitterApp {
 	public TwitterApp() {
 
 	}
-
-	public void runTwitter() {
+	
+	/**
+	 * Aceder ao Token atravers da API twitter4j, imprimir os tweets da timeline do user com a palavra "ISCTE" e adiciona-los ao array como TwitterInfo
+	 */
+	public void runTwitter() { 
 		try {
 			ConfigurationBuilder cb = new ConfigurationBuilder();
 			cb.setDebugEnabled(true).setOAuthConsumerKey("W1f0VvgWPfT8OBqVxvy4Mw")
@@ -62,15 +65,15 @@ public class TwitterApp {
 				}
 
 			}
-			// for(TwitterInfo lst : lista) {
-			// System.out.println(lst);
-			//
-			// }
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
-
+	
+	/**
+	 * Transformar a lista de TwitterInfo para listas AbstractInfo
+	 * @return lista AbstractInfo com os tweets
+	 */
 	public ArrayList<AbstractInfo> getList() {
 		ArrayList<AbstractInfo> listaaux = new ArrayList<AbstractInfo>();
 		for (TwitterInfo post : lista) {
@@ -78,7 +81,10 @@ public class TwitterApp {
 		}
 		return listaaux;
 	}
-
+	
+	/**
+	 * Escrever no ficheiro XML todos os tweets do Twitter
+	 */
 	public void writeTwitterXML() {
 		File datebase = new File("database.xml");
 		if (datebase.exists()) {
