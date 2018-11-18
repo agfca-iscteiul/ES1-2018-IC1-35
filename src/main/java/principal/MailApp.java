@@ -1,6 +1,10 @@
 package principal;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -14,6 +18,21 @@ import javax.mail.Store;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 
 
 public class MailApp {
@@ -31,6 +50,7 @@ public class MailApp {
 		
 	}
 	
+
 	
 	/**
 	 * 
@@ -39,13 +59,11 @@ public class MailApp {
 	 * É lida a mail box do e-mail cujas credenciais são fornecidas nos parâmetros da função.
 	 * Os e-mails presentes na mail box são colocados numa lista para posteriormente ser utilizada na interface.
 	 * 
-	 * @param  host  fornecedor do host
-	 * @param  storeType  protocolo fornecedor que dá acesso a message store
-	 * @param  user  email do utilizador
-	 * @param  password  password do utilizador
-	 * 
+	 * @param host	fornecedor do host
+	 * @param storeType	protocolo fornecedor que dá acesso a message store
+	 * @param user	email do utilizador
+	 * @param password	password do utilizador
 	 */
-	
 	
 	private void check(String host, String storeType, String user, String password) {
 		try {
@@ -166,12 +184,95 @@ public class MailApp {
 		
 		String host = "smtp.outlook.com";
 		String mailStoreType = "smtp";
-		String username = "";//escrever o e-mail aqui
+		String username = "tmcsa1@iscte-iul.pt";//escrever o e-mail aqui
 		String password = "";//respetiva password
 		
 		check(host, mailStoreType, username, password);
 		
 	}
 	
+	
+	/**
+	 * 
+	 * Insere num ficheiro xml os e-mails que o utilizador possui na sua mail box, com informção relativa ao ISCTE
+	 */
+	
+	public void writeMailXML() {
+		File datebase = new File("config.xml");
+		if (datebase.exists()) {
+			System.out.println("A file já existe");
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder;
+			try {
+				dBuilder = dbFactory.newDocumentBuilder();
+				Document doc = dBuilder.parse(datebase);
+				Node root = doc.getDocumentElement();
+				root.normalize();
+				Element tree = doc.createElement("Serviço");
+				root.appendChild(tree);
+				tree.setAttribute("Nome", "Mail");
+				String autor, post;
+				Date data;
+				for (MailInfo tdados : lista) {
+					autor = tdados.getAutor();
+					data = tdados.getData();
+					post = tdados.getPost();
+					Element mail = doc.createElement("Mail");
+					mail.setAttribute("Autor", autor);
+					mail.setAttribute("Data", data.toString());
+					mail.setTextContent(post);
+					tree.appendChild(mail);
+				}
+				System.out.println("\nSave XML document.");
+				Transformer transformer = TransformerFactory.newInstance().newTransformer();
+				transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+				transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+				DOMSource source = new DOMSource(doc);
+				StreamResult result = new StreamResult(new FileOutputStream("database.xml"));
+				transformer.transform(source, result);
+				StreamResult consoleResult = new StreamResult(System.out);
+				transformer.transform(source, consoleResult);
+			} catch (ParserConfigurationException | SAXException | IOException | TransformerFactoryConfigurationError
+					| TransformerException e) {
+				e.printStackTrace();
+			}
+
+		} else {
+			try {
+				System.out.println("A file não existe");
+				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+				Document doc = dBuilder.newDocument();
+				Element rootElement = doc.createElement("Serviços");
+				doc.appendChild(rootElement);
+				Element tree = doc.createElement("Serviço");
+				rootElement.appendChild(tree);
+				tree.setAttribute("Nome", "Mail");
+				String autor, post;
+				Date data;
+				for (MailInfo tdados : lista) {
+					autor = tdados.getAutor();
+					data = tdados.getData();
+					post = tdados.getPost();
+					Element mail = doc.createElement("Mail");
+					mail.setAttribute("Autor", autor);
+					mail.setAttribute("Data", data.toString());
+					mail.setTextContent(post);
+					tree.appendChild(mail);
+				}
+				System.out.println("\nSave XML document.");
+				Transformer transformer = TransformerFactory.newInstance().newTransformer();
+				transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+				transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+				DOMSource source = new DOMSource(doc);
+				StreamResult result = new StreamResult(new File("database.xml"));
+				transformer.transform(source, result);
+				StreamResult consoleResult = new StreamResult(System.out);
+				transformer.transform(source, consoleResult);
+			} catch (ParserConfigurationException | TransformerFactoryConfigurationError | TransformerException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 }
