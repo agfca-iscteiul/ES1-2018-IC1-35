@@ -30,12 +30,15 @@ public class ReadXML {
 			System.out.println("Serviço Twitter\n");
 			XPathFactory xpathFactory = XPathFactory.newInstance();
 			XPath xpath = xpathFactory.newXPath();
+			XPathExpression exprRoot = xpath.compile("/Serviços/Serviço/@*");
 			XPathExpression exprAttribute = xpath.compile("/Serviços/Serviço/Tweet/@*");
 			XPathExpression exprText = xpath.compile("/Serviços/Serviço/Tweet/text()");
+			NodeList nR = (NodeList) exprRoot.evaluate(doc, XPathConstants.NODESET);
 			NodeList nA = (NodeList) exprAttribute.evaluate(doc, XPathConstants.NODESET);
 			NodeList nT = (NodeList) exprText.evaluate(doc, XPathConstants.NODESET);
 			int j=0;
 			for (int i = 0; i < nA.getLength(); i++) {
+				System.out.println(nR.item(i).getNodeName() + ":" + nR.item(i).getNodeValue());
 				System.out.println(nA.item(i).getNodeName() + ":" + nA.item(i).getNodeValue());
 				while(j!=nT.getLength()) {
 					i++;

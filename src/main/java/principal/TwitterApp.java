@@ -14,22 +14,15 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import twitter4j.Status;
@@ -80,7 +73,7 @@ public class TwitterApp {
 	}
 
 	public void writeTwitterXML() {
-		File datebase = new File("database.xml");
+		File datebase = new File("config.xml");
 		if (datebase.exists()) {
 			System.out.println("A file já existe");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -92,7 +85,7 @@ public class TwitterApp {
 				root.normalize();
 				Element tree = doc.createElement("Serviço");
 				root.appendChild(tree);
-				tree.setAttribute("Nome", "Twitter");
+				tree.setAttribute("Nome do serviço", "Twitter");
 				String autor, post;
 				Date data;
 				for (TwitterInfo tdados : lista) {
@@ -110,7 +103,7 @@ public class TwitterApp {
 				transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 				transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 				DOMSource source = new DOMSource(doc);
-				StreamResult result = new StreamResult(new FileOutputStream("database.xml"));
+				StreamResult result = new StreamResult(new FileOutputStream("config.xml"));
 				transformer.transform(source, result);
 				StreamResult consoleResult = new StreamResult(System.out);
 				transformer.transform(source, consoleResult);
@@ -129,7 +122,7 @@ public class TwitterApp {
 				doc.appendChild(rootElement);
 				Element tree = doc.createElement("Serviço");
 				rootElement.appendChild(tree);
-				tree.setAttribute("Nome", "Twitter");
+				tree.setAttribute("Nome do serviço", "Twitter");
 				String autor, post;
 				Date data;
 				for (TwitterInfo tdados : lista) {
@@ -147,7 +140,7 @@ public class TwitterApp {
 				transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 				transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 				DOMSource source = new DOMSource(doc);
-				StreamResult result = new StreamResult(new File("database.xml"));
+				StreamResult result = new StreamResult(new File("config.xml"));
 				transformer.transform(source, result);
 				StreamResult consoleResult = new StreamResult(System.out);
 				transformer.transform(source, consoleResult);
