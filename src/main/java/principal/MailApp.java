@@ -53,6 +53,23 @@ public class MailApp {
 	
 
 	
+	
+	/**
+	 * 
+	 * Cria uma lista auxiliar de AbastractInfo. 
+	 * Os e-mails presentes na lista de MailInfo são transferidos para a lista auxiliar criada.
+	 * 
+	 * @return lista de AbstractInfo com os e-mails que se encontravam na lista de MailInfo.
+	 */
+	
+	public ArrayList<AbstractInfo> getMailList(){
+		ArrayList<AbstractInfo> listaaux = new ArrayList<AbstractInfo>();
+		for(MailInfo mails : lista) {
+			listaaux.add(mails);
+		}
+		return listaaux;
+	}
+	
 	/**
 	 * 
 	 * É fornecida a informação para usar os serviços oferecidos pela JavaMail API.
@@ -103,23 +120,6 @@ public class MailApp {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	
-	/**
-	 * 
-	 * Cria uma lista auxiliar de AbastractInfo. 
-	 * Os e-mails presentes na lista de MailInfo são transferidos para a lista auxiliar criada.
-	 * 
-	 * @return lista de AbstractInfo com os e-mails que se encontravam na lista de MailInfo.
-	 */
-	
-	public ArrayList<AbstractInfo> getMailList(){
-		ArrayList<AbstractInfo> listaaux = new ArrayList<AbstractInfo>();
-		for(MailInfo mails : lista) {
-			listaaux.add(mails);
-		}
-		return listaaux;
 	}
 	
 	
