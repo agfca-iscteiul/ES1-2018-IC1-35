@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextPane;
 import java.awt.SystemColor;
+import javax.swing.JScrollPane;
 
 public class Display {
 
@@ -20,6 +21,8 @@ public class Display {
 	private JTextPane textPaneAut;
 	private JTextPane textPaneDate;
 	private JTextPane textPanePost;
+	private SpringLayout springLayout;
+	private JScrollPane scrollPane_1;
 
 	
 	public Display(AbstractInfo info) {
@@ -27,7 +30,8 @@ public class Display {
 		this.textPaneAut.setText(info.getAutor());
 		this.textPanePost.setText(info.getPost());
 		this.textPaneDate.setText(info.getData().toString());
-		frmDetalhes.setVisible(true);
+		
+		
 	}
 
 	private void initialize() {
@@ -37,7 +41,7 @@ public class Display {
 		frmDetalhes.getContentPane().setForeground(SystemColor.textText);
 		frmDetalhes.setBounds(100, 100, 800, 540);
 		frmDetalhes.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		SpringLayout springLayout = new SpringLayout();
+		springLayout = new SpringLayout();
 		frmDetalhes.getContentPane().setLayout(springLayout);
 		
 		JLabel lblAutor = new JLabel("Autor");
@@ -54,24 +58,27 @@ public class Display {
 		
 		textPaneAut = new JTextPane();
 		springLayout.putConstraint(SpringLayout.NORTH, textPaneAut, 6, SpringLayout.SOUTH, lblAutor);
-		springLayout.putConstraint(SpringLayout.EAST, textPaneAut, 355, SpringLayout.WEST, frmDetalhes.getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, textPaneAut, 0, SpringLayout.WEST, frmDetalhes.getContentPane());
 		textPaneAut.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		frmDetalhes.getContentPane().add(textPaneAut);
 		
 		textPaneDate = new JTextPane();
+		springLayout.putConstraint(SpringLayout.WEST, textPaneDate, 361, SpringLayout.WEST, frmDetalhes.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, textPaneAut, -6, SpringLayout.WEST, textPaneDate);
 		springLayout.putConstraint(SpringLayout.NORTH, textPaneDate, 6, SpringLayout.SOUTH, lblData);
-		springLayout.putConstraint(SpringLayout.WEST, textPaneDate, 6, SpringLayout.EAST, textPaneAut);
 		springLayout.putConstraint(SpringLayout.EAST, textPaneDate, -10, SpringLayout.EAST, frmDetalhes.getContentPane());
 		textPaneDate.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		frmDetalhes.getContentPane().add(textPaneDate);
 		
 		textPanePost = new JTextPane();
-		springLayout.putConstraint(SpringLayout.WEST, textPaneAut, 0, SpringLayout.WEST, textPanePost);
 		textPanePost.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
-		springLayout.putConstraint(SpringLayout.NORTH, textPanePost, -374, SpringLayout.SOUTH, frmDetalhes.getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, textPanePost, 10, SpringLayout.WEST, frmDetalhes.getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, textPanePost, -10, SpringLayout.SOUTH, frmDetalhes.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, textPanePost, 768, SpringLayout.WEST, frmDetalhes.getContentPane());
-		frmDetalhes.getContentPane().add(textPanePost);
+		
+		scrollPane_1 = new JScrollPane(textPanePost);
+		springLayout.putConstraint(SpringLayout.NORTH, scrollPane_1, 8, SpringLayout.SOUTH, textPaneAut);
+		springLayout.putConstraint(SpringLayout.WEST, scrollPane_1, 0, SpringLayout.WEST, frmDetalhes.getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, scrollPane_1, 0, SpringLayout.SOUTH, frmDetalhes.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, scrollPane_1, 0, SpringLayout.EAST, textPaneDate);
+		frmDetalhes.getContentPane().add(scrollPane_1);
+		frmDetalhes.setVisible(true);
 	}
 }

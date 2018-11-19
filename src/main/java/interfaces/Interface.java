@@ -18,10 +18,14 @@ import java.awt.Font;
 import javax.swing.SpringLayout;
 
 import principal.AbstractInfo;
+import principal.DateComparator;
+import principal.FacebookApp;
 import principal.MailApp;
 import principal.TwitterApp;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import java.awt.SystemColor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -54,23 +58,31 @@ public class Interface {
 	private JButton btnTwitter;
 	private TwitterApp ttapp;
 	private MailApp mapp;
+	private FacebookApp fbapp;
 	private JCalendar calendarIn;
 	private JCalendar calendarFim;
 	private JCheckBox chckbxPC;
 	
 	private ArrayList<AbstractInfo> aListMain;
-	private ArrayList<AbstractInfo> aListRepresent;
+	private ArrayList<AbstractInfo> aListRepresent= new ArrayList<AbstractInfo>();
 	private ArrayList<AbstractInfo> aListTT;
 	private ArrayList<AbstractInfo> aListM;
+	private ArrayList<AbstractInfo> aListFB;
 
 	/**
 	 * Create the application.
 	 */
-	public Interface(TwitterApp ttapp,MailApp mapp) {
+	public Interface(TwitterApp ttapp,MailApp mapp,FacebookApp fbapp) {
 		ttapp.runTwitter();
 		mapp.runMail();
+		fbapp.runFacebook();
 		this.ttapp=ttapp;
 		this.mapp=mapp;
+		this.fbapp=fbapp;
+		addToList();
+		addToListMain();
+		filtrList();
+		showList();
 		initialize();
 		initializeAux();
 		frame.setVisible(true);
@@ -108,8 +120,9 @@ public class Interface {
 					else {
 						lblFB.setText("  Ativo");
 						checkFB=true;
-						
-					}
+						}
+				filtrList();
+				showList();
 					frame.repaint();
 			}
 		});
@@ -132,6 +145,9 @@ public class Interface {
 						checkTT=true;
 						
 					}
+
+					filtrList();
+					showList();
 					frame.repaint();
 			}
 		});
@@ -147,18 +163,14 @@ public class Interface {
 				if(checkM==true){
 				lblM.setText("Desativo");
 				checkM=false;
-				
-
-				addToListTwitter();
-				addToListMail();
-				addToListMain();
-				showList();
 				}
 				else {
 					lblM.setText("  Ativo");
 					checkM=true;
 					
 				}
+				filtrList();
+				showList();
 				frame.repaint();
 				
 			}
@@ -174,17 +186,17 @@ public class Interface {
 		
 		listPosts = new JList<AbstractInfo>();
 		listPosts.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
-		springLayout.putConstraint(SpringLayout.WEST, listPosts, 0, SpringLayout.WEST, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, listPosts, -558, SpringLayout.EAST, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, panel, 0, SpringLayout.EAST, listPosts);
 		listPosts.setModel(modelPosts);
 		
 		addListenerLista();
 		
-	
-		springLayout.putConstraint(SpringLayout.NORTH, listPosts, 100, SpringLayout.NORTH, frame.getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, listPosts, 0, SpringLayout.SOUTH, frame.getContentPane());
-		frame.getContentPane().add(listPosts);
+		JScrollPane scrollPane = new JScrollPane(listPosts);
+		springLayout.putConstraint(SpringLayout.WEST, scrollPane, 0, SpringLayout.WEST, frame.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, scrollPane, -558, SpringLayout.EAST, frame.getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, panel, 0, SpringLayout.EAST, scrollPane);
+		springLayout.putConstraint(SpringLayout.NORTH, scrollPane, 100, SpringLayout.NORTH, frame.getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, scrollPane, 0, SpringLayout.SOUTH, frame.getContentPane());
+		frame.getContentPane().add(scrollPane);
 		
 		JLabel lblBomDiaAcademia = new JLabel("Bom Dia Academia");
 		springLayout.putConstraint(SpringLayout.EAST, lblBomDiaAcademia, -32, SpringLayout.WEST, panel);
@@ -197,31 +209,42 @@ public class Interface {
 		
 	}
 	
-	private void addToListTwitter() {
+	private void addToList() {
 		aListTT=ttapp.getList();
+		aListM=mapp.getMailList();
+		aListFB=fbapp.getList();
 	}
 	
-	private void addToListMail() {
-		aListM=mapp.getMailList();
-	}
 	
 	private void addToListMain() {
 		aListMain=new ArrayList<AbstractInfo>();
 		aListMain.addAll(aListTT);
 		aListMain.addAll(aListM);
+		aListMain.addAll(aListFB);
+		aListMain.sort(new DateComparator());
 		
 	}
 	
 	private void filtrList() {
+		if(!aListRepresent.isEmpty())
+			aListRepresent.clear();
 		for(AbstractInfo info: aListMain) {
-			if(chckbxPC.isSelected()==true) {
-				aListMain.add(modelPosts.size(),info);
+			if(checkFB && info.checkFacebook()) {
+				aListRepresent.add(info);
+			}
+			else if(checkM && info.checkEmail()) {
+				aListRepresent.add(info);
+			}
+			else if(checkTT && info.checkTwitter()) {
+				aListRepresent.add(info);
 			}
 		}
+		aListRepresent.sort(new DateComparator());
 	}
 	
 	private void showList() {
-		for(AbstractInfo info: aListMain) {
+		modelPosts.removeAllElements();
+		for(AbstractInfo info: aListRepresent) {
 			modelPosts.add(modelPosts.size(),info);
 		}
 	}
