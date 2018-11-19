@@ -81,7 +81,7 @@ public class MailApp {
 			
 			store.connect(host, user, password);
 			
-			Folder emailFolder = store.getFolder("INBOX");
+			Folder emailFolder = store.getFolder("INBOX"); 
 			emailFolder.open(Folder.READ_ONLY);
 			
 			Message[] msgs = emailFolder.getMessages();
@@ -185,7 +185,7 @@ public class MailApp {
 		
 		String host = "smtp.outlook.com";
 		String mailStoreType = "smtp";
-		String username = "agfca@iscte-iul.pt";//escrever o e-mail aqui
+		String username = "falgs@iscte-iul.pt";//escrever o e-mail aqui
 		String password = "";//respetiva password
 		
 		check(host, mailStoreType, username, password);
