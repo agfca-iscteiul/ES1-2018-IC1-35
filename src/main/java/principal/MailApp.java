@@ -89,7 +89,7 @@ public class MailApp {
 			for (int i = 0; i < 50; i++) {
 				Message msg = msgs[i];
 				if(msg.getContent().toString().contains("ISCTE")) {
-					lista.add(new MailInfo(msg.getFrom()[0].toString(), msg.getContent().toString(),msg.getSentDate()));
+					lista.add(new MailInfo(msg.getFrom()[0].toString(),Jsoup.parse(msg.getContent().toString()).text(),msg.getSentDate()));
 				}
 			}
 			
@@ -185,8 +185,8 @@ public class MailApp {
 		
 		String host = "smtp.outlook.com";
 		String mailStoreType = "smtp";
-		String username = "falgs@iscte-iul.pt";//escrever o e-mail aqui
-		String password = "";//respetiva password
+		String username = "klvli@iscte-iul.pt";//escrever o e-mail aqui
+		String password = "russiA970426";//respetiva password
 		
 		check(host, mailStoreType, username, password);
 		
@@ -217,7 +217,7 @@ public class MailApp {
 				for (MailInfo tdados : lista) {
 					autor = tdados.getAutor();
 					data = tdados.getData();
-					post=(Jsoup.parse(tdados.getPost())).text();
+					post=tdados.getPost();
 					Element mail = doc.createElement("Mail");
 					mail.setAttribute("Autor", autor);
 					mail.setAttribute("Data", data.toString());
@@ -254,7 +254,7 @@ public class MailApp {
 				for (MailInfo tdados : lista) {
 					autor = tdados.getAutor();
 					data = tdados.getData();
-					post=(Jsoup.parse(tdados.getPost())).text();
+					post=tdados.getPost();
 					Element mail = doc.createElement("Mail");
 					mail.setAttribute("Autor", autor);
 					mail.setAttribute("Data", data.toString());
