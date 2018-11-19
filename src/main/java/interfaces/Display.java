@@ -26,6 +26,7 @@ public class Display {
 
 	/**
 	 * Cria a janela para mostrar os detalhes dos posts
+	 * @param info é um AbstractInfo que contêm a informação dos post/emails/tweets
 	 */
 	public Display(AbstractInfo info) {
 		initialize();

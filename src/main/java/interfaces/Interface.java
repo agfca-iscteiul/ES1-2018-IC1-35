@@ -74,9 +74,13 @@ public class Interface {
 	private ArrayList<AbstractInfo> aListRepresent= new ArrayList<AbstractInfo>();
 	private ArrayList<AbstractInfo> aListFiltrada=new ArrayList<AbstractInfo>();
 
+
 	/**
 	 * Cria a Interface
-	 * Associa as varieaveis locais
+	 * Associa as variaveis locais
+	 * @param ttapp é uma instância do TwitterApp que contém todos os métodos relativos ao twitter
+	 * @param mapp é uma instância do MailApp que contém todos os métodos relativos ao mail
+	 * @param fbapp é uma instância do FacebookApp que contém todos os métodos relativos ao facebook
 	 */
 	public Interface(TwitterApp ttapp,MailApp mapp,FacebookApp fbapp) {
 		this.ttapp=ttapp;
