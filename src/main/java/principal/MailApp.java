@@ -70,6 +70,11 @@ public class MailApp {
 		return listaaux;
 	}
 	
+	public List<MailInfo> getListPost(){
+		return lista;
+		
+	}
+	
 	/**
 	 * 
 	 * É fornecida a informação para usar os serviços oferecidos pela JavaMail API.
