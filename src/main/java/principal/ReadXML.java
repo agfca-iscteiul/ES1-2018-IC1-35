@@ -30,24 +30,57 @@ public class ReadXML {
 			System.out.println("Serviço Twitter\n");
 			XPathFactory xpathFactory = XPathFactory.newInstance();
 			XPath xpath = xpathFactory.newXPath();
-			XPathExpression exprRoot = xpath.compile("/Serviços/Serviço/@*");
-			XPathExpression exprAttribute = xpath.compile("/Serviços/Serviço/Tweet/@*");
-			XPathExpression exprText = xpath.compile("/Serviços/Serviço/Tweet/text()");
-			NodeList nR = (NodeList) exprRoot.evaluate(doc, XPathConstants.NODESET);
-			NodeList nA = (NodeList) exprAttribute.evaluate(doc, XPathConstants.NODESET);
-			NodeList nT = (NodeList) exprText.evaluate(doc, XPathConstants.NODESET);
-			int j=0;
-			for (int i = 0; i < nA.getLength(); i++) {
-				System.out.println(nR.item(i).getNodeName() + ":" + nR.item(i).getNodeValue());
-				System.out.println(nA.item(i).getNodeName() + ":" + nA.item(i).getNodeValue());
-				while(j!=nT.getLength()) {
+			XPathExpression exprAttributeT = xpath.compile("/Serviços/Serviço/Tweet/@*");
+			XPathExpression exprTextT = xpath.compile("/Serviços/Serviço/Tweet/text()");
+			NodeList nAT = (NodeList) exprAttributeT.evaluate(doc, XPathConstants.NODESET);
+			NodeList nTT = (NodeList) exprTextT.evaluate(doc, XPathConstants.NODESET);
+			int t = 0;
+			for (int i = 0; i < nAT.getLength(); i++) {
+				System.out.println(nAT.item(i).getNodeName() + ":" + nAT.item(i).getNodeValue());
+				while (t != nTT.getLength()) {
 					i++;
-					System.out.println(nA.item(i).getNodeName() + ":" + nA.item(i).getNodeValue());
-					System.out.println(nT.item(j).getTextContent());
+					System.out.println(nAT.item(i).getNodeName() + ":" + nAT.item(i).getNodeValue());
+					System.out.println(nTT.item(t).getTextContent());
 					System.out.println("--------------------------------------------------------");
 					break;
 				}
-				j++;
+				t++;
+			}
+			// Query 2
+			System.out.println("\nServiço Facebook\n\n");
+			XPathExpression exprAttributeF = xpath.compile("/Serviços/Serviço/Post/@*");
+			XPathExpression exprTextF = xpath.compile("/Serviços/Serviço/Post/text()");
+			NodeList nAF = (NodeList) exprAttributeF.evaluate(doc, XPathConstants.NODESET);
+			NodeList nTF = (NodeList) exprTextF.evaluate(doc, XPathConstants.NODESET);
+			int f = 0;
+			for (int i = 0; i < nAF.getLength(); i++) {
+				System.out.println(nAF.item(i).getNodeName() + ":" + nAF.item(i).getNodeValue());
+				while (f != nTF.getLength()) {
+					i++;
+					System.out.println(nAF.item(i).getNodeName() + ":" + nAF.item(i).getNodeValue());
+					System.out.println(nTF.item(f).getTextContent());
+					System.out.println("--------------------------------------------------------");
+					break;
+				}
+				f++;
+			}
+			// Query 3
+			System.out.println("\nServiço Email\n\n");
+			XPathExpression exprAttributeE = xpath.compile("/Serviços/Serviço/Mail/@*");
+			XPathExpression exprTextE = xpath.compile("/Serviços/Serviço/Mail/text()");
+			NodeList nAE = (NodeList) exprAttributeE.evaluate(doc, XPathConstants.NODESET);
+			NodeList nTE = (NodeList) exprTextE.evaluate(doc, XPathConstants.NODESET);
+			int e = 0;
+			for (int i = 0; i < nAE.getLength(); i++) {
+				System.out.println(nAE.item(i).getNodeName() + ":" + nAE.item(i).getNodeValue());
+				while (e != nTE.getLength()) {
+					i++;
+					System.out.println(nAE.item(i).getNodeName() + ":" + nAE.item(i).getNodeValue());
+					System.out.println(nTE.item(e).getTextContent());
+					System.out.println("--------------------------------------------------------");
+					break;
+				}
+				e++;
 			}
 		} catch (ParserConfigurationException | SAXException | IOException | XPathExpressionException e) {
 			e.printStackTrace();
