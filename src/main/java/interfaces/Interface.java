@@ -4,12 +4,14 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.Action;
 import javax.swing.DefaultListModel;
@@ -59,28 +61,29 @@ public class Interface {
 	private TwitterApp ttapp;
 	private MailApp mapp;
 	private FacebookApp fbapp;
-	private JCalendar calendarIn;
-	private JCalendar calendarFim;
 	private JCheckBox chckbxPC;
+	private JCheckBox chckbxOrigem;
+	private JCheckBox chckbxData;
+	
+	private String filtroPC;
+	private String filtroOrigem;
+	private Date dateIn;
+	private Date dateFim;
 	
 	private ArrayList<AbstractInfo> aListMain;
 	private ArrayList<AbstractInfo> aListRepresent= new ArrayList<AbstractInfo>();
-	private ArrayList<AbstractInfo> aListTT;
-	private ArrayList<AbstractInfo> aListM;
-	private ArrayList<AbstractInfo> aListFB;
+	private ArrayList<AbstractInfo> aListFiltrada=new ArrayList<AbstractInfo>();
 
 	/**
-	 * Create the application.
+	 * Cria a Interface
+	 * Associa as varieaveis locais
 	 */
 	public Interface(TwitterApp ttapp,MailApp mapp,FacebookApp fbapp) {
-		ttapp.runTwitter();
-		mapp.runMail();
-		fbapp.runFacebook();
 		this.ttapp=ttapp;
 		this.mapp=mapp;
 		this.fbapp=fbapp;
-		addToList();
 		addToListMain();
+		optionList();
 		filtrList();
 		showList();
 		initialize();
@@ -89,7 +92,7 @@ public class Interface {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Cria a frame inicial e inicia o conteudo da janela
 	 */
 	private void initialize() {
 		frame = new JFrame();
@@ -121,7 +124,7 @@ public class Interface {
 						lblFB.setText("  Ativo");
 						checkFB=true;
 						}
-				filtrList();
+				optionList();
 				showList();
 					frame.repaint();
 			}
@@ -146,7 +149,7 @@ public class Interface {
 						
 					}
 
-					filtrList();
+					optionList();
 					showList();
 					frame.repaint();
 			}
@@ -169,7 +172,7 @@ public class Interface {
 					checkM=true;
 					
 				}
-				filtrList();
+				optionList();
 				showList();
 				frame.repaint();
 				
@@ -209,23 +212,24 @@ public class Interface {
 		
 	}
 	
-	private void addToList() {
-		aListTT=ttapp.getList();
-		aListM=mapp.getMailList();
-		aListFB=fbapp.getList();
-	}
 	
-	
+	/**
+	 * Adiciona as listas dos pots/tweets/emails à lista main da classe.
+	 */
 	private void addToListMain() {
 		aListMain=new ArrayList<AbstractInfo>();
-		aListMain.addAll(aListTT);
-		aListMain.addAll(aListM);
-		aListMain.addAll(aListFB);
+		aListMain.addAll(ttapp.getList());
+		aListMain.addAll(mapp.getMailList());
+		aListMain.addAll(fbapp.getList());
 		aListMain.sort(new DateComparator());
 		
 	}
 	
-	private void filtrList() {
+	/**
+	 * Percorre a lista main, adicionando os post ,das fontes de informaçao que se encontram selecionadas
+	 * na pesquisa, na lista de representacao
+	 */
+	private void optionList() {
 		if(!aListRepresent.isEmpty())
 			aListRepresent.clear();
 		for(AbstractInfo info: aListMain) {
@@ -242,15 +246,49 @@ public class Interface {
 		aListRepresent.sort(new DateComparator());
 	}
 	
+	/**
+	 * Percorre a lista main, adicionando os post conforme os filros, à lista filtrada
+	 */
+	private void filtrList() {
+		if(!aListFiltrada.isEmpty())
+			aListFiltrada.clear();
+		if(filtroPC==null && filtroOrigem==null && dateIn==null && dateFim==null) {
+			aListFiltrada.addAll(aListMain);
+		}
+		else {
+			aListFiltrada.addAll(aListMain);
+			ArrayList<AbstractInfo> aux=new ArrayList<AbstractInfo>();
+			for(AbstractInfo info:aListFiltrada) {
+				if(chckbxPC.isSelected()==true && !info.getPost().toString().contains(filtroPC)) {
+					aux.add(info);
+				}
+				if(chckbxOrigem.isSelected()==true && !info.getAutor().toString().equals(filtroOrigem)) {
+					aux.add(info);
+				}
+				if(chckbxData.isSelected()==true && !(info.getData().after(dateIn) && info.getData().before(dateFim)))
+					aux.add(info);
+				}
+				aListFiltrada.removeAll(aux);
+				}
+			}
+		
+	/**
+	 * Percorre a lista de representação e seleciona os posts que se encontram
+	 * simultâneamente na lista de representação e na lista filtrada
+	 */
 	private void showList() {
 		modelPosts.removeAllElements();
 		for(AbstractInfo info: aListRepresent) {
-			modelPosts.add(modelPosts.size(),info);
+			if(aListFiltrada.contains(info)) {
+				modelPosts.add(modelPosts.size(),info);
+			}
 		}
 	}
 	
 	
-
+	/**
+	 * Adiciona um listener à lista dos posts para que ao clicar seja aberta uma janela de detalhes
+	 */
 	private void addListenerLista() {
 		listPosts.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
@@ -264,6 +302,10 @@ public class Interface {
 		});
 	}
 	
+	
+	/**
+	 * Função que permite ativar os campos dos filtros quando este são selecionados
+	 */
 	private void enableComponents(JCheckBox chcbox,JComponent component,JComponent component2) {
 		chcbox.addMouseListener(new MouseAdapter() {
 			  @Override
@@ -283,6 +325,10 @@ public class Interface {
 		
 	}
 	
+	
+	/**
+	 * Função que permite ativar os campos dos filtros quando este são selecionados
+	 */
 	private void enableComponents(JCheckBox chcbox,JComponent component) {
 		chcbox.addMouseListener(new MouseAdapter() {
 			  @Override
@@ -300,6 +346,10 @@ public class Interface {
 		
 	}
 	
+	
+	/**
+	 * Incializar os botões que permitem filtrar as fontes dos posts
+	 */
 	private void initializeLabel(JButton btnFacebook,JButton btnTwitter,JButton btnEmail) {
 		lblFB = new JLabel("  Ativo");
 		sl_panel.putConstraint(SpringLayout.NORTH, lblFB, 6, SpringLayout.SOUTH, btnFacebook);
@@ -320,6 +370,10 @@ public class Interface {
 		panel.add(lblM);
 	}
 	
+	
+	/**
+	 * Inicializa o painel auxiliar que vai conter os botes para selecionar as fontes e os filtros.
+	 */
 	private void initializeAux() {
 		
 		txtFiltros = new JTextField();
@@ -343,14 +397,14 @@ public class Interface {
 		btnOk.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		panel.add(btnOk);
 		
-		JCheckBox chckbxPC = new JCheckBox("Palavra-chave");
+		chckbxPC = new JCheckBox("Palavra-chave");
 		sl_panel.putConstraint(SpringLayout.WEST, chckbxPC, 44, SpringLayout.WEST, panel);
 		sl_panel.putConstraint(SpringLayout.SOUTH, chckbxPC, -453, SpringLayout.SOUTH, panel);
 		sl_panel.putConstraint(SpringLayout.NORTH, txtFiltros, 6, SpringLayout.SOUTH, chckbxPC);
 		chckbxPC.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		panel.add(chckbxPC);
 		
-		JCheckBox chckbxOrigem = new JCheckBox("Origem");
+		chckbxOrigem = new JCheckBox("Origem");
 		sl_panel.putConstraint(SpringLayout.WEST, chckbxOrigem, 0, SpringLayout.WEST, chckbxPC);
 		sl_panel.putConstraint(SpringLayout.EAST, chckbxOrigem, -343, SpringLayout.EAST, panel);
 		chckbxOrigem.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
@@ -375,7 +429,7 @@ public class Interface {
 			  }
 			});
 		
-		JCheckBox chckbxData = new JCheckBox("Data");
+		chckbxData = new JCheckBox("Data");
 		sl_panel.putConstraint(SpringLayout.WEST, chckbxData, 0, SpringLayout.WEST, chckbxPC);
 		sl_panel.putConstraint(SpringLayout.EAST, chckbxData, -343, SpringLayout.EAST, panel);
 		chckbxData.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
@@ -394,7 +448,7 @@ public class Interface {
 		lblFim.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		panel.add(lblFim);
 		
-		calendarIn = new JCalendar();
+		JCalendar calendarIn = new JCalendar();
 		sl_panel.putConstraint(SpringLayout.NORTH, btnOk, 6, SpringLayout.SOUTH, calendarIn);
 		calendarIn.getDayChooser().getDayPanel().setBackground(Color.WHITE);
 		calendarIn.setEnabled(false);
@@ -404,7 +458,7 @@ public class Interface {
 		sl_panel.putConstraint(SpringLayout.EAST, calendarIn, 270, SpringLayout.WEST, panel);
 		panel.add(calendarIn);
 		
-		calendarFim = new JCalendar();
+		JCalendar calendarFim = new JCalendar();
 		sl_panel.putConstraint(SpringLayout.WEST, calendarFim, 6, SpringLayout.EAST, calendarIn);
 		sl_panel.putConstraint(SpringLayout.EAST, calendarFim, -35, SpringLayout.EAST, panel);
 		calendarFim.getDayChooser().getDayPanel().setBackground(Color.WHITE);
@@ -412,6 +466,22 @@ public class Interface {
 		sl_panel.putConstraint(SpringLayout.NORTH, calendarFim, 6, SpringLayout.SOUTH, lblFim);
 		sl_panel.putConstraint(SpringLayout.SOUTH, calendarFim, 0, SpringLayout.SOUTH, calendarIn);
 		panel.add(calendarFim);
+		
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!calendarIn.getDate().after(calendarFim.getDate())) {
+					filtroPC=txtFiltros.getText();
+					filtroOrigem=txtOrigem.getText();
+					dateIn=calendarIn.getDate();
+					dateFim=calendarFim.getDate();
+					filtrList();
+					showList();
+				}
+				else {
+					JOptionPane.showMessageDialog(panel, "A data de fim não pode ser inferior a de inicio", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		
 		enableComponents(chckbxPC, txtFiltros);
 		enableComponents(chckbxOrigem,txtOrigem);

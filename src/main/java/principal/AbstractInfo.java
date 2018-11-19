@@ -43,7 +43,7 @@ public abstract class AbstractInfo {
 	
 	public String toString() {
 		// TODO Auto-generated method stub
-		return ("Autor: " + this.getAutor() + " \n \n" + this.getPost() + " \n \n" + this.getData() + "\n \n \n \n \n");
+		return (this.getPost());
 	}
 
 	

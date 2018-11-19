@@ -24,7 +24,9 @@ public class Display {
 	private SpringLayout springLayout;
 	private JScrollPane scrollPane_1;
 
-	
+	/**
+	 * Cria a janela para mostrar os detalhes dos posts
+	 */
 	public Display(AbstractInfo info) {
 		initialize();
 		this.textPaneAut.setText(info.getAutor());
@@ -34,6 +36,10 @@ public class Display {
 		
 	}
 
+	
+	/**
+	 * Inicializa os componetes da janela
+	 */
 	private void initialize() {
 		frmDetalhes = new JFrame();
 		frmDetalhes.setTitle("Detalhes");

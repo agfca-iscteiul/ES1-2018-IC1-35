@@ -23,8 +23,4 @@ public class FacebookInfo extends AbstractInfo {
 		return false;
 	}
 	
-	@Override
-	public String toString() {
-		return ("Autor: " + this.getAutor() + " \n \n" + this.getPost() + " \n \n" + this.getData() + "\n \n \n \n \n");
-	}
 }
