@@ -42,7 +42,7 @@ public class FacebookApp {
 	 */
 	public void runFacebook() {
 		try {
-			String accessToken = "EAAffZC9Xl8dEBAEgJECEMOLjpmLajeKMZCCNgzlxh6mgfJZCDEkFPlXQZAGekFWiVqjAT0r4WcDxTFUASE0YgPXpWvPTVIpS2PwZB6pZA3ZBqYrfZBZArFu1OsvsmwglpntYatZBlZCEfQkqO455TS7CZCSmid5iAtM4bgfAKYWxxtYhQpOoWw32RCrYHJb20jiBS5aJK2gc6pga3ldStxrdVTJd";
+			String accessToken = "EAAffZC9Xl8dEBAPcqTRMVZB2wT1d8g98YUB9TbUAIVXwRSOFLLmJxNs00oLO0TLlMf7XnempwnZBCP9lfh6t0zL7nbkvFlZABPC60TXDprR2Ty3UY9jm6gil4FtqXNv6HnPooBXND2XXFAODkWYZA1XmhZAPe950MgJ3yHAZB7jHzf3dHb4ZCqCgtYqkZBjRCJtTiJfJVakmt0hCksQJ9F6kW";
 			FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_12);
 			User me = fbClient.fetchObject("me", User.class);
 			
