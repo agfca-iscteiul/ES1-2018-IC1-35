@@ -17,7 +17,9 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class ReadXML {
-
+	/**
+	 * A função serve para ler o ficheiro XML e devolver num formato mais "friendly" para o utilizador as informações lá contidas
+	 */
 	public void readFromXML() {
 		File inputFile = new File("config.xml");
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
