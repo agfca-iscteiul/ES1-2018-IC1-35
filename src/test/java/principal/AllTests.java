@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ FacebookAppTest.class, MailAppTest.class, TwitterAppTest.class })
+@SuiteClasses({TwitterInfoTest.class , FacebookInfoTest.class, MailInfoTest.class})
 
 public class AllTests {
 
