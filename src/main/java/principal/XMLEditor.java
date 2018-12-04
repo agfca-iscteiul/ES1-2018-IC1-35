@@ -71,8 +71,33 @@ public class XMLEditor {
 			Element root = doc.getDocumentElement();
 			NodeList child = root.getElementsByTagName("Serviço");
 			for (int x = 0; x < child.getLength(); x++) {
+				Element twitter = (Element) child.item(x);
+				if (twitter.getAttribute("Plataforma").equals("Twitter")) {
+					root.removeChild(twitter);
+				}
+			}
+			TransformerFactory tf = TransformerFactory.newInstance();
+			Transformer t = tf.newTransformer();
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(new FileOutputStream("config.xml"));
+			t.transform(source, result);
+		} catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void removeFacebook() {
+		File datebase = new File("config.xml");
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder;
+		try {
+			dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(datebase);
+			Element root = doc.getDocumentElement();
+			NodeList child = root.getElementsByTagName("Serviço");
+			for (int x = 0; x < child.getLength(); x++) {
 				Element facebook = (Element) child.item(x);
-				if (facebook.getAttribute("Plataforma").equals("Twitter")) {
+				if (facebook.getAttribute("Plataforma").equals("Facebook")) {
 					root.removeChild(facebook);
 				}
 			}
@@ -82,12 +107,53 @@ public class XMLEditor {
 			StreamResult result = new StreamResult(new FileOutputStream("config.xml"));
 			t.transform(source, result);
 		} catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	public void removeOutlook() {
+		File datebase = new File("config.xml");
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder;
+		try {
+			dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(datebase);
+			Element root = doc.getDocumentElement();
+			NodeList child = root.getElementsByTagName("Serviço");
+			for (int x = 0; x < child.getLength(); x++) {
+				Element outlook = (Element) child.item(x);
+				if (outlook.getAttribute("Plataforma").equals("Mail")) {
+					root.removeChild(outlook);
+				}
+			}
+			TransformerFactory tf = TransformerFactory.newInstance();
+			Transformer t = tf.newTransformer();
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(new FileOutputStream("config.xml"));
+			t.transform(source, result);
+		} catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void addTwitterInfo() {
+		twitter.runTwitter();
+		twitter.writeTwitterXML();
+	}
+	
+	public void addFacebookInfo() {
+		facebook.runFacebook();
+		facebook.writeFacebookXML();;
+	}
+	
+	public void addOutlookInfo() {
+		outlook.runMail();
+		outlook.writeMailXML();
+	}
 	public void readFromXML() {
+		listaTwitter.clear();
+		listaFacebook.clear();
+		listaMail.clear();
 		File inputFile = new File("config.xml");
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder;
@@ -96,60 +162,64 @@ public class XMLEditor {
 			Document doc = dBuilder.parse(inputFile);
 			System.out.println("\n----- Search the XML document with xpath queries -----");
 			// Query 1
-			System.out.println("Serviço Twitter\n");
+			System.out.println("Ler do serviço Twitter\n");
 			XPathFactory xpathFactory = XPathFactory.newInstance();
 			XPath xpath = xpathFactory.newXPath();
 			XPathExpression exprAttributeT = xpath.compile("/Serviços/Serviço/Tweet/@*");
 			XPathExpression exprTextT = xpath.compile("/Serviços/Serviço/Tweet/text()");
 			NodeList nAT = (NodeList) exprAttributeT.evaluate(doc, XPathConstants.NODESET);
 			NodeList nTT = (NodeList) exprTextT.evaluate(doc, XPathConstants.NODESET);
-			String autor, tweet;
-			Date data;
+			String autorT, tweet;
+			Date dataT;
 			SimpleDateFormat formatter = new SimpleDateFormat("EE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
 			int t = 0;
 			for (int i = 0; i < nAT.getLength(); i++) {
-				autor = nAT.item(i).getNodeValue();
+				autorT = nAT.item(i).getNodeValue();
 				while (t != nTT.getLength()) {
 					i++;
-					data = formatter.parse(nAT.item(i).getNodeValue());
+					dataT = formatter.parse(nAT.item(i).getNodeValue());
 					tweet = nTT.item(t).getTextContent();
-					listaTwitter.add(new TwitterInfo(autor, tweet, data));
+					listaTwitter.add(new TwitterInfo(autorT, tweet, dataT));
 					break;
 				}
 				t++;
 			}
 			// Query 2
-			System.out.println("\nServiço Facebook\n\n");
+			System.out.println("\nLer do serviço Facebook\n\n");
 			XPathExpression exprAttributeF = xpath.compile("/Serviços/Serviço/Post/@*");
 			XPathExpression exprTextF = xpath.compile("/Serviços/Serviço/Post/text()");
 			NodeList nAF = (NodeList) exprAttributeF.evaluate(doc, XPathConstants.NODESET);
 			NodeList nTF = (NodeList) exprTextF.evaluate(doc, XPathConstants.NODESET);
+			String autorF, post;
+			Date dataF;
 			int f = 0;
 			for (int i = 0; i < nAF.getLength(); i++) {
-				System.out.println(nAF.item(i).getNodeName() + ":" + nAF.item(i).getNodeValue());
+				autorF = nAF.item(i).getNodeValue();
 				while (f != nTF.getLength()) {
 					i++;
-					System.out.println(nAF.item(i).getNodeName() + ":" + nAF.item(i).getNodeValue());
-					System.out.println(nTF.item(f).getTextContent());
-					System.out.println("--------------------------------------------------------");
+					dataF = formatter.parse(nAF.item(i).getNodeValue());
+					post = nTF.item(f).getTextContent();
+					listaFacebook.add(new FacebookInfo(autorF, post, dataF));
 					break;
 				}
 				f++;
 			}
 			// Query 3
-			System.out.println("\nServiço Email\n\n");
+			System.out.println("\nLer do serviço Outlook\n\n");
 			XPathExpression exprAttributeE = xpath.compile("/Serviços/Serviço/Mail/@*");
 			XPathExpression exprTextE = xpath.compile("/Serviços/Serviço/Mail/text()");
 			NodeList nAE = (NodeList) exprAttributeE.evaluate(doc, XPathConstants.NODESET);
 			NodeList nTE = (NodeList) exprTextE.evaluate(doc, XPathConstants.NODESET);
+			String autorM, mail;
+			Date dataM;
 			int e = 0;
 			for (int i = 0; i < nAE.getLength(); i++) {
-				System.out.println(nAE.item(i).getNodeName() + ":" + nAE.item(i).getNodeValue());
+				autorM = nAE.item(i).getNodeValue();
 				while (e != nTE.getLength()) {
 					i++;
-					System.out.println(nAE.item(i).getNodeName() + ":" + nAE.item(i).getNodeValue());
-					System.out.println(nTE.item(e).getTextContent());
-					System.out.println("--------------------------------------------------------");
+					dataM = formatter.parse(nAE.item(i).getNodeValue());
+					mail = nTE.item(e).getTextContent();
+					listaMail.add(new MailInfo(autorM, mail, dataM));
 					break;
 				}
 				e++;
