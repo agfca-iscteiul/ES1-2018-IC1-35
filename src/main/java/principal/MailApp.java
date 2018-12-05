@@ -35,6 +35,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import interfaces.Login;
+
 
 public class MailApp {
 	
@@ -42,10 +44,12 @@ public class MailApp {
 	
 	String host;
 	String mailStoreType;
-	String username;
-	String password;
+	public static String username;
+	public static String password;
 	
 	Properties properties;
+	
+
 	
 	public MailApp() {
 		
@@ -192,8 +196,6 @@ public class MailApp {
 		
 		String host = "smtp.outlook.com";
 		String mailStoreType = "smtp";
-		String username = "klvli@iscte-iul.pt";//escrever o e-mail aqui
-		String password = "russiA970426";//respetiva password
 		
 		check(host, mailStoreType, username, password);
 		

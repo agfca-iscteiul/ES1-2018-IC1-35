@@ -10,19 +10,21 @@ import javax.xml.xpath.XPathExpressionException;
 import org.xml.sax.SAXException;
 
 import interfaces.Interface;
+import interfaces.Login;
 
 
 public class Main {
 	
 
 	public static void main(String[] args) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException, TransformerFactoryConfigurationError, TransformerException {
-		TwitterApp ttapp=new TwitterApp();
+		/*TwitterApp ttapp=new TwitterApp();
 		MailApp mapp=new MailApp();
 		FacebookApp fbapp=new FacebookApp();
 		ttapp.runTwitter();
 		mapp.runMail();
-		fbapp.runFacebook();
-		Interface i=new Interface(ttapp,mapp,fbapp); 
+		fbapp.runFacebook();*/
+		Login lg = new Login();
+		//Interface i=new Interface(ttapp,mapp,fbapp); 
 	}
 
 }
