@@ -234,10 +234,12 @@ public class MailApp {
 				transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 				transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 				DOMSource source = new DOMSource(doc);
-				StreamResult result = new StreamResult(new FileOutputStream("config.xml"));
+				FileOutputStream foutstream=new FileOutputStream("config.xml");
+				StreamResult result = new StreamResult(foutstream);
 				transformer.transform(source, result);
 				StreamResult consoleResult = new StreamResult(System.out);
 				transformer.transform(source, consoleResult);
+				foutstream.close();
 			} catch (ParserConfigurationException | SAXException | IOException | TransformerFactoryConfigurationError
 					| TransformerException e) {
 				e.printStackTrace();

@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import principal.AbstractInfo;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -37,23 +39,25 @@ public class XMLEditor {
 	private ArrayList<TwitterInfo> listaTwitter = new ArrayList<TwitterInfo>();
 	private ArrayList<FacebookInfo> listaFacebook = new ArrayList<FacebookInfo>();
 	private ArrayList<MailInfo> listaMail = new ArrayList<MailInfo>();
-	private FacebookApp facebook = new FacebookApp();
-	private TwitterApp twitter = new TwitterApp();
-	private MailApp outlook = new MailApp();
+	private FacebookApp facebook;
+	private TwitterApp twitter;
+	private MailApp outlook;
 
-	public void createXMLFile() {
+	public void createXMLFile(FacebookApp facebook,TwitterApp twitter,MailApp outlook) {
+		this.facebook=facebook;
+		this.twitter=twitter;
+		this.outlook=outlook;
 		System.out.println("A criar ficheiro XML\n");
-		facebook.runFacebook();
-		twitter.runTwitter();
-		outlook.runMail();
 		twitter.writeTwitterXML();
 		facebook.writeFacebookXML();
 		outlook.writeMailXML();
 		System.out.println("\nFicheiro XML criado");
 	}
+	
 
 	public void removeXMLFile() {
 		File data = new File("config.xml");
+		System.out.println(data.exists());
 		if (data.delete()) {
 			System.out.println("O ficheiro XML foi removido");
 		} else {
@@ -137,17 +141,14 @@ public class XMLEditor {
 	}
 	
 	public void addTwitterInfo() {
-		twitter.runTwitter();
 		twitter.writeTwitterXML();
 	}
 	
 	public void addFacebookInfo() {
-		facebook.runFacebook();
 		facebook.writeFacebookXML();;
 	}
 	
 	public void addOutlookInfo() {
-		outlook.runMail();
 		outlook.writeMailXML();
 	}
 	public void readFromXML() {
@@ -229,6 +230,39 @@ public class XMLEditor {
 			e.printStackTrace();
 		}
 
+	}
+
+
+	public ArrayList<TwitterInfo> getListaTwitter() {
+		return listaTwitter;
+	}
+
+
+	public ArrayList<FacebookInfo> getListaFacebook() {
+		return listaFacebook;
+	}
+
+
+	public ArrayList<MailInfo> getListaMail() {
+		return listaMail;
+	}
+	
+	public String getContent() {
+		this.readFromXML();
+		ArrayList<AbstractInfo> lista=new ArrayList<AbstractInfo>();
+		lista.addAll(listaTwitter);
+		lista.addAll(listaFacebook);
+		lista.addAll(listaMail);
+		
+		String result=new String();
+		
+		for (AbstractInfo info:lista) {
+			result=result+("  Autor: "+info.getAutor()+"\n"+ "  Data :"+info.getData().toString()+"\n  "+info.getPost()+"\n"
+					+"----------------------------------------------------------------------"+"\n");
+		}
+		
+		return result;
+		
 	}
 
 }
