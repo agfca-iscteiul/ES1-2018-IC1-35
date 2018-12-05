@@ -121,7 +121,9 @@ public class MailApp {
 		} catch (NoSuchProviderException e) {
 			e.printStackTrace();
 		} catch (MessagingException e) {
-			e.printStackTrace();
+			XMLEditor xml=new XMLEditor();
+			xml.readFromXML();
+			lista.addAll(xml.getListaMail());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

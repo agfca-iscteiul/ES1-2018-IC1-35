@@ -64,7 +64,9 @@ public class FacebookApp {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			XMLEditor xml=new XMLEditor();
+			xml.readFromXML();
+			lista.addAll(xml.getListaFacebook());
 		}
 	}
 	

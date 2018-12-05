@@ -161,9 +161,9 @@ public class XMLEditor {
 		try {
 			dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(inputFile);
-			System.out.println("\n----- Search the XML document with xpath queries -----");
+//			System.out.println("\n----- Search the XML document with xpath queries -----");
 			// Query 1
-			System.out.println("Ler do serviço Twitter\n");
+//			System.out.println("Ler do serviço Twitter\n");
 			XPathFactory xpathFactory = XPathFactory.newInstance();
 			XPath xpath = xpathFactory.newXPath();
 			XPathExpression exprAttributeT = xpath.compile("/Serviços/Serviço/Tweet/@*");
@@ -186,7 +186,7 @@ public class XMLEditor {
 				t++;
 			}
 			// Query 2
-			System.out.println("\nLer do serviço Facebook\n\n");
+//			System.out.println("\nLer do serviço Facebook\n\n");
 			XPathExpression exprAttributeF = xpath.compile("/Serviços/Serviço/Post/@*");
 			XPathExpression exprTextF = xpath.compile("/Serviços/Serviço/Post/text()");
 			NodeList nAF = (NodeList) exprAttributeF.evaluate(doc, XPathConstants.NODESET);
@@ -206,7 +206,7 @@ public class XMLEditor {
 				f++;
 			}
 			// Query 3
-			System.out.println("\nLer do serviço Outlook\n\n");
+//			System.out.println("\nLer do serviço Outlook\n\n");
 			XPathExpression exprAttributeE = xpath.compile("/Serviços/Serviço/Mail/@*");
 			XPathExpression exprTextE = xpath.compile("/Serviços/Serviço/Mail/text()");
 			NodeList nAE = (NodeList) exprAttributeE.evaluate(doc, XPathConstants.NODESET);

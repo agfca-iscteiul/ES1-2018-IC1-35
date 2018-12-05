@@ -57,7 +57,9 @@ public class TwitterApp {
 
 			}
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			XMLEditor xml=new XMLEditor();
+			xml.readFromXML();
+			lista.addAll(xml.getListaTwitter());
 		}
 	}
 	
