@@ -16,7 +16,7 @@ public class DisplayDB {
 	private String texto;
 	
 	/**
-	 * Create the application.
+	 * Cria a aplicação.
 	 */
 	public DisplayDB(String texto) {
 		this.texto=texto;
@@ -24,7 +24,7 @@ public class DisplayDB {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Inicializa o conteúdo da janela.
 	 */
 	private void initialize() {
 		frmBaseDeDados = new JFrame();

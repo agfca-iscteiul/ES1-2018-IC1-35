@@ -26,22 +26,25 @@ public class Login extends JFrame {
     super("Login BDA");
 
     blogin = new JButton("Login");
+    blogin.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
     loginpanel = new JPanel();
     txuser = new JTextField(15);
     pass = new JPasswordField(15);
     username = new JLabel("Email - ");
+    username.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
     password = new JLabel("Pass - ");
+    password.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 
-    setSize(300,200);
+    setSize(406,283);
     setLocation(500,280);
     loginpanel.setLayout (null); 
 
 
-    txuser.setBounds(70,30,150,20);
-    pass.setBounds(70,65,150,20);
-    blogin.setBounds(110,100,80,20);
-    username.setBounds(20,28,80,20);
-    password.setBounds(20,63,80,20);
+    txuser.setBounds(99,45,270,29);
+    pass.setBounds(99,94,270,29);
+    blogin.setBounds(140,170,96,29);
+    username.setBounds(20,47,80,20);
+    password.setBounds(20,101,80,20);
 
     loginpanel.add(blogin);
     loginpanel.add(txuser);

@@ -60,12 +60,14 @@ public class Display {
 		frmDetalhes.getContentPane().add(lblData);
 		
 		textPaneAut = new JTextPane();
+		textPaneAut.setEditable(false);
 		springLayout.putConstraint(SpringLayout.NORTH, textPaneAut, 6, SpringLayout.SOUTH, lblAutor);
 		springLayout.putConstraint(SpringLayout.WEST, textPaneAut, 0, SpringLayout.WEST, frmDetalhes.getContentPane());
 		textPaneAut.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		frmDetalhes.getContentPane().add(textPaneAut);
 		
 		textPaneDate = new JTextPane();
+		textPaneDate.setEditable(false);
 		springLayout.putConstraint(SpringLayout.WEST, textPaneDate, 361, SpringLayout.WEST, frmDetalhes.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, textPaneAut, -6, SpringLayout.WEST, textPaneDate);
 		springLayout.putConstraint(SpringLayout.NORTH, textPaneDate, 6, SpringLayout.SOUTH, lblData);
@@ -74,6 +76,7 @@ public class Display {
 		frmDetalhes.getContentPane().add(textPaneDate);
 		
 		textPanePost = new JTextPane();
+		textPanePost.setEditable(false);
 		textPanePost.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		
 		scrollPane_1 = new JScrollPane(textPanePost);

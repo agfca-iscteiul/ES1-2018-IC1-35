@@ -114,7 +114,7 @@ public class Interface {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(50, 50, 1500, 974);
+		frame.setBounds(50, 50, 1500, 1007);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Bom Dia Academia");
 
@@ -221,8 +221,8 @@ public class Interface {
 		frame.getContentPane().add(scrollPane);
 
 		JLabel lblBomDiaAcademia = new JLabel("Bom Dia Academia");
-		springLayout.putConstraint(SpringLayout.EAST, lblBomDiaAcademia, -32, SpringLayout.WEST, panel);
 		springLayout.putConstraint(SpringLayout.NORTH, lblBomDiaAcademia, 0, SpringLayout.NORTH, frame.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, lblBomDiaAcademia, -32, SpringLayout.WEST, panel);
 
 
 		lblBomDiaAcademia.setFont(new Font("Lucida Fax", Font.BOLD, 84));
@@ -383,6 +383,9 @@ public class Interface {
 
 	/**
 	 * Função que permite ativar os campos dos filtros quando este são selecionados
+	 *  @param chcbox para activar ou desactivar componentes
+	 *  @param component primeiro componente do filtro
+	 *  @param componente2 segundo componente do filtro
 	 */
 	private void enableComponents(JCheckBox chcbox,JComponent component,JComponent component2) {
 		chcbox.addMouseListener(new MouseAdapter() {
@@ -406,6 +409,8 @@ public class Interface {
 
 	/**
 	 * Função que permite ativar os campos dos filtros quando este são selecionados
+	 *  @param chcbox para activar ou desactivar componentes
+	 *  @param component primeiro componente do filtro
 	 */
 	private void enableComponents(JCheckBox chcbox,JComponent component) {
 		chcbox.addMouseListener(new MouseAdapter() {
@@ -427,6 +432,9 @@ public class Interface {
 
 	/**
 	 * Incializar os botões que permitem filtrar as fontes dos posts
+	 *  @param btnFacebook botão do Facebook
+	 *  @param btnTwitter botão do Twitter
+	 *  @param btnEmail botão do Email
 	 */
 	private void initializeLabel(JButton btnFacebook,JButton btnTwitter,JButton btnEmail) {
 		lblFB = new JLabel("  Ativo");
@@ -448,23 +456,31 @@ public class Interface {
 		panel.add(lblM);
 	}
 
-
+	/**
+	 * Obter o xml da interface
+	 */
 	public XMLEditor getXml() {
 		return xml;
 	}
 
-	public void setXml(XMLEditor xml) {
-		this.xml = xml;
-	}
-
+	/**
+	 * Criar a base de dados da Aplicação
+	 */
 	public void criarXml() {
 		xml.createXMLFile(this.fbapp,this.ttapp,this.mapp); 
 	}
-
+	
+	/**
+	 * Remover a base de dados da Aplicação
+	 */
 	public void removerXml() {
 		xml.removeXMLFile();
 	}
 	
+	/**
+	 * Incializar os botões do menu de Adicionar/Remover conteúdo da base de dados
+	 * @param opcao botão do Email
+	 */
 	public void auxXml(int opcao) {
 		 switch (opcao) {
          case 1:
@@ -496,7 +512,6 @@ public class Interface {
 	private void initializeAux() {
 
 		txtFiltros = new JTextField();
-		sl_panel.putConstraint(SpringLayout.WEST, txtFiltros, 105, SpringLayout.WEST, panel);
 		txtFiltros.setEnabled(false);
 		txtFiltros.setText("escreva aqui o filtro");
 		txtFiltros.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
@@ -517,22 +532,23 @@ public class Interface {
 		panel.add(btnOk);
 
 		chckbxPC = new JCheckBox("Palavra-chave");
-		sl_panel.putConstraint(SpringLayout.WEST, chckbxPC, 44, SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.SOUTH, chckbxPC, -453, SpringLayout.SOUTH, panel);
-		sl_panel.putConstraint(SpringLayout.NORTH, txtFiltros, 6, SpringLayout.SOUTH, chckbxPC);
+		sl_panel.putConstraint(SpringLayout.SOUTH, chckbxPC, -6, SpringLayout.NORTH, txtFiltros);
 		chckbxPC.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		panel.add(chckbxPC);
 
 		chckbxOrigem = new JCheckBox("Origem");
-		sl_panel.putConstraint(SpringLayout.WEST, chckbxOrigem, 0, SpringLayout.WEST, chckbxPC);
+		sl_panel.putConstraint(SpringLayout.WEST, chckbxOrigem, 44, SpringLayout.WEST, panel);
 		sl_panel.putConstraint(SpringLayout.EAST, chckbxOrigem, -343, SpringLayout.EAST, panel);
+		sl_panel.putConstraint(SpringLayout.WEST, chckbxPC, 0, SpringLayout.WEST, chckbxOrigem);
+		sl_panel.putConstraint(SpringLayout.SOUTH, txtFiltros, -12, SpringLayout.NORTH, chckbxOrigem);
 		chckbxOrigem.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		panel.add(chckbxOrigem);
 
 		txtOrigem = new JTextField();
+		sl_panel.putConstraint(SpringLayout.WEST, txtFiltros, 0, SpringLayout.WEST, txtOrigem);
+		sl_panel.putConstraint(SpringLayout.EAST, txtFiltros, 0, SpringLayout.EAST, txtOrigem);
 		sl_panel.putConstraint(SpringLayout.WEST, txtOrigem, 105, SpringLayout.WEST, panel);
 		sl_panel.putConstraint(SpringLayout.EAST, txtOrigem, -35, SpringLayout.EAST, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, txtFiltros, 0, SpringLayout.EAST, txtOrigem);
 		sl_panel.putConstraint(SpringLayout.SOUTH, chckbxOrigem, -6, SpringLayout.NORTH, txtOrigem);
 		sl_panel.putConstraint(SpringLayout.NORTH, txtOrigem, 566, SpringLayout.NORTH, panel);
 		txtOrigem.setEnabled(false);
@@ -549,7 +565,7 @@ public class Interface {
 		});
 
 		chckbxData = new JCheckBox("Data");
-		sl_panel.putConstraint(SpringLayout.WEST, chckbxData, 0, SpringLayout.WEST, chckbxPC);
+		sl_panel.putConstraint(SpringLayout.WEST, chckbxData, 44, SpringLayout.WEST, panel);
 		sl_panel.putConstraint(SpringLayout.EAST, chckbxData, -343, SpringLayout.EAST, panel);
 		chckbxData.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		panel.add(chckbxData);
@@ -608,6 +624,10 @@ public class Interface {
 
 	}
 
+	
+	/**
+	 * Ação para criar a base de dados
+	 */
 	private class CriarAction extends AbstractAction {
 		Interface inface;
 
@@ -622,7 +642,10 @@ public class Interface {
 		}
 	}
 
-
+	
+	/**
+	 * Ação para remover a base de dados
+	 */
 	private class RemoverAction extends AbstractAction {
 		Interface inface;
 
@@ -635,6 +658,10 @@ public class Interface {
 			this.inface.removerXml();
 		}
 	}
+	
+	/**
+	 * Ação para criar os elementos do menu de barra
+	 */
 	private class AuxAction extends AbstractAction {
 		Interface inface;
 		int opcao;
@@ -645,27 +672,21 @@ public class Interface {
 			 switch (opcao) {
 	         case 1:
 	        	 putValue(NAME, "Facebook");
-	 		     putValue(SHORT_DESCRIPTION, "Some short description");
 	             break;
 	         case 2:
 	        	 putValue(NAME, "Twitter");
-	 			 putValue(SHORT_DESCRIPTION, "Some short description");
 	             break;
 	         case 3:
 	        	 putValue(NAME, "Outlook");
-	 			 putValue(SHORT_DESCRIPTION, "Some short description");
 	             break;
 	         case 4:
 	        	 putValue(NAME, "Facebook");
-	 			 putValue(SHORT_DESCRIPTION, "Some short description");
 	             break;
 	         case 5:
 	        	 putValue(NAME, "Twitter");
-	 			 putValue(SHORT_DESCRIPTION, "Some short description");
 	             break;
 	         case 6:
 	        	 putValue(NAME, "Outlook");
-	 			 putValue(SHORT_DESCRIPTION, "Some short description");
 	             break;
 	         default:
 	             break;
@@ -675,6 +696,10 @@ public class Interface {
 			inface.auxXml(opcao);
 		}
 	}
+	
+	/**
+	 * Ação para mostrar a base de dados
+	 */
 	private class MostrarAction extends AbstractAction {
 		Interface inface;
 		
