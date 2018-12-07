@@ -2,26 +2,38 @@ package principal;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 public class FacebookAppTest {
-	FacebookApp app = new FacebookApp();
 
+	private FacebookApp app = new FacebookApp();
+	private WebDriver driver;
+	
+	public void setUpBeforeClass() throws InterruptedException{
+		  driver=new ChromeDriver();
+		  driver.get("http://www.facebook.com");
+		  Thread.sleep(5000);
+		  driver.findElement(By.id("email")).sendKeys("usares@outlook.pt");
+		  driver.findElement(By.id("pass")).sendKeys("ESgrupo35");
+		  driver.findElement(By.id("u_0_n")).click();
+		  System.out.println("Login com Sucesso");
+	}
+	
+	
 	@Test
 	public void testRunFacebook() {
-		app.runFacebook();
-		assertNotNull(app.getListPost());
 	}
 
 	@Test
 	public void testGetList() {
-		app.runFacebook();
-		assertEquals(app.getList(), app.getListPost());
 	}
-
-	@Test
-	public void testWriteFacebookXML() {
-		fail("Not yet implemented");
+	
+	public void tearDownAfterClass() {
+		driver.close();
 	}
-
 }
