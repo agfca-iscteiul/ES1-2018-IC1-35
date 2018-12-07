@@ -42,7 +42,7 @@ public class FacebookApp {
 	long yourmilliseconds = System.currentTimeMillis();
 	SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
 	Date resultdate = new Date(yourmilliseconds);
-	String accessToken = "EAAEfJq3XIicBAMaihs0igfAGMdbmyrWFEOgWlh8RcZBCAvEgegZCqIoMvun6VrhXyo3g4x8cNp9qM7AUVEZBhfG8ZAUQO7SONOJusYjZCExUtqdXp1Bbo0gTVwEyx2HIiU9zKXlg7mueaYszb2HwscRO4ZCXXhLEumNQUApPIB5mQ8J1ZCe1xOw0ez7q8pU9ciZAdxq9M0d5gddr59DWNuMlWAeMTZCXnxhcZD";
+	String accessToken = "EAAEfJq3XIicBAPTFBLVOcDZAnFZCOzehs4VHdznVQ72PhOnvktoZC8h8pbzs5AKvcDdOXPc4E92DR67CkSX6pt5MyG803TnfpNcfmmvP4nXeLpT5mr95yqTjEjKe0TOzf9gsH52XIotYOPfoztCOvBgNfVOHxvEooEmQ6JV4UiZBsLAfK3FK";
 	private ArrayList<String> tokens = new ArrayList<String>();
 	private String firstExtend = "315725962486311";
 	private String secondExtend = "e4a7080fe0f8b1d33e682f71875971f0";
@@ -63,21 +63,12 @@ public class FacebookApp {
 			User me = fbClient.fetchObject("me", User.class);
 			tokens.add(accessToken);
 
-			AccessToken exAcessToken = fbClient.obtainExtendedAccessToken(firstExtend, secondExtend);
-			tokens.add(firstExtend);
-			tokens.add(secondExtend);
-			System.out.println(exAcessToken.getAccessToken() + exAcessToken.getExpires());
-			System.out.println(exAcessToken.toString());
-
-
 			Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
 
 			for (List<Post> page : result) {
 				for (Post aPost : page) {
-					// Filters only posts that contain the word "ISCTE"
-					if (aPost.getMessage() != null/* && aPost.getMessage().contains("ISCTE") */) {
+					if (aPost.getMessage() != null && aPost.getMessage().contains("ISCTE")) {
 						lista.add(new FacebookInfo(me.getName(), aPost.getMessage(), aPost.getCreatedTime()));
-						System.out.println("added to list");
 					}
 				}
 				tokens.add(accessToken);
@@ -122,12 +113,11 @@ public class FacebookApp {
 	 * 
 	 * publicar post num grupo cujo o utilizador tenhas permissões de administrador
 	 * 
-	 * @param content texto que o utilizador pretende enviar no post
+	 * @param content	texto que o utilizador pertende postar no grupo
 	 */
 	
 	
 	public void publicGroup(String content) {
-		//a publicar no grupo ES que a conta é administradora
 		FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_12);
 		FacebookType response = fbClient.publish("372019400036311/feed", FacebookType.class, Parameter.with("message", content));
 	}
