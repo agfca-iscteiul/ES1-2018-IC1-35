@@ -44,15 +44,16 @@ public class FacebookApp {
 	Date resultdate = new Date(yourmilliseconds);
 	String accessToken = "EAAEfJq3XIicBAMaihs0igfAGMdbmyrWFEOgWlh8RcZBCAvEgegZCqIoMvun6VrhXyo3g4x8cNp9qM7AUVEZBhfG8ZAUQO7SONOJusYjZCExUtqdXp1Bbo0gTVwEyx2HIiU9zKXlg7mueaYszb2HwscRO4ZCXXhLEumNQUApPIB5mQ8J1ZCe1xOw0ez7q8pU9ciZAdxq9M0d5gddr59DWNuMlWAeMTZCXnxhcZD";
 	private ArrayList<String> tokens = new ArrayList<String>();
-	private String firstExtend, secondExtend;
+	private String firstExtend = "315725962486311";
+	private String secondExtend = "e4a7080fe0f8b1d33e682f71875971f0";
 	
 	public FacebookApp() {
 
-	}
-
+	} 
+ 
 	/**
 	 * Aceder ao Token e extender o tempo do mesmo através da API RestFB, imprimir
-	 * os post da timeline do user com a palavra "ISCTE" e adiciona-los ao array
+	 * os post da timeline do user com a palavra "ISCTE" e adiciona-los ao array 
 	 * como FacebookInfo
 	 */
 	public void runFacebook() {
@@ -60,8 +61,7 @@ public class FacebookApp {
 			FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_12);
 			User me = fbClient.fetchObject("me", User.class);
 			tokens.add(accessToken);
-			firstExtend = "315725962486311";
-			secondExtend = "e4a7080fe0f8b1d33e682f71875971f0";
+
 
 			// Extender o tempo do token
 			AccessToken exAcessToken = fbClient.obtainExtendedAccessToken(firstExtend, secondExtend);

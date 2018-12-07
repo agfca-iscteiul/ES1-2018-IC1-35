@@ -33,7 +33,11 @@ import twitter4j.conf.ConfigurationBuilder;
 public class TwitterApp {
 
 	private ArrayList<TwitterInfo> lista = new ArrayList<TwitterInfo>(); 
-
+	private String consumerKey = "7jt7DCYjdjYjGoBaDPYCdYpvi";
+	private String consumerSecret = "PktQuGnaU4SzMhmouwq0rR6EzOhe0wpFYYqhbqmHOG6XEh3Ypn";
+	private String accessToken = "1067778655647121408-aMtSPX7fC5fjoke9yXbJaqr6zeH8Wd";
+	private String accessTokenSecret = "xhqjK3CITYEeVHop8VjOPsM87pUrDMgRjdzLSyk2tyTJR";
+	
 	public TwitterApp() {
 
 	}
@@ -44,10 +48,10 @@ public class TwitterApp {
 	public void runTwitter() { 
 		try {
 			ConfigurationBuilder cb = new ConfigurationBuilder();
-			cb.setDebugEnabled(true).setOAuthConsumerKey("7jt7DCYjdjYjGoBaDPYCdYpvi")
-					.setOAuthConsumerSecret("PktQuGnaU4SzMhmouwq0rR6EzOhe0wpFYYqhbqmHOG6XEh3Ypn")
-					.setOAuthAccessToken("1067778655647121408-aMtSPX7fC5fjoke9yXbJaqr6zeH8Wd")
-					.setOAuthAccessTokenSecret("xhqjK3CITYEeVHop8VjOPsM87pUrDMgRjdzLSyk2tyTJR");
+			cb.setDebugEnabled(true).setOAuthConsumerKey(consumerKey)
+					.setOAuthConsumerSecret(consumerSecret)
+					.setOAuthAccessToken(accessToken)
+					.setOAuthAccessTokenSecret(accessTokenSecret);
 			TwitterFactory tf = new TwitterFactory(cb.build());
 			Twitter twitter = tf.getInstance();
 			List<Status> statuses = twitter.getHomeTimeline();
@@ -67,22 +71,32 @@ public class TwitterApp {
 	
 	
 	public void tweet(String content) {
+		TwitterFactory twitterFactory = new TwitterFactory();
+		Twitter twitter = twitterFactory.getInstance();
+		twitter.setOAuthConsumer(consumerKey, consumerSecret);
+		AccessToken accessToken2 = new AccessToken(accessToken, accessTokenSecret);
+		twitter.setOAuthAccessToken(accessToken2);
+		try {
+			Status status = twitter.updateStatus(content);
+		} catch (TwitterException e) {
+			System.out.println("not sending");
+			e.printStackTrace();
+		}
+	}	
 
-	TwitterFactory twitterFactory = new TwitterFactory();
-	
-	Twitter twitter = twitterFactory.getInstance();
-	twitter.setOAuthConsumer("7jt7DCYjdjYjGoBaDPYCdYpvi", "PktQuGnaU4SzMhmouwq0rR6EzOhe0wpFYYqhbqmHOG6XEh3Ypn");
-	AccessToken accessToken = new AccessToken("1067778655647121408-aMtSPX7fC5fjoke9yXbJaqr6zeH8Wd", "xhqjK3CITYEeVHop8VjOPsM87pUrDMgRjdzLSyk2tyTJR");
-	twitter.setOAuthAccessToken(accessToken);
-	
-	try {
-		Status status = twitter.updateStatus(content);
+	public void retweet(Long tweetId) {
+	TwitterFactory factory = new TwitterFactory();
+    Twitter twitter = factory.getInstance();
+    twitter.setOAuthConsumer(consumerKey, consumerSecret);
+    AccessToken accessToken2 = new AccessToken(accessToken, accessTokenSecret);
+    twitter.setOAuthAccessToken(accessToken2);
+    try {
+		twitter.retweetStatus(tweetId);
 	} catch (TwitterException e) {
-		System.out.println("not sending");
+		System.out.println("Erro no Retweet!");
 		e.printStackTrace();
 	}
-	}	
-	
+	}
 	
 	public ArrayList<TwitterInfo> getListPost(){
 		return lista;
