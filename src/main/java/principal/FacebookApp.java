@@ -29,7 +29,9 @@ import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.FacebookClient.AccessToken;
+import com.restfb.Parameter;
 import com.restfb.Version;
+import com.restfb.types.FacebookType;
 import com.restfb.types.Group;
 import com.restfb.types.Post;
 import com.restfb.types.User;
@@ -39,7 +41,7 @@ public class FacebookApp {
 	long yourmilliseconds = System.currentTimeMillis();
 	SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");    
 	Date resultdate = new Date(yourmilliseconds);
-
+	String accessToken = "EAAEfJq3XIicBAHbGP4KfR5crUqfFU7NDj7HZBwZAvdirRjUSmYx1LE6ozGqTKz8MGf2hHF5fIgDHlzfmyLr7vaagVS1TZA0cI4NUOtW1pebeZBmQkqDd6ESCcl0kDHB499kRi5ojT3hQFBSexGx5sNbUP9kkwdo01kB4XSqUOBK6ZAhAyQg1M0ZAhZBRmbozC9Oh06izXb2PHm1YXD43dcZBhpvDEAFWi2IZD";
 	public FacebookApp() {
 
 	} 
@@ -49,7 +51,6 @@ public class FacebookApp {
 	 */
 	public void runFacebook() {
 		try {
-			String accessToken = "EAAEfJq3XIicBAHbGP4KfR5crUqfFU7NDj7HZBwZAvdirRjUSmYx1LE6ozGqTKz8MGf2hHF5fIgDHlzfmyLr7vaagVS1TZA0cI4NUOtW1pebeZBmQkqDd6ESCcl0kDHB499kRi5ojT3hQFBSexGx5sNbUP9kkwdo01kB4XSqUOBK6ZAhAyQg1M0ZAhZBRmbozC9Oh06izXb2PHm1YXD43dcZBhpvDEAFWi2IZD";
 			FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_12);
 			User me = fbClient.fetchObject("me", User.class);
 			
@@ -118,9 +119,11 @@ public class FacebookApp {
 	}
 	
 	
-	/*public void publicGroup(String content()) {
-		
-	}*/
+	public void publicGroup(String content) {
+		//a publicar no grupo ES que a conta é administradora
+		FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_12);
+		FacebookType response = fbClient.publish("372019400036311/feed", FacebookType.class, Parameter.with("message", content));
+	}
 	/**
 	 * Transformar as lista de FacebookInfo para listas AbstractInfo
 	 * @return lista AbstractInfo com os post
