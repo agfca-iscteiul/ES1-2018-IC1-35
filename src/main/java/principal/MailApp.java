@@ -3,10 +3,14 @@ package principal;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.mail.Folder;
 import javax.mail.Message;
@@ -35,7 +39,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
-import interfaces.Login;
+import interfaces.Interface;
+import interfaces.LoginInterface;
 
 
 public class MailApp {
@@ -105,7 +110,18 @@ public class MailApp {
 			
 			Store store = emailSession.getStore("pop3s");
 			
-			store.connect(host, user, password);
+			//verifica se esta offline
+			if(check()){
+				
+			LoginInterface login=new LoginInterface();
+			
+			while(!login.isValido()) {
+				System.out.println("não conectado");
+			}
+			
+			store.connect(host, login.getUN(), login.getPW());
+			
+			}
 			
 			Folder emailFolder = store.getFolder("INBOX"); 
 			emailFolder.open(Folder.READ_ONLY);
@@ -286,5 +302,21 @@ public class MailApp {
 			}
 		}
 	}
+	
+	    public boolean check() throws Exception 
+	    { 
+	        Process process = java.lang.Runtime.getRuntime().exec("ping www.geeksforgeeks.org"); 
+	        int x = process.waitFor(); 
+	        if (x == 0) { 
+	            return true;
+	        } 
+	        else { 
+	            return false;
+	        } 
+	    } 
+	   
+	
+	
+	
 
 }
