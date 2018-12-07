@@ -14,9 +14,9 @@ import java.util.*;
 public class Login extends JFrame {
   JButton blogin;
   JPanel loginpanel;
-  JTextField txuser;
+  JTextField txuser; 
   JTextField pass;
-  JButton newUSer;
+  JButton newUSer; 
   JLabel username;
   JLabel password;
   String UN;
@@ -79,7 +79,7 @@ public class Login extends JFrame {
   		fbapp.runFacebook();
         
       	Interface i=new Interface(ttapp,mapp,fbapp); 
-          
+        //ttapp.tweet("");
       }
 
 

@@ -97,13 +97,17 @@ public class MailApp {
 			
 			properties = new Properties();
 			
-			properties.put("mail.smtp.host", host);
-			properties.put("mail.smtp.port", "993");
-			properties.put("mail.smtp.starttls.enable", "true");
+	
+			 properties.setProperty("mail.store.protocol", "imaps");
+	         properties.put("mail.imap-mail.outlook.com.ssl.enable", "true");
+	         properties.put("mail.pop3.host", "outlook.com");
+	         properties.put("mail.pop3.port", "995");
+	         properties.put("mail.pop3.starttls.enable", "true");
 			
+		     
 			Session emailSession = Session.getDefaultInstance(properties);
 			
-			Store store = emailSession.getStore("pop3s");
+			Store store = emailSession.getStore();
 			
 			store.connect(host, user, password);
 			
@@ -114,7 +118,7 @@ public class MailApp {
 			
 			for (int i = 0; i < 50; i++) {
 				Message msg = msgs[i];
-				if(msg.getContent().toString().contains("ISCTE")) {
+				if(msg.getContent().toString().contains("iscte")) {
 					lista.add(new MailInfo(msg.getFrom()[0].toString(),Jsoup.parse(msg.getContent().toString()).text(),msg.getSentDate()));
 				}
 			}
@@ -148,7 +152,7 @@ public class MailApp {
 	 * @param text	corpo da mensagem do e-mail a enviar
 	 */
 	
-	public void sendEmail(String to, String username, String password, String subject, String text) {
+	public void sendEmail(String to, String subject, String text) {
 		
 		String host="smtp.office365.com";
 

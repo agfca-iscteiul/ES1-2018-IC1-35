@@ -25,12 +25,14 @@ import org.xml.sax.SAXException;
 
 import twitter4j.Status;
 import twitter4j.Twitter;
+import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
 import twitter4j.conf.ConfigurationBuilder;
 
 public class TwitterApp {
 
-	private ArrayList<TwitterInfo> lista = new ArrayList<TwitterInfo>();
+	private ArrayList<TwitterInfo> lista = new ArrayList<TwitterInfo>(); 
 
 	public TwitterApp() {
 
@@ -42,10 +44,10 @@ public class TwitterApp {
 	public void runTwitter() { 
 		try {
 			ConfigurationBuilder cb = new ConfigurationBuilder();
-			cb.setDebugEnabled(true).setOAuthConsumerKey("W1f0VvgWPfT8OBqVxvy4Mw")
-					.setOAuthConsumerSecret("zKH2yAtRyefwsgOO8h8Szc4kru68iEm95QmIG7svw")
-					.setOAuthAccessToken("36481851-VhzByC4f9MSsZES1QZQ4e4iBvA9bWGLyv9HKFpy7c")
-					.setOAuthAccessTokenSecret("OahDuXF2Lhl5xlNYALhYZir6xSflAxKP9Zh89T05po");
+			cb.setDebugEnabled(true).setOAuthConsumerKey("7jt7DCYjdjYjGoBaDPYCdYpvi")
+					.setOAuthConsumerSecret("PktQuGnaU4SzMhmouwq0rR6EzOhe0wpFYYqhbqmHOG6XEh3Ypn")
+					.setOAuthAccessToken("1067778655647121408-aMtSPX7fC5fjoke9yXbJaqr6zeH8Wd")
+					.setOAuthAccessTokenSecret("xhqjK3CITYEeVHop8VjOPsM87pUrDMgRjdzLSyk2tyTJR");
 			TwitterFactory tf = new TwitterFactory(cb.build());
 			Twitter twitter = tf.getInstance();
 			List<Status> statuses = twitter.getHomeTimeline();
@@ -64,9 +66,26 @@ public class TwitterApp {
 	}
 	
 	
+	public void tweet(String content) {
+
+	TwitterFactory twitterFactory = new TwitterFactory();
+	
+	Twitter twitter = twitterFactory.getInstance();
+	twitter.setOAuthConsumer("7jt7DCYjdjYjGoBaDPYCdYpvi", "PktQuGnaU4SzMhmouwq0rR6EzOhe0wpFYYqhbqmHOG6XEh3Ypn");
+	AccessToken accessToken = new AccessToken("1067778655647121408-aMtSPX7fC5fjoke9yXbJaqr6zeH8Wd", "xhqjK3CITYEeVHop8VjOPsM87pUrDMgRjdzLSyk2tyTJR");
+	twitter.setOAuthAccessToken(accessToken);
+	
+	try {
+		Status status = twitter.updateStatus(content);
+	} catch (TwitterException e) {
+		System.out.println("not sending");
+		e.printStackTrace();
+	}
+	}	
+	
+	
 	public ArrayList<TwitterInfo> getListPost(){
 		return lista;
-		
 	}
 	
 	/**
