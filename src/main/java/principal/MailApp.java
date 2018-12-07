@@ -45,8 +45,8 @@ public class MailApp {
 	
 	String host;
 	String mailStoreType;
-	public static String username;
-	public static String password;
+	public String username;
+	public String password;
 	
 	Properties properties;
 	
@@ -120,7 +120,8 @@ public class MailApp {
 			}
 			
 			store.connect(host, login.getUN(), login.getPW());
-			
+			username=login.getUN();
+			this.password=login.getPW();
 			}
 			
 			Folder emailFolder = store.getFolder("INBOX"); 
@@ -128,7 +129,7 @@ public class MailApp {
 			
 			Message[] msgs = emailFolder.getMessages();
 			
-			for (int i = 0; i < 50; i++) {
+			for (int i = 0; i < msgs.length; i++) {
 				Message msg = msgs[i];
 				if(msg.getContent().toString().contains("iscte")) {
 					lista.add(new MailInfo(msg.getFrom()[0].toString(),Jsoup.parse(msg.getContent().toString()).text(),msg.getSentDate()));
@@ -165,6 +166,8 @@ public class MailApp {
 	 */
 	
 	public void sendEmail(String to, String subject, String text) {
+		
+		System.out.println(username+"   "+password);
 		
 		String host="smtp.office365.com";
 

@@ -8,6 +8,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.DefaultListModel;
 
@@ -303,6 +305,7 @@ public class Interface {
 		JMenuItem mntmOutlook_2 = new JMenuItem("Outlook");
 		mntmOutlook_2.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		mnEnviar.add(mntmOutlook_2);
+		mntmOutlook_2.setAction(new EmailAction(this.mapp) );
 
 	}
 
@@ -726,6 +729,18 @@ public class Interface {
 		}
 		public void actionPerformed(ActionEvent e) {
 			DisplayDB displaydbs=new DisplayDB(inface.getXml().getContent());
+		}
+	}
+	
+	private class EmailAction extends AbstractAction {
+		MailApp mapp;
+		
+		public EmailAction(MailApp mapp) {
+			this.mapp=mapp;
+			putValue(NAME, "Outlook");
+		}
+		public void actionPerformed(ActionEvent e) {
+			Email mail=new Email(this.mapp);
 		}
 	}
 }
