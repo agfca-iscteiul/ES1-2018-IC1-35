@@ -287,6 +287,22 @@ public class Interface {
 		mntmOutlook_1.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		mntmOutlook_1.setAction(new AuxAction(this,6));
 		mnAdicionar.add(mntmOutlook_1);
+		
+		JMenu mnEnviar = new JMenu("Enviar");
+		mnEnviar.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
+		menuBar.add(mnEnviar);
+		
+		JMenuItem mntmFacebook_2 = new JMenuItem("Facebook");
+		mntmFacebook_2.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
+		mnEnviar.add(mntmFacebook_2);
+		
+		JMenuItem mntmTwitter_2 = new JMenuItem("Twitter");
+		mntmTwitter_2.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
+		mnEnviar.add(mntmTwitter_2);
+		
+		JMenuItem mntmOutlook_2 = new JMenuItem("Outlook");
+		mntmOutlook_2.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
+		mnEnviar.add(mntmOutlook_2);
 
 	}
 
@@ -307,7 +323,7 @@ public class Interface {
 	 * Percorre a lista main, adicionando os post ,das fontes de informaçao que se encontram selecionadas
 	 * na pesquisa, na lista de representacao
 	 */
-	private void optionList() {
+	public void optionList() {
 		if(!aListRepresent.isEmpty())
 			aListRepresent.clear();
 		for(AbstractInfo info: aListMain) {
@@ -327,7 +343,7 @@ public class Interface {
 	/**
 	 * Percorre a lista main, adicionando os post conforme os filros, à lista filtrada
 	 */
-	private void filtrList() {
+	public void filtrList() {
 		if(!aListFiltrada.isEmpty())
 			aListFiltrada.clear();
 		if(filtroPC==null && filtroOrigem==null && dateIn==null && dateFim==null) {

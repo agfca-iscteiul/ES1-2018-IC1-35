@@ -13,7 +13,6 @@ public class XMLEditorTest {
 	@Test
 	public void testContent() {
 		String content=xml.getContent();
-		System.out.println(content.isEmpty());
 		assertTrue(!content.isEmpty());
 	}
 	

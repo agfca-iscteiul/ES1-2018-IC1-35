@@ -151,6 +151,7 @@ public class XMLEditor {
 	public void addOutlookInfo() {
 		outlook.writeMailXML();
 	}
+	
 	public void readFromXML() {
 		listaTwitter.clear();
 		listaFacebook.clear();
