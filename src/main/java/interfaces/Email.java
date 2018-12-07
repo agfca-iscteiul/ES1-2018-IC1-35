@@ -83,11 +83,11 @@ public class Email {
 		
 		btnEnviar.addActionListener(new ActionListener() {
 		      public void actionPerformed(ActionEvent e) {
-		    	  System.out.println(textDest.getText());
-		    	  System.out.println(textTema.getText());
-		    	  System.out.println(textTexto.getText());
 		    	  mapp.sendEmail(textDest.getText(), textTema.getText(), textTexto.getText());
-		          
+		    	  JFrame parent = new JFrame();
+
+		    	  JOptionPane.showMessageDialog(parent, "Mensagem Enviada");
+		    	  frmEnviarEmail.dispose();
 		          
 		      }
 

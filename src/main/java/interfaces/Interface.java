@@ -297,10 +297,12 @@ public class Interface {
 		JMenuItem mntmFacebook_2 = new JMenuItem("Facebook");
 		mntmFacebook_2.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		mnEnviar.add(mntmFacebook_2);
+		mntmFacebook_2.setAction(new FacebookAction(this.fbapp));
 		
 		JMenuItem mntmTwitter_2 = new JMenuItem("Twitter");
 		mntmTwitter_2.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		mnEnviar.add(mntmTwitter_2);
+		mntmTwitter_2.setAction(new TwitterAction(this.ttapp));
 		
 		JMenuItem mntmOutlook_2 = new JMenuItem("Outlook");
 		mntmOutlook_2.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
@@ -741,6 +743,30 @@ public class Interface {
 		}
 		public void actionPerformed(ActionEvent e) {
 			Email mail=new Email(this.mapp);
+		}
+	}
+	
+	private class TwitterAction extends AbstractAction {
+		TwitterApp ttapp;
+		
+		public TwitterAction(TwitterApp ttapp) {
+			this.ttapp=ttapp;
+			putValue(NAME, "Twitter");
+		}
+		public void actionPerformed(ActionEvent e) {
+			Twitter tweet=new Twitter(this.ttapp);
+		}
+	}
+	
+	private class FacebookAction extends AbstractAction {
+		FacebookApp fbapp;
+		
+		public FacebookAction(FacebookApp fbapp) {
+			this.fbapp=fbapp;
+			putValue(NAME, "Facebook");
+		}
+		public void actionPerformed(ActionEvent e) {
+			Facebook post=new Facebook(this.fbapp);
 		}
 	}
 }
