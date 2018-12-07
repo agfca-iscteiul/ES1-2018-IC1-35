@@ -3,6 +3,7 @@ package principal;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -35,9 +37,15 @@ import com.restfb.types.Post;
 import com.restfb.types.User;
 
 public class FacebookApp {
-	private ArrayList<FacebookInfo> lista = new ArrayList<FacebookInfo>();
-	private String accessToken;
 
+	private ArrayList<FacebookInfo> lista = new ArrayList<FacebookInfo>();
+	long yourmilliseconds = System.currentTimeMillis();
+	SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
+	Date resultdate = new Date(yourmilliseconds);
+	String accessToken = "EAAEfJq3XIicBAMaihs0igfAGMdbmyrWFEOgWlh8RcZBCAvEgegZCqIoMvun6VrhXyo3g4x8cNp9qM7AUVEZBhfG8ZAUQO7SONOJusYjZCExUtqdXp1Bbo0gTVwEyx2HIiU9zKXlg7mueaYszb2HwscRO4ZCXXhLEumNQUApPIB5mQ8J1ZCe1xOw0ez7q8pU9ciZAdxq9M0d5gddr59DWNuMlWAeMTZCXnxhcZD";
+	private ArrayList<String> tokens = new ArrayList<String>();
+	private String firstExtend, secondExtend;
+	
 	public FacebookApp() {
 
 	}
@@ -49,67 +57,75 @@ public class FacebookApp {
 	 */
 	public void runFacebook() {
 		try {
-			accessToken = "EAAffZC9Xl8dEBAPWiu23ZAnlwDEIFcl9olxZBPiZCHdZBp4mSgy155GSHL2C6f45ixXrQUcNOdpy4rscyQur6lIEZBZBOmPYZA5B0DkfxZCbm0fhkWWP8BlTdZBsBb5qi5fibRiZAiymk2GHTocR3PxkwJ8YnetpiZCCUwEnxZCaXiKqB9QMc8lFEMhgg9uAWRzqqG1pDtSAInG3nCcPqcG14nja6";
 			FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_12);
 			User me = fbClient.fetchObject("me", User.class);
+			tokens.add(accessToken);
+			firstExtend = "315725962486311";
+			secondExtend = "e4a7080fe0f8b1d33e682f71875971f0";
 
 			// Extender o tempo do token
-			AccessToken exAcessToken = fbClient.obtainExtendedAccessToken("2216614735245777",
-					"47baee1d3c2b6366f7212a3dfa403dd3");
+			AccessToken exAcessToken = fbClient.obtainExtendedAccessToken(firstExtend, secondExtend);
+			tokens.add(firstExtend);
+			tokens.add(secondExtend);
 			System.out.println(exAcessToken.getAccessToken() + exAcessToken.getExpires());
+			System.out.println(exAcessToken.toString());
 
 			// Imprimir os post da timeline do user
+
 			Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
 
 			for (List<Post> page : result) {
 				for (Post aPost : page) {
 					// Filters only posts that contain the word "ISCTE"
-					if (aPost.getMessage() != null && aPost.getMessage().contains("ISCTE")) {
+					if (aPost.getMessage() != null/* && aPost.getMessage().contains("ISCTE") */) {
 						lista.add(new FacebookInfo(me.getName(), aPost.getMessage(), aPost.getCreatedTime()));
+						System.out.println("added to list");
 					}
 				}
+				tokens.add(accessToken);
 			}
-			/*
-			// Imprimir os post dos grupos dos quais somos admin
-			Scanner input = new Scanner(System.in);
 
 			Connection<Group> groupFeed = fbClient.fetchConnection("me/groups", Group.class);
 
 			for (List<Group> page : groupFeed) {
 				for (Group aGroup : page) {
-					System.out.println("Quer obter post do grupo " + aGroup.getName() + "? Sim/Nao");
-					String ans = input.nextLine();
-					if (ans.equals("Sim")) {
-						System.out.println("fb.com/" + aGroup.getId());
-						System.out.println("Post deste grupo");
-						Connection<Post> postFeed = fbClient.fetchConnection(aGroup.getId()+"/feed", Post.class);
-						for (List<Post> postPage : postFeed) {
-							for (Post aPost : postPage) {
-								System.out.println("Mensagem: \n");
-								System.out.println(aPost.getMessage());
-							}
+					System.out.println("fb.com/" + aGroup.getId());
+					System.out.println("Post deste grupo");
+					Connection<Post> postFeed = fbClient.fetchConnection(aGroup.getId() + "/feed", Post.class);
+					for (List<Post> postPage : postFeed) {
+						for (Post aPost : postPage) {
+
+							lista.add(new FacebookInfo("ES", aPost.getMessage(), resultdate));
 						}
 					}
 				}
-			}*/
-			
-			//Postar na timeline de grupos aos quais somos admin
-			FacebookType response = fbClient.publish("372019400036311/feed", FacebookType.class, Parameter.with("message", "testetesteteste"));
-			//Se quisermos acrescentar um link
-			//FacebookType response = fbClient.publish("id grupo/feed", FacebookType.class, Parameter.with("message", "testetesteteste"), Parameter.with("link", "www.google.pt"));
-			//Para publicar uma imagem
-			// FileInputStream file = new FileInputStream(new File(local onde imagem está no disco));
-			// FacebookType response = fbClient.publish("id grupo/feed", FacebookType.class, binaryAttachment.with("nomeimg", file), Parameter.with("message", "testetesteteste"));
-			// FileInputStream file = new FileInputStream(new File(local onde video está no disco));
-			// FacebookType response = fbClient.publish("id grupo/feed", FacebookType.class, binaryAttachment.with("nomevideo", file), Parameter.with("message", "testetesteteste"));
-			
-			
-			System.out.println("fb.com/"+response.getId());
+			}
+
+			// Postar na timeline de grupos aos quais somos admin
+			// ***********FacebookType response = fbClient.publish("372019400036311/feed",
+			// FacebookType.class, Parameter.with("message", "testetesteteste"));
+			// Se quisermos acrescentar um link
+			// FacebookType response = fbClient.publish("id grupo/feed", FacebookType.class,
+			// Parameter.with("message", "testetesteteste"), Parameter.with("link",
+			// "www.google.pt"));
+			// Para publicar uma imagem
+			// FileInputStream file = new FileInputStream(new File(local onde imagem está no
+			// disco));
+			// FacebookType response = fbClient.publish("id grupo/feed", FacebookType.class,
+			// binaryAttachment.with("nomeimg", file), Parameter.with("message",
+			// "testetesteteste"));
+			// FileInputStream file = new FileInputStream(new File(local onde video está no
+			// disco));
+			// FacebookType response = fbClient.publish("id grupo/feed", FacebookType.class,
+			// binaryAttachment.with("nomevideo", file), Parameter.with("message",
+			// "testetesteteste"));
+
+			// System.out.println("fb.com/"+response.getId());
 
 		} catch (Exception e) {
-			//XMLEditor xml = new XMLEditor();
-			//xml.readFromXML();
-			//lista.addAll(xml.getListaFacebook());
+			// XMLEditor xml = new XMLEditor();
+			// xml.readFromXML();
+			// lista.addAll(xml.getListaFacebook());
 		}
 	}
 
@@ -118,6 +134,23 @@ public class FacebookApp {
 
 	}
 
+	public ArrayList<String> getListTokens() {
+		return tokens;
+	}
+
+	/*
+	 * public void publicGroup(String content()) {
+	 * 
+	 * }
+	 */
+	
+	
+	public void publicGroup(String content) {
+		//a publicar no grupo ES que a conta é administradora
+		FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_12);
+		FacebookType response = fbClient.publish("372019400036311/feed", FacebookType.class, Parameter.with("message", content));
+	}
+	
 	/**
 	 * Transformar as lista de FacebookInfo para listas AbstractInfo
 	 * 
@@ -149,6 +182,11 @@ public class FacebookApp {
 				Element tree = doc.createElement("Serviço");
 				root.appendChild(tree);
 				tree.setAttribute("Plataforma", "Facebook");
+				System.out.println(tokens);
+				tree.setAttribute("TokenAcesso", tokens.get(0));
+				System.out.println("chegou");
+				tree.setAttribute("ObterExtensao1", tokens.get(1));
+				tree.setAttribute("ObterExtensão2", tokens.get(2));
 				String autor, post;
 				Date data;
 				for (FacebookInfo tdados : lista) {
