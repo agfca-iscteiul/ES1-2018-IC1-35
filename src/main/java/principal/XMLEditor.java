@@ -47,11 +47,16 @@ public class XMLEditor {
 		this.facebook=facebook;
 		this.twitter=twitter;
 		this.outlook=outlook;
-		System.out.println("A criar ficheiro XML\n");
-		twitter.writeTwitterXML();
-		facebook.writeFacebookXML();
-		outlook.writeMailXML();
-		System.out.println("\nFicheiro XML criado");
+		File bda= new File("config.xml");
+		if(bda.exists()) {
+			System.out.println("O ficheiro XML já se encontra criado");
+		}else {
+			System.out.println("A criar ficheiro XML\n");
+			twitter.writeTwitterXML();
+			facebook.writeFacebookXML();
+			outlook.writeMailXML();
+			System.out.println("\nFicheiro XML criado");
+		}
 	}
 	
 
