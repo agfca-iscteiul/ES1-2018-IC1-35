@@ -194,6 +194,7 @@ public class FacebookApp {
 				tree.setAttribute("Plataforma", "Facebook");
 				System.out.println(tokens);
 				tree.setAttribute("TokenAcesso", tokens.get(0));
+				System.out.println("chegou");
 				tree.setAttribute("ObterExtensao1", tokens.get(1));
 				tree.setAttribute("ObterExtensão2", tokens.get(2));
 				String autor, post;
