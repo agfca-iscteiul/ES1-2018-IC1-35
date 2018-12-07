@@ -28,9 +28,9 @@ public class TwitterInfoTest {
 
 	@Test
 	public void testTwitterInfo() {
-		assertEquals("AAA",teste.getAutor());
-		assertEquals("BBBB",teste.getPost());
-		assertEquals(new Date(0), teste.getData());
+		assertTrue(teste.getAutor().equals("AAA"));
+		assertTrue(teste.getPost().equals("BBBB"));
+		assertTrue(teste.getData().equals(new Date(0)));
 	}
 
 }
