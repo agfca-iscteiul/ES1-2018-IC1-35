@@ -4,6 +4,9 @@ import java.util.Date;
 
 public class FacebookInfo extends AbstractInfo {
 
+	/**
+	 * Obter o username
+	 */
 	public FacebookInfo(String autor, String post, Date data) {
 		super(autor, post, data);
 	}

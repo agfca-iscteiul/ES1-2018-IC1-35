@@ -9,6 +9,7 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.xml.sax.SAXException;
 
+import interfaces.Facebook;
 import interfaces.Interface;
 
 

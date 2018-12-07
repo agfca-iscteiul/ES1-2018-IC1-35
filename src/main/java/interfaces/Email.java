@@ -28,18 +28,19 @@ public class Email {
 	private MailApp mapp;
 	private JButton btnEnviar;
 
-
 	/**
-	 * Create the application.
+	 * Cria a classe.
+	 * 
+	 * @param mapp a aplicação de email
 	 */
 	public Email(MailApp mapp) {
-		this.mapp=mapp;
+		this.mapp = mapp;
 		initialize();
 		frmEnviarEmail.setVisible(true);
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Inicia os conteudos da janela
 	 */
 	private void initialize() {
 		frmEnviarEmail = new JFrame();
@@ -48,50 +49,49 @@ public class Email {
 		frmEnviarEmail.setBounds(100, 100, 756, 558);
 		frmEnviarEmail.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmEnviarEmail.getContentPane().setLayout(null);
-		
+
 		textDest = new JTextField();
 		textDest.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textDest.setBounds(151, 30, 568, 38);
 		frmEnviarEmail.getContentPane().add(textDest);
 		textDest.setColumns(10);
-		
+
 		JLabel lblDestinatrio = new JLabel("Destinatário");
 		lblDestinatrio.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		lblDestinatrio.setBounds(15, 28, 136, 38);
 		frmEnviarEmail.getContentPane().add(lblDestinatrio);
-		
+
 		JLabel lblTema = new JLabel("Tema");
 		lblTema.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		lblTema.setBounds(45, 84, 62, 20);
 		frmEnviarEmail.getContentPane().add(lblTema);
-		
+
 		textTema = new JTextField();
 		textTema.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		textTema.setBounds(150, 78, 569, 38);
 		frmEnviarEmail.getContentPane().add(textTema);
 		textTema.setColumns(10);
-		
+
 		btnEnviar = new JButton("Enviar");
 		btnEnviar.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		btnEnviar.setBounds(285, 445, 115, 29);
 		frmEnviarEmail.getContentPane().add(btnEnviar);
-		
+
 		JTextArea textTexto = new JTextArea();
 		textTexto.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		textTexto.setBounds(15, 133, 704, 284);
 		frmEnviarEmail.getContentPane().add(textTexto);
-		
+
 		btnEnviar.addActionListener(new ActionListener() {
-		      public void actionPerformed(ActionEvent e) {
-		    	  mapp.sendEmail(textDest.getText(), textTema.getText(), textTexto.getText());
-		    	  JFrame parent = new JFrame();
+			public void actionPerformed(ActionEvent e) {
+				mapp.sendEmail(textDest.getText(), textTema.getText(), textTexto.getText());
+				JFrame parent = new JFrame();
 
-		    	  JOptionPane.showMessageDialog(parent, "Mensagem Enviada");
-		    	  frmEnviarEmail.dispose();
-		          
-		      }
+				JOptionPane.showMessageDialog(parent, "Mensagem Enviada");
+				frmEnviarEmail.dispose();
 
+			}
 
-		    });
+		});
 	}
 }

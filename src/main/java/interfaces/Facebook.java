@@ -20,16 +20,18 @@ public class Facebook {
 	private FacebookApp fbapp;
 
 	/**
-	 * Create the application.
+	 * Cria a aplicação.
+	 * 
+	 * @param a aplicação do Facebook.
 	 */
 	public Facebook(FacebookApp fbapp) {
-		this.fbapp=fbapp;
+		this.fbapp = fbapp;
 		initialize();
 		frmPostFacebook.setVisible(true);
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Inicia o conteudo da janela.
 	 */
 	private void initialize() {
 		frmPostFacebook = new JFrame();
@@ -37,29 +39,28 @@ public class Facebook {
 		frmPostFacebook.setBounds(100, 100, 645, 451);
 		frmPostFacebook.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmPostFacebook.getContentPane().setLayout(null);
-		
+
 		JTextPane textPane = new JTextPane();
 		textPane.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		textPane.setBounds(15, 16, 593, 318);
 		frmPostFacebook.getContentPane().add(textPane);
-		
+
 		JButton btnPostar = new JButton("Postar");
 		btnPostar.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		btnPostar.setBounds(251, 350, 115, 29);
 		frmPostFacebook.getContentPane().add(btnPostar);
-		
+
 		btnPostar.addActionListener(new ActionListener() {
-		      public void actionPerformed(ActionEvent e) {
-		    	  fbapp.publicGroup(textPane.getText());
-		    	  JFrame parent = new JFrame();
+			public void actionPerformed(ActionEvent e) {
+				fbapp.publicGroup(textPane.getText());
+				JFrame parent = new JFrame();
 
-		    	  JOptionPane.showMessageDialog(parent, "Mensagem Enviada");
-		    	  frmPostFacebook.dispose();
-		          
-		      }
+				JOptionPane.showMessageDialog(parent, "Mensagem Enviada");
+				frmPostFacebook.dispose();
 
+			}
 
-		    });
+		});
 	}
 
 }

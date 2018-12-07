@@ -2,7 +2,6 @@ package principal;
 
 import java.util.Comparator;
 
-
 /**
  * Comparador para comparar as datas dos posts
  */

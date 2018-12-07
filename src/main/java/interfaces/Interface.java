@@ -8,8 +8,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.swing.DefaultListModel;
 
@@ -41,7 +39,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 
 public class Interface {
 
@@ -51,11 +48,11 @@ public class Interface {
 	private JLabel lblFB;
 	private JLabel lblTT;
 	private JLabel lblM;
-	private boolean checkFB=true;
-	private boolean checkTT=true;
-	private boolean checkM=true;
+	private boolean checkFB = true;
+	private boolean checkTT = true;
+	private boolean checkM = true;
 	JList<AbstractInfo> listPosts;
-	DefaultListModel<AbstractInfo> modelPosts= new DefaultListModel<>();
+	DefaultListModel<AbstractInfo> modelPosts = new DefaultListModel<>();
 	private JTextField txtFiltros;
 	private JTextField txtOrigem;
 	private JButton btnFacebook;
@@ -74,34 +71,35 @@ public class Interface {
 	private Date dateFim;
 
 	private ArrayList<AbstractInfo> aListMain;
-	private ArrayList<AbstractInfo> aListRepresent= new ArrayList<AbstractInfo>();
-	private ArrayList<AbstractInfo> aListFiltrada=new ArrayList<AbstractInfo>();
+	private ArrayList<AbstractInfo> aListRepresent = new ArrayList<AbstractInfo>();
+	private ArrayList<AbstractInfo> aListFiltrada = new ArrayList<AbstractInfo>();
 	private JMenuItem mntmRemover;
 	private JMenu mnApagar;
 	private JMenuItem mntmFacebook;
 	private JMenuItem mntmTwitter;
 	private JMenuItem mntmOutlook;
-	private XMLEditor xml= new XMLEditor();
+	private XMLEditor xml = new XMLEditor();
 	private JMenuItem mntmCriar;
-	private JMenuBar menuBar_1;
 	private JMenu mnAdicionar;
 	private JMenuItem mntmFacebook_1;
 	private JMenuItem mntmTwitter_1;
 	private JMenuItem mntmOutlook_1;
 	private JMenuItem mntmMostrar;
 
-
 	/**
-	 * Cria a Interface
-	 * Associa as variaveis locais
-	 * @param ttapp é uma instância do TwitterApp que contém todos os métodos relativos ao twitter
-	 * @param mapp é uma instância do MailApp que contém todos os métodos relativos ao mail
-	 * @param fbapp é uma instância do FacebookApp que contém todos os métodos relativos ao facebook
+	 * Cria a Interface Associa as variaveis locais
+	 * 
+	 * @param ttapp é uma instância do TwitterApp que contém todos os métodos
+	 *              relativos ao twitter
+	 * @param mapp  é uma instância do MailApp que contém todos os métodos relativos
+	 *              ao mail
+	 * @param fbapp é uma instância do FacebookApp que contém todos os métodos
+	 *              relativos ao facebook
 	 */
-	public Interface(TwitterApp ttapp,MailApp mapp,FacebookApp fbapp) {
-		this.ttapp=ttapp;
-		this.mapp=mapp;
-		this.fbapp=fbapp;
+	public Interface(TwitterApp ttapp, MailApp mapp, FacebookApp fbapp) {
+		this.ttapp = ttapp;
+		this.mapp = mapp;
+		this.fbapp = fbapp;
 		addToListMain();
 		optionList();
 		filtrList();
@@ -120,7 +118,6 @@ public class Interface {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Bom Dia Academia");
 
-
 		SpringLayout springLayout = new SpringLayout();
 		frame.getContentPane().setLayout(springLayout);
 
@@ -137,13 +134,12 @@ public class Interface {
 		btnFacebook = new JButton("");
 		btnFacebook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(checkFB==true){
+				if (checkFB == true) {
 					lblFB.setText("Desativo");
-					checkFB=false;
-				}
-				else {
+					checkFB = false;
+				} else {
 					lblFB.setText("  Ativo");
-					checkFB=true;
+					checkFB = true;
 				}
 				optionList();
 				showList();
@@ -160,13 +156,12 @@ public class Interface {
 		btnTwitter = new JButton("");
 		btnTwitter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(checkTT==true){
+				if (checkTT == true) {
 					lblTT.setText("Desativo");
-					checkTT=false;
-				}
-				else {
+					checkTT = false;
+				} else {
 					lblTT.setText("  Ativo");
-					checkTT=true;
+					checkTT = true;
 
 				}
 
@@ -184,13 +179,12 @@ public class Interface {
 		btnEmail = new JButton("");
 		btnEmail.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(checkM==true){
+				if (checkM == true) {
 					lblM.setText("Desativo");
-					checkM=false;
-				}
-				else {
+					checkM = false;
+				} else {
 					lblM.setText("  Ativo");
-					checkM=true;
+					checkM = true;
 
 				}
 				optionList();
@@ -205,8 +199,7 @@ public class Interface {
 		btnEmail.setIcon(new ImageIcon("src\\main\\java\\Gmail-icon.png"));
 		panel.add(btnEmail);
 
-		initializeLabel(btnFacebook,btnTwitter,btnEmail);
-
+		initializeLabel(btnFacebook, btnTwitter, btnEmail);
 
 		listPosts = new JList<AbstractInfo>();
 		listPosts.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
@@ -223,9 +216,9 @@ public class Interface {
 		frame.getContentPane().add(scrollPane);
 
 		JLabel lblBomDiaAcademia = new JLabel("Bom Dia Academia");
-		springLayout.putConstraint(SpringLayout.NORTH, lblBomDiaAcademia, 0, SpringLayout.NORTH, frame.getContentPane());
+		springLayout.putConstraint(SpringLayout.NORTH, lblBomDiaAcademia, 0, SpringLayout.NORTH,
+				frame.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, lblBomDiaAcademia, -32, SpringLayout.WEST, panel);
-
 
 		lblBomDiaAcademia.setFont(new Font("Lucida Fax", Font.BOLD, 84));
 		frame.getContentPane().add(lblBomDiaAcademia);
@@ -236,7 +229,7 @@ public class Interface {
 		JMenu mnXml = new JMenu("XML");
 		mnXml.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		menuBar.add(mnXml);
-		
+
 		mntmMostrar = new JMenuItem("Mostrar");
 		mntmMostrar.setAction(new MostrarAction(this));
 		mntmMostrar.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
@@ -263,60 +256,59 @@ public class Interface {
 
 		mntmTwitter = new JMenuItem("Twitter");
 		mntmTwitter.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
-		mntmTwitter.setAction(new AuxAction(this,2));
+		mntmTwitter.setAction(new AuxAction(this, 2));
 		mnApagar.add(mntmTwitter);
 
 		mntmOutlook = new JMenuItem("Outlook");
 		mntmOutlook.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
-		mntmOutlook.setAction(new AuxAction(this,3));
+		mntmOutlook.setAction(new AuxAction(this, 3));
 		mnApagar.add(mntmOutlook);
-		
+
 		mnAdicionar = new JMenu("Adicionar");
 		mnAdicionar.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		mnXml.add(mnAdicionar);
-		
+
 		mntmFacebook_1 = new JMenuItem("Facebook");
 		mntmFacebook_1.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
-		mntmFacebook_1.setAction(new AuxAction(this,4));
+		mntmFacebook_1.setAction(new AuxAction(this, 4));
 		mnAdicionar.add(mntmFacebook_1);
-		
+
 		mntmTwitter_1 = new JMenuItem("Twitter");
 		mntmTwitter_1.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
-		mntmTwitter_1.setAction(new AuxAction(this,5));
+		mntmTwitter_1.setAction(new AuxAction(this, 5));
 		mnAdicionar.add(mntmTwitter_1);
-		
+
 		mntmOutlook_1 = new JMenuItem("Outlook");
 		mntmOutlook_1.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
-		mntmOutlook_1.setAction(new AuxAction(this,6));
+		mntmOutlook_1.setAction(new AuxAction(this, 6));
 		mnAdicionar.add(mntmOutlook_1);
-		
+
 		JMenu mnEnviar = new JMenu("Enviar");
 		mnEnviar.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		menuBar.add(mnEnviar);
-		
+
 		JMenuItem mntmFacebook_2 = new JMenuItem("Facebook");
 		mntmFacebook_2.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		mnEnviar.add(mntmFacebook_2);
 		mntmFacebook_2.setAction(new FacebookAction(this.fbapp));
-		
+
 		JMenuItem mntmTwitter_2 = new JMenuItem("Twitter");
 		mntmTwitter_2.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		mnEnviar.add(mntmTwitter_2);
 		mntmTwitter_2.setAction(new TwitterAction(this.ttapp));
-		
+
 		JMenuItem mntmOutlook_2 = new JMenuItem("Outlook");
 		mntmOutlook_2.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		mnEnviar.add(mntmOutlook_2);
-		mntmOutlook_2.setAction(new EmailAction(this.mapp) );
+		mntmOutlook_2.setAction(new EmailAction(this.mapp));
 
 	}
-
 
 	/**
 	 * Adiciona as listas dos pots/tweets/emails à lista main da classe.
 	 */
 	private void addToListMain() {
-		aListMain=new ArrayList<AbstractInfo>();
+		aListMain = new ArrayList<AbstractInfo>();
 		aListMain.addAll(ttapp.getList());
 		aListMain.addAll(mapp.getMailList());
 		aListMain.addAll(fbapp.getList());
@@ -325,20 +317,18 @@ public class Interface {
 	}
 
 	/**
-	 * Percorre a lista main, adicionando os post ,das fontes de informaçao que se encontram selecionadas
-	 * na pesquisa, na lista de representacao
+	 * Percorre a lista main, adicionando os post ,das fontes de informaçao que se
+	 * encontram selecionadas na pesquisa, na lista de representacao
 	 */
 	public void optionList() {
-		if(!aListRepresent.isEmpty())
+		if (!aListRepresent.isEmpty())
 			aListRepresent.clear();
-		for(AbstractInfo info: aListMain) {
-			if(checkFB && info.checkFacebook()) {
+		for (AbstractInfo info : aListMain) {
+			if (checkFB && info.checkFacebook()) {
 				aListRepresent.add(info);
-			}
-			else if(checkM && info.checkEmail()) {
+			} else if (checkM && info.checkEmail()) {
 				aListRepresent.add(info);
-			}
-			else if(checkTT && info.checkTwitter()) {
+			} else if (checkTT && info.checkTwitter()) {
 				aListRepresent.add(info);
 			}
 		}
@@ -346,25 +336,26 @@ public class Interface {
 	}
 
 	/**
-	 * Percorre a lista main, adicionando os post conforme os filros, à lista filtrada
+	 * Percorre a lista main, adicionando os post conforme os filros, à lista
+	 * filtrada
 	 */
 	public void filtrList() {
-		if(!aListFiltrada.isEmpty())
+		if (!aListFiltrada.isEmpty())
 			aListFiltrada.clear();
-		if(filtroPC==null && filtroOrigem==null && dateIn==null && dateFim==null) {
+		if (filtroPC == null && filtroOrigem == null && dateIn == null && dateFim == null) {
 			aListFiltrada.addAll(aListMain);
-		}
-		else {
+		} else {
 			aListFiltrada.addAll(aListMain);
-			ArrayList<AbstractInfo> aux=new ArrayList<AbstractInfo>();
-			for(AbstractInfo info:aListFiltrada) {
-				if(chckbxPC.isSelected()==true && !info.getPost().toString().contains(filtroPC)) {
+			ArrayList<AbstractInfo> aux = new ArrayList<AbstractInfo>();
+			for (AbstractInfo info : aListFiltrada) {
+				if (chckbxPC.isSelected() == true && !info.getPost().toString().contains(filtroPC)) {
 					aux.add(info);
 				}
-				if(chckbxOrigem.isSelected()==true && !info.getAutor().toString().equals(filtroOrigem)) {
+				if (chckbxOrigem.isSelected() == true && !info.getAutor().toString().equals(filtroOrigem)) {
 					aux.add(info);
 				}
-				if(chckbxData.isSelected()==true && !(info.getData().after(dateIn) && info.getData().before(dateFim)))
+				if (chckbxData.isSelected() == true
+						&& !(info.getData().after(dateIn) && info.getData().before(dateFim)))
 					aux.add(info);
 			}
 			aListFiltrada.removeAll(aux);
@@ -377,22 +368,22 @@ public class Interface {
 	 */
 	private void showList() {
 		modelPosts.removeAllElements();
-		for(AbstractInfo info: aListRepresent) {
-			if(aListFiltrada.contains(info)) {
-				modelPosts.add(modelPosts.size(),info);
+		for (AbstractInfo info : aListRepresent) {
+			if (aListFiltrada.contains(info)) {
+				modelPosts.add(modelPosts.size(), info);
 			}
 		}
 	}
 
-
 	/**
-	 * Adiciona um listener à lista dos posts para que ao clicar seja aberta uma janela de detalhes
+	 * Adiciona um listener à lista dos posts para que ao clicar seja aberta uma
+	 * janela de detalhes
 	 */
 	private void addListenerLista() {
 		listPosts.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
 				@SuppressWarnings({ "unchecked", "rawtypes" })
-				JList<AbstractInfo> list = (JList)evt.getSource();
+				JList<AbstractInfo> list = (JList) evt.getSource();
 				if (evt.getClickCount() == 2) {
 					int index = list.locationToIndex(evt.getPoint());
 					new Display(modelPosts.getElementAt(index));
@@ -401,63 +392,59 @@ public class Interface {
 		});
 	}
 
-
 	/**
 	 * Função que permite ativar os campos dos filtros quando este são selecionados
-	 *  @param chcbox para activar ou desactivar componentes
-	 *  @param component primeiro componente do filtro
-	 *  @param componente2 segundo componente do filtro
+	 * 
+	 * @param chcbox      para activar ou desactivar componentes
+	 * @param component   primeiro componente do filtro
+	 * @param componente2 segundo componente do filtro
 	 */
-	private void enableComponents(JCheckBox chcbox,JComponent component,JComponent component2) {
+	private void enableComponents(JCheckBox chcbox, JComponent component, JComponent component2) {
 		chcbox.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(component.isEnabled()==false && component2.isEnabled()==false) {
+				if (component.isEnabled() == false && component2.isEnabled() == false) {
 					component.setEnabled(true);
 					component2.setEnabled(true);
-				}
-				else {
+				} else {
 					component.setEnabled(false);
 					component2.setEnabled(false);
 				}
 
-
-			}});
-
+			}
+		});
 
 	}
-
 
 	/**
 	 * Função que permite ativar os campos dos filtros quando este são selecionados
-	 *  @param chcbox para activar ou desactivar componentes
-	 *  @param component primeiro componente do filtro
+	 * 
+	 * @param chcbox    para activar ou desactivar componentes
+	 * @param component primeiro componente do filtro
 	 */
-	private void enableComponents(JCheckBox chcbox,JComponent component) {
+	private void enableComponents(JCheckBox chcbox, JComponent component) {
 		chcbox.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(component.isEnabled()==false) {
+				if (component.isEnabled() == false) {
 					component.setEnabled(true);
-				}
-				else {
+				} else {
 					component.setEnabled(false);
 				}
 
-
-			}});
-
+			}
+		});
 
 	}
 
-
 	/**
 	 * Incializar os botões que permitem filtrar as fontes dos posts
-	 *  @param btnFacebook botão do Facebook
-	 *  @param btnTwitter botão do Twitter
-	 *  @param btnEmail botão do Email
+	 * 
+	 * @param btnFacebook botão do Facebook
+	 * @param btnTwitter  botão do Twitter
+	 * @param btnEmail    botão do Email
 	 */
-	private void initializeLabel(JButton btnFacebook,JButton btnTwitter,JButton btnEmail) {
+	private void initializeLabel(JButton btnFacebook, JButton btnTwitter, JButton btnEmail) {
 		lblFB = new JLabel("  Ativo");
 		sl_panel.putConstraint(SpringLayout.NORTH, lblFB, 6, SpringLayout.SOUTH, btnFacebook);
 		sl_panel.putConstraint(SpringLayout.WEST, lblFB, 137, SpringLayout.WEST, panel);
@@ -488,47 +475,52 @@ public class Interface {
 	 * Criar a base de dados da Aplicação
 	 */
 	public void criarXml() {
-		xml.createXMLFile(this.fbapp,this.ttapp,this.mapp); 
+		xml.createXMLFile(this.fbapp, this.ttapp, this.mapp);
 	}
-	
+
 	/**
 	 * Remover a base de dados da Aplicação
 	 */
 	public void removerXml() {
 		xml.removeXMLFile();
 	}
-	
+
 	/**
 	 * Incializar os botões do menu de Adicionar/Remover conteúdo da base de dados
+	 * 
 	 * @param opcao botão do Email
 	 */
 	public void auxXml(int opcao) {
-		 switch (opcao) {
-         case 1:
-        	 xml.removeFacebook();
-             break;
-         case 2:
-             xml.removeTwitter();
-             break;
-         case 3:
-             xml.removeOutlook();
-             break;
-         case 4:
-             xml.addFacebookInfo();;
-             break;
-         case 5:
-             xml.addTwitterInfo();;
-             break;
-         case 6:
-             xml.addOutlookInfo();;
-             break;
-         default:
-             break;
-         }
+		switch (opcao) {
+		case 1:
+			xml.removeFacebook();
+			break;
+		case 2:
+			xml.removeTwitter();
+			break;
+		case 3:
+			xml.removeOutlook();
+			break;
+		case 4:
+			xml.addFacebookInfo();
+			;
+			break;
+		case 5:
+			xml.addTwitterInfo();
+			;
+			break;
+		case 6:
+			xml.addOutlookInfo();
+			;
+			break;
+		default:
+			break;
+		}
 	}
 
 	/**
-	 * Inicializa o painel auxiliar que vai conter os botes para selecionar as fontes e os filtros.
+	 * Inicializa o painel auxiliar que vai conter os botes para selecionar as
+	 * fontes e os filtros.
 	 */
 	private void initializeAux() {
 
@@ -541,7 +533,7 @@ public class Interface {
 		txtFiltros.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(txtFiltros.isEnabled())
+				if (txtFiltros.isEnabled())
 					txtFiltros.setText("");
 			}
 		});
@@ -580,7 +572,7 @@ public class Interface {
 		txtOrigem.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(txtOrigem.isEnabled())
+				if (txtOrigem.isEnabled())
 					txtOrigem.setText("");
 			}
 		});
@@ -625,27 +617,26 @@ public class Interface {
 
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(!calendarIn.getDate().after(calendarFim.getDate())) {
-					filtroPC=txtFiltros.getText();
-					filtroOrigem=txtOrigem.getText();
-					dateIn=calendarIn.getDate();
-					dateFim=calendarFim.getDate();
+				if (!calendarIn.getDate().after(calendarFim.getDate())) {
+					filtroPC = txtFiltros.getText();
+					filtroOrigem = txtOrigem.getText();
+					dateIn = calendarIn.getDate();
+					dateFim = calendarFim.getDate();
 					filtrList();
 					showList();
-				}
-				else {
-					JOptionPane.showMessageDialog(panel, "A data de fim não pode ser inferior a de inicio", "Error", JOptionPane.ERROR_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(panel, "A data de fim não pode ser inferior a de inicio", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 
 		enableComponents(chckbxPC, txtFiltros);
-		enableComponents(chckbxOrigem,txtOrigem);
-		enableComponents(chckbxData,calendarIn,calendarFim);
+		enableComponents(chckbxOrigem, txtOrigem);
+		enableComponents(chckbxData, calendarIn, calendarFim);
 
 	}
 
-	
 	/**
 	 * Ação para criar a base de dados
 	 */
@@ -655,15 +646,15 @@ public class Interface {
 		public CriarAction(Interface inface) {
 			putValue(NAME, "Criar");
 			putValue(SHORT_DESCRIPTION, "Cria a base de dados");
-			this.inface=inface;
+			this.inface = inface;
 		}
+
 		public void actionPerformed(ActionEvent e) {
 			inface.criarXml();
 			inface.xml.getContent();
 		}
 	}
 
-	
 	/**
 	 * Ação para remover a base de dados
 	 */
@@ -671,102 +662,117 @@ public class Interface {
 		Interface inface;
 
 		public RemoverAction(Interface inface) {
-			this.inface=inface;
+			this.inface = inface;
 			putValue(NAME, "Remover");
 			putValue(SHORT_DESCRIPTION, "Remover a base de dados");
 		}
+
 		public void actionPerformed(ActionEvent e) {
 			this.inface.removerXml();
 		}
 	}
-	
+
 	/**
 	 * Ação para criar os elementos do menu de barra
 	 */
 	private class AuxAction extends AbstractAction {
 		Interface inface;
 		int opcao;
-		
-		public AuxAction(Interface inface,int opcao) {
-			this.inface=inface;
-			this.opcao=opcao;
-			 switch (opcao) {
-	         case 1:
-	        	 putValue(NAME, "Facebook");
-	             break;
-	         case 2:
-	        	 putValue(NAME, "Twitter");
-	             break;
-	         case 3:
-	        	 putValue(NAME, "Outlook");
-	             break;
-	         case 4:
-	        	 putValue(NAME, "Facebook");
-	             break;
-	         case 5:
-	        	 putValue(NAME, "Twitter");
-	             break;
-	         case 6:
-	        	 putValue(NAME, "Outlook");
-	             break;
-	         default:
-	             break;
-	         }
+
+		public AuxAction(Interface inface, int opcao) {
+			this.inface = inface;
+			this.opcao = opcao;
+			switch (opcao) {
+			case 1:
+				putValue(NAME, "Facebook");
+				break;
+			case 2:
+				putValue(NAME, "Twitter");
+				break;
+			case 3:
+				putValue(NAME, "Outlook");
+				break;
+			case 4:
+				putValue(NAME, "Facebook");
+				break;
+			case 5:
+				putValue(NAME, "Twitter");
+				break;
+			case 6:
+				putValue(NAME, "Outlook");
+				break;
+			default:
+				break;
+			}
 		}
+
 		public void actionPerformed(ActionEvent e) {
 			inface.auxXml(opcao);
 		}
 	}
-	
+
 	/**
 	 * Ação para mostrar a base de dados
 	 */
 	private class MostrarAction extends AbstractAction {
 		Interface inface;
-		
+
 		public MostrarAction(Interface inface) {
-			this.inface=inface;
+			this.inface = inface;
 			putValue(NAME, "Mostrar");
 			putValue(SHORT_DESCRIPTION, "Mostra a base de dados");
 		}
+
 		public void actionPerformed(ActionEvent e) {
-			DisplayDB displaydbs=new DisplayDB(inface.getXml().getContent());
+			DisplayDB displaydbs = new DisplayDB(inface.getXml().getContent());
 		}
 	}
-	
+
+	/**
+	 * Ação para enviar emails
+	 */
 	private class EmailAction extends AbstractAction {
 		MailApp mapp;
-		
+
 		public EmailAction(MailApp mapp) {
-			this.mapp=mapp;
+			this.mapp = mapp;
 			putValue(NAME, "Outlook");
 		}
+
 		public void actionPerformed(ActionEvent e) {
-			Email mail=new Email(this.mapp);
+			Email mail = new Email(this.mapp);
 		}
 	}
-	
+
+	/**
+	 * Ação para enviar tweets
+	 */
 	private class TwitterAction extends AbstractAction {
 		TwitterApp ttapp;
-		
+
 		public TwitterAction(TwitterApp ttapp) {
-			this.ttapp=ttapp;
+			this.ttapp = ttapp;
 			putValue(NAME, "Twitter");
 		}
+
 		public void actionPerformed(ActionEvent e) {
-			Twitter tweet=new Twitter(this.ttapp);
+			Twitter tweet = new Twitter(this.ttapp);
 		}
 	}
-	
+
+	/**
+	 * Ação para enviar posts para o facebook
+	 */
 	private class FacebookAction extends AbstractAction {
 		FacebookApp fbapp;
-		
+
 		public FacebookAction(FacebookApp fbapp) {
-			this.fbapp=fbapp;
+			this.fbapp = fbapp;
 			putValue(NAME, "Facebook");
 		}
+
 		public void actionPerformed(ActionEvent e) {
-			Facebook post=new Facebook(this.fbapp);
+			Facebook post = new Facebook(this.fbapp);
 		}
 	}
 }

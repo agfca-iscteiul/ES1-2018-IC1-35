@@ -14,12 +14,14 @@ public class DisplayDB {
 
 	private JFrame frmBaseDeDados;
 	private String texto;
-	
+
 	/**
 	 * Cria a aplicação.
+	 * 
+	 * @param texto a informação da base de dados
 	 */
 	public DisplayDB(String texto) {
-		this.texto=texto;
+		this.texto = texto;
 		initialize();
 	}
 
@@ -32,22 +34,19 @@ public class DisplayDB {
 		frmBaseDeDados.setBounds(100, 100, 780, 622);
 		frmBaseDeDados.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmBaseDeDados.getContentPane().setLayout(null);
-		
+
 		JTextArea textArea = new JTextArea();
 		textArea.setEditable(false);
 		textArea.setWrapStyleWord(true);
 		textArea.setLineWrap(true);
 		textArea.setFont(new Font("Lucida Fax", Font.PLAIN, 20));
 		textArea.setText(texto);
-		
+
 		JScrollPane scrollPane = new JScrollPane(textArea);
 		scrollPane.setBounds(0, 0, 758, 566);
-		
+
 		frmBaseDeDados.getContentPane().add(scrollPane);
-		
-		
-		
-		
+
 		frmBaseDeDados.setVisible(true);
 	}
 }

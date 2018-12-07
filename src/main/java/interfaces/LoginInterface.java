@@ -1,7 +1,5 @@
 package interfaces;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -28,7 +26,7 @@ public class LoginInterface {
 	private JPasswordField txPassword;
 
 	/**
-	 * Create the application.
+	 * Cria a classe.
 	 */
 	public LoginInterface() {
 		initialize();
@@ -36,7 +34,7 @@ public class LoginInterface {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Inicia o conteudo da janela.
 	 */
 	private void initialize() {
 		frmLogin = new JFrame();
@@ -94,14 +92,23 @@ public class LoginInterface {
 		});
 	}
 
+	/**
+	 * Obter o username
+	 */
 	public String getUN() {
 		return username;
 	}
 
+	/**
+	 * Obter a password
+	 */
 	public String getPW() {
 		return password;
 	}
 
+	/**
+	 * Verificar se o username é valido
+	 */
 	public boolean isValido() {
 		return valido;
 	}
