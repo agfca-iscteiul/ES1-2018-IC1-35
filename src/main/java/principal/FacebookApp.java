@@ -53,24 +53,22 @@ public class FacebookApp {
  
 	/**
 	 * Aceder ao Token e extender o tempo do mesmo através da API RestFB, imprimir
-	 * os post da timeline do user com a palavra "ISCTE" e adiciona-los ao array 
+	 * os post da timeline e grupos do user com a palavra "ISCTE" e adiciona-los ao array 
 	 * como FacebookInfo
 	 */
 	public void runFacebook() {
 		try {
+			
 			FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_12);
 			User me = fbClient.fetchObject("me", User.class);
 			tokens.add(accessToken);
 
-
-			// Extender o tempo do token
 			AccessToken exAcessToken = fbClient.obtainExtendedAccessToken(firstExtend, secondExtend);
 			tokens.add(firstExtend);
 			tokens.add(secondExtend);
 			System.out.println(exAcessToken.getAccessToken() + exAcessToken.getExpires());
 			System.out.println(exAcessToken.toString());
 
-			// Imprimir os post da timeline do user
 
 			Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
 
@@ -101,31 +99,12 @@ public class FacebookApp {
 				}
 			}
 
-			// Postar na timeline de grupos aos quais somos admin
-			// ***********FacebookType response = fbClient.publish("372019400036311/feed",
-			// FacebookType.class, Parameter.with("message", "testetesteteste"));
-			// Se quisermos acrescentar um link
-			// FacebookType response = fbClient.publish("id grupo/feed", FacebookType.class,
-			// Parameter.with("message", "testetesteteste"), Parameter.with("link",
-			// "www.google.pt"));
-			// Para publicar uma imagem
-			// FileInputStream file = new FileInputStream(new File(local onde imagem está no
-			// disco));
-			// FacebookType response = fbClient.publish("id grupo/feed", FacebookType.class,
-			// binaryAttachment.with("nomeimg", file), Parameter.with("message",
-			// "testetesteteste"));
-			// FileInputStream file = new FileInputStream(new File(local onde video está no
-			// disco));
-			// FacebookType response = fbClient.publish("id grupo/feed", FacebookType.class,
-			// binaryAttachment.with("nomevideo", file), Parameter.with("message",
-			// "testetesteteste"));
 
-			// System.out.println("fb.com/"+response.getId());
 
 		} catch (Exception e) {
-			// XMLEditor xml = new XMLEditor();
-			// xml.readFromXML();
-			// lista.addAll(xml.getListaFacebook());
+			XMLEditor xml = new XMLEditor();
+			xml.readFromXML();
+			lista.addAll(xml.getListaFacebook());
 		}
 	}
 
@@ -138,10 +117,12 @@ public class FacebookApp {
 		return tokens;
 	}
 
-	/*
-	 * public void publicGroup(String content()) {
+	
+	/**
 	 * 
-	 * }
+	 * publicar post num grupo cujo o utilizador tenhas permissões de administrador
+	 * 
+	 * @param content texto que o utilizador pretende enviar no post
 	 */
 	
 	
@@ -167,7 +148,6 @@ public class FacebookApp {
 	/**
 	 * Escrever no ficheiro XML todos os post do facebook
 	 */
-	// Escrever no ficheiro XML
 	public void writeFacebookXML() {
 		File datebase = new File("config.xml");
 		if (datebase.exists()) {

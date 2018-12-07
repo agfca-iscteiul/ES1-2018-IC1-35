@@ -40,25 +40,19 @@ import interfaces.LoginInterface;
 
 
 public class MailApp {
-	
+
 	private List<MailInfo> lista = new ArrayList<MailInfo>();
-	
 	String host;
 	String mailStoreType;
 	public String username;
 	public String password;
-	
 	Properties properties;
-	
 
-	
 	public MailApp() {
-		
-	}
-	
 
-	
-	
+	}
+
+
 	/**
 	 * 
 	 * Cria uma lista auxiliar de AbastractInfo. 
@@ -66,7 +60,7 @@ public class MailApp {
 	 * 
 	 * @return lista de AbstractInfo com os e-mails que se encontravam na lista de MailInfo.
 	 */
-	
+
 	public ArrayList<AbstractInfo> getMailList(){
 		ArrayList<AbstractInfo> listaaux = new ArrayList<AbstractInfo>();
 		for(MailInfo mails : lista) {
@@ -74,12 +68,12 @@ public class MailApp {
 		}
 		return listaaux;
 	}
-	
+
 	public List<MailInfo> getListPost(){
 		return lista;
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * É fornecida a informação para usar os serviços oferecidos pela JavaMail API.
@@ -92,53 +86,49 @@ public class MailApp {
 	 * @param user	email do utilizador
 	 * @param password	password do utilizador
 	 */
-	
+
 	private void check(String host, String storeType, String user, String password) {
 		try {
-			
+
 			properties = new Properties();
-			
-	
-			 properties.setProperty("mail.store.protocol", "imaps");
-	         properties.put("mail.imap-mail.outlook.com.ssl.enable", "true");
-	         properties.put("mail.pop3.host", "outlook.com");
-	         properties.put("mail.pop3.port", "995");
-	         properties.put("mail.pop3.starttls.enable", "true");
-			
-		     
+
+			properties.setProperty("mail.store.protocol", "imaps");
+			properties.put("mail.imap-mail.outlook.com.ssl.enable", "true");
+			properties.put("mail.pop3.host", "outlook.com");
+			properties.put("mail.pop3.port", "995");
+			properties.put("mail.pop3.starttls.enable", "true");
+
+
 			Session emailSession = Session.getDefaultInstance(properties);
-			
+
 			Store store = emailSession.getStore();
-			
+
 			//verifica se esta offline
 			if(check()){
-				
-			LoginInterface login=new LoginInterface();
-			
-			while(!login.isValido()) {
-				System.out.println("não conectado");
+				LoginInterface login=new LoginInterface();
+				while(!login.isValido()) {
+					System.out.println("não conectado");
+				}
+				store.connect(host, login.getUN(), login.getPW());
+				username=login.getUN();
+				this.password=login.getPW();
 			}
-			
-			store.connect(host, login.getUN(), login.getPW());
-			username=login.getUN();
-			this.password=login.getPW();
-			}
-			
+
 			Folder emailFolder = store.getFolder("INBOX"); 
 			emailFolder.open(Folder.READ_ONLY);
-			
+
 			Message[] msgs = emailFolder.getMessages();
-			
+
 			for (int i = 0; i < msgs.length; i++) {
 				Message msg = msgs[i];
 				if(msg.getContent().toString().contains("iscte")) {
 					lista.add(new MailInfo(msg.getFrom()[0].toString(),Jsoup.parse(msg.getContent().toString()).text(),msg.getSentDate()));
 				}
 			}
-			
-		emailFolder.close(false);
-		store.close();
-			
+
+			emailFolder.close(false);
+			store.close();
+
 		} catch (NoSuchProviderException e) {
 			e.printStackTrace();
 		} catch (MessagingException e) {
@@ -149,8 +139,8 @@ public class MailApp {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * É fornecida a informação para usar os serviços oferecidos pela JavaMail API.
@@ -164,19 +154,17 @@ public class MailApp {
 	 * @param subject	assunto do e-mail a enviar
 	 * @param text	corpo da mensagem do e-mail a enviar
 	 */
-	
-	public void sendEmail(String to, String subject, String text) {
-		
-		System.out.println(username+"   "+password);
-		
-		String host="smtp.office365.com";
 
+	public void sendEmail(String to, String subject, String text) {
+
+		System.out.println(username+"   "+password);
+		String host="smtp.office365.com";
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.host", host);
 		props.put("mail.smtp.port", "587");
-		
+
 		Session session = Session.getInstance(props,
 				new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
@@ -203,29 +191,29 @@ public class MailApp {
 
 			// Send message
 			Transport.send(message);
-			
-	      } catch (MessagingException e) {
-		         throw new RuntimeException(e);
-		      }
-		
+
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
+
 	}
-	
-	
+
+
 	public void runMail() {
-		
+
 		String host = "smtp.outlook.com";
 		String mailStoreType = "smtp";
-		
+
 		check(host, mailStoreType, username, password);
-		
+
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * Insere num ficheiro xml os e-mails que o utilizador possui na sua mail box, com informção relativa ao ISCTE
 	 */
-	
+
 	public void writeMailXML() {
 		File datebase = new File("config.xml");
 		if (datebase.exists()) {
@@ -306,20 +294,27 @@ public class MailApp {
 		}
 	}
 	
-	    public boolean check() throws Exception 
-	    { 
-	        Process process = java.lang.Runtime.getRuntime().exec("ping www.geeksforgeeks.org"); 
-	        int x = process.waitFor(); 
-	        if (x == 0) { 
-	            return true;
-	        } 
-	        else { 
-	            return false;
-	        } 
-	    } 
-	   
-	
-	
-	
+	/**
+	 * 
+	 * função verifica se o utilizador está ligado ou não, retorna true quando este efetua o login com sucesso
+	 * 
+	 * @return true quando efetua o login com sucesso, false quando ainda não o fez
+	 * @throws Exception
+	 */
+
+	public boolean check() throws Exception { 
+		Process process = java.lang.Runtime.getRuntime().exec("ping www.geeksforgeeks.org"); 
+		int x = process.waitFor(); 
+		if (x == 0) { 
+			return true;
+		} 
+		else { 
+			return false;
+		} 
+	} 
+
+
+
+
 
 }

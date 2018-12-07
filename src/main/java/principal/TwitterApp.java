@@ -37,11 +37,11 @@ public class TwitterApp {
 	private String consumerSecret = "PktQuGnaU4SzMhmouwq0rR6EzOhe0wpFYYqhbqmHOG6XEh3Ypn";
 	private String accessToken = "1067778655647121408-aMtSPX7fC5fjoke9yXbJaqr6zeH8Wd";
 	private String accessTokenSecret = "xhqjK3CITYEeVHop8VjOPsM87pUrDMgRjdzLSyk2tyTJR";
-	
+
 	public TwitterApp() {
 
 	}
-	
+
 	/**
 	 * Aceder ao Token atravers da API twitter4j, imprimir os tweets da timeline do user com a palavra "ISCTE" e adiciona-los ao array como TwitterInfo
 	 */
@@ -49,9 +49,9 @@ public class TwitterApp {
 		try {
 			ConfigurationBuilder cb = new ConfigurationBuilder();
 			cb.setDebugEnabled(true).setOAuthConsumerKey(consumerKey)
-					.setOAuthConsumerSecret(consumerSecret)
-					.setOAuthAccessToken(accessToken)
-					.setOAuthAccessTokenSecret(accessTokenSecret);
+			.setOAuthConsumerSecret(consumerSecret)
+			.setOAuthAccessToken(accessToken)
+			.setOAuthAccessTokenSecret(accessTokenSecret);
 			TwitterFactory tf = new TwitterFactory(cb.build());
 			Twitter twitter = tf.getInstance();
 			List<Status> statuses = twitter.getHomeTimeline();
@@ -69,7 +69,14 @@ public class TwitterApp {
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * Envio de tweets com o conteúdo que o utilizador apresentar na interface
+	 * 
+	 * @param content Texto que o utilizador pretender que o tweet tenha
+	 */
+
+
 	public void tweet(String content) {
 		TwitterFactory twitterFactory = new TwitterFactory();
 		Twitter twitter = twitterFactory.getInstance();
@@ -83,25 +90,32 @@ public class TwitterApp {
 			e.printStackTrace();
 		}
 	}	
+	
+	/**
+	 * 
+	 * Retweetar determinado tweet através do ID desse
+	 * 
+	 * @param tweetId ID do tweet selecionado
+	 */
 
 	public void retweet(Long tweetId) {
-	TwitterFactory factory = new TwitterFactory();
-    Twitter twitter = factory.getInstance();
-    twitter.setOAuthConsumer(consumerKey, consumerSecret);
-    AccessToken accessToken2 = new AccessToken(accessToken, accessTokenSecret);
-    twitter.setOAuthAccessToken(accessToken2);
-    try {
-		twitter.retweetStatus(tweetId);
-	} catch (TwitterException e) {
-		System.out.println("Erro no Retweet!");
-		e.printStackTrace();
+		TwitterFactory factory = new TwitterFactory();
+		Twitter twitter = factory.getInstance();
+		twitter.setOAuthConsumer(consumerKey, consumerSecret);
+		AccessToken accessToken2 = new AccessToken(accessToken, accessTokenSecret);
+		twitter.setOAuthAccessToken(accessToken2);
+		try {
+			twitter.retweetStatus(tweetId);
+		} catch (TwitterException e) {
+			System.out.println("Erro no Retweet!");
+			e.printStackTrace();
+		}
 	}
-	}
-	
+
 	public ArrayList<TwitterInfo> getListPost(){
 		return lista;
 	}
-	
+
 	/**
 	 * Transformar a lista de TwitterInfo para listas AbstractInfo
 	 * @return lista AbstractInfo com os tweets
@@ -113,7 +127,7 @@ public class TwitterApp {
 		}
 		return listaaux;
 	}
-	
+
 	/**
 	 * Escrever no ficheiro XML todos os tweets do Twitter
 	 */
