@@ -43,14 +43,21 @@ public class XMLEditor {
 	private TwitterApp twitter;
 	private MailApp outlook;
 
-	public void createXMLFile(FacebookApp facebook,TwitterApp twitter,MailApp outlook) {
-		this.facebook=facebook;
-		this.twitter=twitter;
-		this.outlook=outlook;
-		File bda= new File("config.xml");
-		if(bda.exists()) {
+	/**
+	 * Cria a classe
+	 * 
+	 * @param facebook Facebook
+	 * @param twitter  Twitter
+	 * @param outlook  Outlook
+	 */
+	public void createXMLFile(FacebookApp facebook, TwitterApp twitter, MailApp outlook) {
+		this.facebook = facebook;
+		this.twitter = twitter;
+		this.outlook = outlook;
+		File bda = new File("config.xml");
+		if (bda.exists()) {
 			System.out.println("O ficheiro XML já se encontra criado");
-		}else {
+		} else {
 			System.out.println("A criar ficheiro XML\n");
 			twitter.writeTwitterXML();
 			facebook.writeFacebookXML();
@@ -58,8 +65,10 @@ public class XMLEditor {
 			System.out.println("\nFicheiro XML criado");
 		}
 	}
-	
 
+	/**
+	 * Remove o ficheiro XML
+	 */
 	public void removeXMLFile() {
 		File data = new File("config.xml");
 		System.out.println(data.exists());
@@ -70,6 +79,9 @@ public class XMLEditor {
 		}
 	}
 
+	/**
+	 * Remove o Twitter do XML
+	 */
 	public void removeTwitter() {
 		File datebase = new File("config.xml");
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -95,6 +107,9 @@ public class XMLEditor {
 		}
 	}
 
+	/**
+	 * Remover o Facebook do XML
+	 */
 	public void removeFacebook() {
 		File datebase = new File("config.xml");
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -120,6 +135,9 @@ public class XMLEditor {
 		}
 	}
 
+	/**
+	 * Remover o Outlook do XML
+	 */
 	public void removeOutlook() {
 		File datebase = new File("config.xml");
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -144,19 +162,32 @@ public class XMLEditor {
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * Adicionar a informação do Twitter ao XML
+	 */
 	public void addTwitterInfo() {
 		twitter.writeTwitterXML();
 	}
-	
+
+	/**
+	 * Adicionar a informação do Facebook ao XML
+	 */
 	public void addFacebookInfo() {
-		facebook.writeFacebookXML();;
+		facebook.writeFacebookXML();
+		;
 	}
-	
+
+	/**
+	 * Adicionar a informação do Outlook ao XML
+	 */
 	public void addOutlookInfo() {
 		outlook.writeMailXML();
 	}
-	
+
+	/**
+	 * Ler do XML e guardar nas listas respectivas
+	 */
 	public void readFromXML() {
 		listaTwitter.clear();
 		listaFacebook.clear();
@@ -238,37 +269,38 @@ public class XMLEditor {
 
 	}
 
-
 	public ArrayList<TwitterInfo> getListaTwitter() {
 		return listaTwitter;
 	}
-
 
 	public ArrayList<FacebookInfo> getListaFacebook() {
 		return listaFacebook;
 	}
 
-
 	public ArrayList<MailInfo> getListaMail() {
 		return listaMail;
 	}
-	
+
+	/**
+	 * Obter o conteudo do XML numa string
+	 */
 	public String getContent() {
 		this.readFromXML();
-		ArrayList<AbstractInfo> lista=new ArrayList<AbstractInfo>();
+		ArrayList<AbstractInfo> lista = new ArrayList<AbstractInfo>();
 		lista.addAll(listaTwitter);
 		lista.addAll(listaFacebook);
 		lista.addAll(listaMail);
-		
-		String result=new String();
-		
-		for (AbstractInfo info:lista) {
-			result=result+("  Autor: "+info.getAutor()+"\n"+ "  Data :"+info.getData().toString()+"\n  "+info.getPost()+"\n"
-					+"----------------------------------------------------------------------"+"\n");
+
+		String result = new String();
+
+		for (AbstractInfo info : lista) {
+			result = result + ("  Autor: " + info.getAutor() + "\n" + "  Data :" + info.getData().toString() + "\n  "
+					+ info.getPost() + "\n" + "----------------------------------------------------------------------"
+					+ "\n");
 		}
-		
+
 		return result;
-		
+
 	}
 
 }

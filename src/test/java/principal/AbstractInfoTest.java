@@ -50,13 +50,6 @@ public class AbstractInfoTest {
 		assertEquals(expected, actual);
 	}
 
-	@Test
-	public void testSetAutor() {
-		String expected = "CCC";
-		teste.setAutor("CCC");
-		String actual = teste.getAutor();
-		assertEquals(expected, actual);
-	}
 
 	@Test
 	public void testGetPost() {
@@ -65,25 +58,10 @@ public class AbstractInfoTest {
 		assertEquals(expected, actual);
 	}
 
-	@Test
-	public void testSetPost() {
-		String expected = "DDDD";
-		teste.setPost("DDDD");
-		String actual = teste.getPost();
-		assertEquals(expected, actual);
-	}
 
 	@Test
 	public void testGetData() {
 		Date expected = new Date(1);
-		Date actual = teste.getData();
-		assertEquals(expected, actual);
-	}
-
-	@Test
-	public void testSetData() {
-		Date expected = new Date(2);
-		teste.setData(new Date(2));
 		Date actual = teste.getData();
 		assertEquals(expected, actual);
 	}

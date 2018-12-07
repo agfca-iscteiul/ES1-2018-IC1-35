@@ -46,19 +46,22 @@ public class FacebookApp {
 	private ArrayList<String> tokens = new ArrayList<String>();
 	private String firstExtend = "315725962486311";
 	private String secondExtend = "e4a7080fe0f8b1d33e682f71875971f0";
-	
+
+	/**
+	 * Cria a classe
+	 */
 	public FacebookApp() {
 
-	} 
- 
+	}
+
 	/**
 	 * Aceder ao Token e extender o tempo do mesmo através da API RestFB, imprimir
-	 * os post da timeline e grupos do user com a palavra "ISCTE" e adiciona-los ao array 
-	 * como FacebookInfo
+	 * os post da timeline e grupos do user com a palavra "ISCTE" e adiciona-los ao
+	 * array como FacebookInfo
 	 */
 	public void runFacebook() {
 		try {
-			
+
 			FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_12);
 			User me = fbClient.fetchObject("me", User.class);
 			tokens.add(accessToken);
@@ -90,8 +93,6 @@ public class FacebookApp {
 				}
 			}
 
-
-
 		} catch (Exception e) {
 			XMLEditor xml = new XMLEditor();
 			xml.readFromXML();
@@ -99,29 +100,38 @@ public class FacebookApp {
 		}
 	}
 
+	/**
+	 * Obter os posts do Facebook
+	 * 
+	 * @return lista lista
+	 */
 	public ArrayList<FacebookInfo> getListPost() {
 		return lista;
 
 	}
 
+	/**
+	 * Obter os tokens
+	 * 
+	 * @return tokens tokens
+	 */
 	public ArrayList<String> getListTokens() {
 		return tokens;
 	}
 
-	
 	/**
 	 * 
 	 * publicar post num grupo cujo o utilizador tenhas permissões de administrador
 	 * 
-	 * @param content	texto que o utilizador pertende postar no grupo
+	 * @param content texto que o utilizador pertende postar no grupo
 	 */
-	
-	
+
 	public void publicGroup(String content) {
 		FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_12);
-		FacebookType response = fbClient.publish("372019400036311/feed", FacebookType.class, Parameter.with("message", content));
+		FacebookType response = fbClient.publish("372019400036311/feed", FacebookType.class,
+				Parameter.with("message", content));
 	}
-	
+
 	/**
 	 * Transformar as lista de FacebookInfo para listas AbstractInfo
 	 * 
