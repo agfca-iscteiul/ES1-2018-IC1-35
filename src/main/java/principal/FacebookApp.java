@@ -42,13 +42,10 @@ public class FacebookApp {
 	long yourmilliseconds = System.currentTimeMillis();
 	SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
 	Date resultdate = new Date(yourmilliseconds);
-<<<<<<< HEAD
+	String accessToken = "EAAEfJq3XIicBAMaihs0igfAGMdbmyrWFEOgWlh8RcZBCAvEgegZCqIoMvun6VrhXyo3g4x8cNp9qM7AUVEZBhfG8ZAUQO7SONOJusYjZCExUtqdXp1Bbo0gTVwEyx2HIiU9zKXlg7mueaYszb2HwscRO4ZCXXhLEumNQUApPIB5mQ8J1ZCe1xOw0ez7q8pU9ciZAdxq9M0d5gddr59DWNuMlWAeMTZCXnxhcZD";
 	private ArrayList<String> tokens = new ArrayList<String>();
 	private String firstExtend, secondExtend;
-
-=======
-	String accessToken = "EAAEfJq3XIicBAHbGP4KfR5crUqfFU7NDj7HZBwZAvdirRjUSmYx1LE6ozGqTKz8MGf2hHF5fIgDHlzfmyLr7vaagVS1TZA0cI4NUOtW1pebeZBmQkqDd6ESCcl0kDHB499kRi5ojT3hQFBSexGx5sNbUP9kkwdo01kB4XSqUOBK6ZAhAyQg1M0ZAhZBRmbozC9Oh06izXb2PHm1YXD43dcZBhpvDEAFWi2IZD";
->>>>>>> branch 'master' of https://github.com/agfca-iscteiul/ES1-2018-IC1-35
+	
 	public FacebookApp() {
 
 	}
@@ -60,13 +57,8 @@ public class FacebookApp {
 	 */
 	public void runFacebook() {
 		try {
-<<<<<<< HEAD
-			String accessToken = "EAAEfJq3XIicBAMaihs0igfAGMdbmyrWFEOgWlh8RcZBCAvEgegZCqIoMvun6VrhXyo3g4x8cNp9qM7AUVEZBhfG8ZAUQO7SONOJusYjZCExUtqdXp1Bbo0gTVwEyx2HIiU9zKXlg7mueaYszb2HwscRO4ZCXXhLEumNQUApPIB5mQ8J1ZCe1xOw0ez7q8pU9ciZAdxq9M0d5gddr59DWNuMlWAeMTZCXnxhcZD";
-=======
->>>>>>> branch 'master' of https://github.com/agfca-iscteiul/ES1-2018-IC1-35
 			FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_12);
 			User me = fbClient.fetchObject("me", User.class);
-
 			tokens.add(accessToken);
 			firstExtend = "315725962486311";
 			secondExtend = "e4a7080fe0f8b1d33e682f71875971f0";
@@ -141,7 +133,6 @@ public class FacebookApp {
 		return lista;
 
 	}
-<<<<<<< HEAD
 
 	public ArrayList<String> getListTokens() {
 		return tokens;
@@ -152,7 +143,6 @@ public class FacebookApp {
 	 * 
 	 * }
 	 */
-=======
 	
 	
 	public void publicGroup(String content) {
@@ -160,7 +150,7 @@ public class FacebookApp {
 		FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_12);
 		FacebookType response = fbClient.publish("372019400036311/feed", FacebookType.class, Parameter.with("message", content));
 	}
->>>>>>> branch 'master' of https://github.com/agfca-iscteiul/ES1-2018-IC1-35
+	
 	/**
 	 * Transformar as lista de FacebookInfo para listas AbstractInfo
 	 * 
