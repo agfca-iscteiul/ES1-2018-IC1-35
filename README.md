@@ -6,6 +6,8 @@ Os dados das configurações associadas aos serviços referidos (identificação
 A informação obtida a partir dos vários serviços (fontes de informação académica) é toda apresentada na interface gráfica da aplicação, seguindo uma estrutura do tipo timeline (informação organizada cronologicamente), onde é facilmente identificado os dados principais da mensagem (v.g. fonte, data/hora, título) e caso o utilizador pretenda, é possível expandir e visualizar todos os detalhes da mensagem.
 A aplicação permite o modo de funcionamento offline, ou seja, o utilizador pode continuar a consultar os últimos conteúdos que a aplicação conseguiu obter dos vários serviços, mesmo que a aplicação perca a ligação de rede e o utilizador tenha fechado e voltado a abrir a aplicação.
 
+https://www.youtube.com/watch?v=vHh6vMdyP-k
+
 Projeto Realizado Por:
 - André Correia 73743
 - Filipe Gonçalves 78740
