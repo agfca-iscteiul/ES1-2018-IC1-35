@@ -619,6 +619,7 @@ public class Interface {
 			public void actionPerformed(ActionEvent e) {
 				if (!calendarIn.getDate().after(calendarFim.getDate())) {
 					filtroPC = txtFiltros.getText();
+					System.out.println(txtFiltros.getText());
 					filtroOrigem = txtOrigem.getText();
 					dateIn = calendarIn.getDate();
 					dateFim = calendarFim.getDate();

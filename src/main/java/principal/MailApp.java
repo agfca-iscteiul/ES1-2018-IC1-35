@@ -203,8 +203,13 @@ public class MailApp {
 
 		String host = "smtp.outlook.com";
 		String mailStoreType = "smtp";
-
-		check(host, mailStoreType, username, password);
+		try {
+			if(check())
+			check(host, mailStoreType, username, password);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
